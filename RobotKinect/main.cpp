@@ -1,15 +1,22 @@
-//
-//  main.cpp
-//  RobotKinect
-//
-//  Created by Mikael on 31/01/2015.
-//  Copyright (c) 2015 mikael. All rights reserved.
-//
+/*******************************************************************************
+*                                                                              *
+*   PrimeSense NiTE 2.0 - User Viewer Sample                                   *
+*   Copyright (C) 2012 PrimeSense Ltd.                                         *
+*                                                                              *
+*******************************************************************************/
 
-#include <iostream>
+#include "Viewer.h"
 
-int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
-    return 0;
+int main(int argc, char** argv)
+{
+	openni::Status rc = openni::STATUS_OK;
+
+	SampleViewer sampleViewer("User Viewer");
+
+	rc = sampleViewer.Init(argc, argv);
+	if (rc != openni::STATUS_OK)
+	{
+		return 1;
+	}
+	sampleViewer.Run();
 }
