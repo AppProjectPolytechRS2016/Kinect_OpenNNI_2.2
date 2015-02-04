@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		73BBA27B1A7D41D0007C647C /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73BBA2771A7D41D0007C647C /* main.cpp */; };
+		73BBA27B1A7D41D0007C647C /* ApplicationKinect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73BBA2771A7D41D0007C647C /* ApplicationKinect.cpp */; };
 		73BBA27C1A7D41D0007C647C /* Viewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73BBA2791A7D41D0007C647C /* Viewer.cpp */; };
 		73BBA28D1A7D42A2007C647C /* libNiTE2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BBA27F1A7D42A1007C647C /* libNiTE2.dylib */; };
 		73BBA2A01A7D42F6007C647C /* libOpenNI2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BBA28F1A7D42F6007C647C /* libOpenNI2.dylib */; };
@@ -115,8 +115,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		73261B321A826027008C37B5 /* Device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
 		73BBA26D1A7D4143007C647C /* RobotKinect */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RobotKinect; sourceTree = BUILT_PRODUCTS_DIR; };
-		73BBA2771A7D41D0007C647C /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		73BBA2771A7D41D0007C647C /* ApplicationKinect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ApplicationKinect.cpp; sourceTree = "<group>"; };
 		73BBA2781A7D41D0007C647C /* NiteSampleUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NiteSampleUtilities.h; sourceTree = "<group>"; };
 		73BBA2791A7D41D0007C647C /* Viewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Viewer.cpp; sourceTree = "<group>"; };
 		73BBA27A1A7D41D0007C647C /* Viewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Viewer.h; sourceTree = "<group>"; };
@@ -215,7 +216,8 @@
 		73BBA26F1A7D4143007C647C /* RobotKinect */ = {
 			isa = PBXGroup;
 			children = (
-				73BBA2771A7D41D0007C647C /* main.cpp */,
+				73BBA2771A7D41D0007C647C /* ApplicationKinect.cpp */,
+				73261B321A826027008C37B5 /* Device.h */,
 				73BBA2781A7D41D0007C647C /* NiteSampleUtilities.h */,
 				73BBA2791A7D41D0007C647C /* Viewer.cpp */,
 				73BBA27A1A7D41D0007C647C /* Viewer.h */,
@@ -465,7 +467,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				73BBA27B1A7D41D0007C647C /* main.cpp in Sources */,
+				73BBA27B1A7D41D0007C647C /* ApplicationKinect.cpp in Sources */,
 				73BBA27C1A7D41D0007C647C /* Viewer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -592,6 +594,7 @@
 				73BBA2761A7D4143007C647C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
