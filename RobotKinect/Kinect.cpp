@@ -9,6 +9,9 @@
 
 using namespace std;
 
+#define PAD_WIDTH 1024
+#define PAD_HEIGHT 720
+
 Kinect::Kinect(int kinectID) : myPoseUser(0){
     myKinectID=kinectID;
 }
@@ -44,8 +47,8 @@ openni::Status Kinect::initKinect(){
         return openni::STATUS_ERROR;
     }*/
     
-    myKinectDisplay.setPadX(900);
-    myKinectDisplay.setPadY(600);
+    myKinectDisplay.setPadX(PAD_WIDTH);
+    myKinectDisplay.setPadY(PAD_HEIGHT);
     
     return checkResult;
 };
@@ -66,11 +69,13 @@ nite::Status Kinect::initHandTracker(){
         cout<<"Error in : "<<checkResult<<endl;
         exit(1);
     }
-    checkResult = myHandTracker.startGestureDetection(nite::GESTURE_CLICK);
+    checkResult = myHandTracker.startGestureDetection(nite::GESTURE_HAND_RAISE);
     if (checkResult!=nite::STATUS_OK) {
         cout<<"Error in : "<<checkResult<<endl;
         exit(1);
     }
+    
+    checkResult = myHandTracker.readFrame(&myHandTrackerFrame);
     
     cout<<"Wave or Click to start tracking your hand..."<<endl;
     
@@ -83,6 +88,11 @@ nite::Status Kinect::trackHand(int &robotSelected,std::vector<std::string> cases
     int caseSelected=-1;
 
     checkResult = myHandTracker.readFrame(&myHandTrackerFrame);
+    openni::VideoFrameRef depthFrame = myHandTrackerFrame.getDepthFrame();
+    
+    int resolutionX = depthFrame.getVideoMode().getResolutionX();
+    int resolutionY = depthFrame.getVideoMode().getResolutionY();
+    
     if (checkResult != nite::STATUS_OK)
     {
         cout<<"Get next frame failed"<<endl;
@@ -101,10 +111,11 @@ nite::Status Kinect::trackHand(int &robotSelected,std::vector<std::string> cases
             cout<<"wave detected"<<endl;
 
         }
-        /*if (gestures[i].isComplete() & (gestures[i].getType()==nite::GESTURE_CLICK))
+        if (gestures[i].isComplete() /*& (gestures[i].getType()==nite::GESTURE_CLICK)*/)
         {
             robotSelected = caseSelected;
-        }*/
+            cout<<"robot selected : "<<robotSelected<<endl;
+        }
     }
     
     const nite::Array<nite::HandData>& hands = myHandTrackerFrame.getHands();
@@ -113,7 +124,15 @@ nite::Status Kinect::trackHand(int &robotSelected,std::vector<std::string> cases
         const nite::HandData& hand = hands[i];
         if (hand.isTracking())
         {
-           caseSelected = myKinectDisplay.displayPad(hand.getPosition().x, hand.getPosition().y, cases);
+            float handProjectivePostionX;
+            float handProjectivePostionY;
+            myHandTracker.convertHandCoordinatesToDepth(hand.getPosition().x, hand.getPosition().y, hand.getPosition().z, &handProjectivePostionX, &handProjectivePostionY);
+            handProjectivePostionX = (resolutionX-handProjectivePostionX-resolutionX/3)*PAD_WIDTH/(resolutionX/3) ;
+            handProjectivePostionY = (handProjectivePostionY-resolutionY/6)*PAD_HEIGHT/(resolutionY/6) ;
+            caseSelected = myKinectDisplay.displayPad((int)(handProjectivePostionX), (int)(handProjectivePostionY), cases);
+            cout<<"X : "<<handProjectivePostionX<<endl;
+            cout<<"Y : "<<handProjectivePostionY<<endl;
+
         }
     }
     
