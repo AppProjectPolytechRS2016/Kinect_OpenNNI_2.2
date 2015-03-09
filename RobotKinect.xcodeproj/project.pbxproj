@@ -7,6 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		733CCCBA1A8E2EE6006273CB /* Device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 733CCCB91A8E2EE6006273CB /* Device.cpp */; };
+		733CCCBD1A8E39EC006273CB /* Kinect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 733CCCBB1A8E39EC006273CB /* Kinect.cpp */; };
+		733CCCC01A9F8147006273CB /* KinectDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 733CCCBE1A9F8147006273CB /* KinectDisplay.cpp */; };
+		733CCCC11A9F8299006273CB /* OpenNI.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA2911A7D42F6007C647C /* OpenNI.ini */; };
+		733CCCC21A9F8299006273CB /* org.openni.jar in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA29F1A7D42F6007C647C /* org.openni.jar */; };
+		733CCCC31A9F8299006273CB /* com.primesense.nite.jar in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA27E1A7D42A1007C647C /* com.primesense.nite.jar */; };
+		733CCCC41A9F8299006273CB /* NiTE.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA2811A7D42A1007C647C /* NiTE.ini */; };
+		733CCCCB1A9F9C93006273CB /* libopencv_gpu.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 733CCCC51A9F9C93006273CB /* libopencv_gpu.2.4.9.dylib */; };
+		733CCCCC1A9F9C93006273CB /* libopencv_highgui.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 733CCCC61A9F9C93006273CB /* libopencv_highgui.2.4.9.dylib */; };
+		733CCCCD1A9F9C93006273CB /* libopencv_imgproc.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 733CCCC71A9F9C93006273CB /* libopencv_imgproc.2.4.9.dylib */; };
+		733CCCCE1A9F9C93006273CB /* libopencv_legacy.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 733CCCC81A9F9C93006273CB /* libopencv_legacy.2.4.9.dylib */; };
+		733CCCCF1A9F9C93006273CB /* libopencv_objdetect.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 733CCCC91A9F9C93006273CB /* libopencv_objdetect.2.4.9.dylib */; };
+		733CCCD01A9F9C93006273CB /* libopencv_photo.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 733CCCCA1A9F9C93006273CB /* libopencv_photo.2.4.9.dylib */; };
+		733CCCD51A9F9CD6006273CB /* libopencv_calib3d.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 733CCCD11A9F9CD6006273CB /* libopencv_calib3d.2.4.9.dylib */; };
+		733CCCD61A9F9CD6006273CB /* libopencv_contrib.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 733CCCD21A9F9CD6006273CB /* libopencv_contrib.2.4.9.dylib */; };
+		733CCCD71A9F9CD6006273CB /* libopencv_core.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 733CCCD31A9F9CD6006273CB /* libopencv_core.2.4.9.dylib */; };
+		733CCCD81A9F9CD6006273CB /* libopencv_features2d.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 733CCCD41A9F9CD6006273CB /* libopencv_features2d.2.4.9.dylib */; };
 		73BBA27B1A7D41D0007C647C /* ApplicationKinect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73BBA2771A7D41D0007C647C /* ApplicationKinect.cpp */; };
 		73BBA27C1A7D41D0007C647C /* Viewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73BBA2791A7D41D0007C647C /* Viewer.cpp */; };
 		73BBA28D1A7D42A2007C647C /* libNiTE2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BBA27F1A7D42A1007C647C /* libNiTE2.dylib */; };
@@ -15,12 +32,8 @@
 		73BBA2AF1A7D438C007C647C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BBA2AE1A7D438C007C647C /* OpenGL.framework */; };
 		73BBA2B11A7D4429007C647C /* libOpenNI2.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA28F1A7D42F6007C647C /* libOpenNI2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73BBA2B21A7D4429007C647C /* libOpenNI2.jni.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA2901A7D42F6007C647C /* libOpenNI2.jni.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		73BBA2B31A7D4429007C647C /* OpenNI.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA2911A7D42F6007C647C /* OpenNI.ini */; };
-		73BBA2B41A7D4429007C647C /* org.openni.jar in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA29F1A7D42F6007C647C /* org.openni.jar */; };
-		73BBA2B51A7D4429007C647C /* com.primesense.nite.jar in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA27E1A7D42A1007C647C /* com.primesense.nite.jar */; };
 		73BBA2B61A7D4429007C647C /* libNiTE2.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA27F1A7D42A1007C647C /* libNiTE2.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73BBA2B71A7D4429007C647C /* libNiTE2.jni.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA2801A7D42A1007C647C /* libNiTE2.jni.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		73BBA2B81A7D4429007C647C /* NiTE.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA2811A7D42A1007C647C /* NiTE.ini */; };
 		73BBA2C61A7D44C2007C647C /* FeatureExtraction.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA2881A7D42A2007C647C /* FeatureExtraction.ini */; };
 		73BBA2C71A7D44C2007C647C /* h.dat in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA2891A7D42A2007C647C /* h.dat */; };
 		73BBA2C81A7D44C2007C647C /* HandAlgorithms.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA28A1A7D42A2007C647C /* HandAlgorithms.ini */; };
@@ -52,14 +65,14 @@
 			dstPath = "";
 			dstSubfolderSpec = 6;
 			files = (
+				733CCCC11A9F8299006273CB /* OpenNI.ini in CopyFiles */,
+				733CCCC21A9F8299006273CB /* org.openni.jar in CopyFiles */,
+				733CCCC31A9F8299006273CB /* com.primesense.nite.jar in CopyFiles */,
+				733CCCC41A9F8299006273CB /* NiTE.ini in CopyFiles */,
 				73BBA2B11A7D4429007C647C /* libOpenNI2.dylib in CopyFiles */,
 				73BBA2B21A7D4429007C647C /* libOpenNI2.jni.dylib in CopyFiles */,
-				73BBA2B31A7D4429007C647C /* OpenNI.ini in CopyFiles */,
-				73BBA2B41A7D4429007C647C /* org.openni.jar in CopyFiles */,
-				73BBA2B51A7D4429007C647C /* com.primesense.nite.jar in CopyFiles */,
 				73BBA2B61A7D4429007C647C /* libNiTE2.dylib in CopyFiles */,
 				73BBA2B71A7D4429007C647C /* libNiTE2.jni.dylib in CopyFiles */,
-				73BBA2B81A7D4429007C647C /* NiTE.ini in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,6 +129,22 @@
 
 /* Begin PBXFileReference section */
 		73261B321A826027008C37B5 /* Device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
+		733CCCB81A8E2944006273CB /* ApplicationKinect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationKinect.h; sourceTree = "<group>"; };
+		733CCCB91A8E2EE6006273CB /* Device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Device.cpp; sourceTree = "<group>"; };
+		733CCCBB1A8E39EC006273CB /* Kinect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Kinect.cpp; sourceTree = "<group>"; };
+		733CCCBC1A8E39EC006273CB /* Kinect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Kinect.h; sourceTree = "<group>"; };
+		733CCCBE1A9F8147006273CB /* KinectDisplay.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KinectDisplay.cpp; sourceTree = "<group>"; };
+		733CCCBF1A9F8147006273CB /* KinectDisplay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KinectDisplay.h; sourceTree = "<group>"; };
+		733CCCC51A9F9C93006273CB /* libopencv_gpu.2.4.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_gpu.2.4.9.dylib; path = ../../../Desktop/opencv/Build/lib/libopencv_gpu.2.4.9.dylib; sourceTree = "<group>"; };
+		733CCCC61A9F9C93006273CB /* libopencv_highgui.2.4.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_highgui.2.4.9.dylib; path = ../../../Desktop/opencv/Build/lib/libopencv_highgui.2.4.9.dylib; sourceTree = "<group>"; };
+		733CCCC71A9F9C93006273CB /* libopencv_imgproc.2.4.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_imgproc.2.4.9.dylib; path = ../../../Desktop/opencv/Build/lib/libopencv_imgproc.2.4.9.dylib; sourceTree = "<group>"; };
+		733CCCC81A9F9C93006273CB /* libopencv_legacy.2.4.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_legacy.2.4.9.dylib; path = ../../../Desktop/opencv/Build/lib/libopencv_legacy.2.4.9.dylib; sourceTree = "<group>"; };
+		733CCCC91A9F9C93006273CB /* libopencv_objdetect.2.4.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_objdetect.2.4.9.dylib; path = ../../../Desktop/opencv/Build/lib/libopencv_objdetect.2.4.9.dylib; sourceTree = "<group>"; };
+		733CCCCA1A9F9C93006273CB /* libopencv_photo.2.4.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_photo.2.4.9.dylib; path = ../../../Desktop/opencv/Build/lib/libopencv_photo.2.4.9.dylib; sourceTree = "<group>"; };
+		733CCCD11A9F9CD6006273CB /* libopencv_calib3d.2.4.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_calib3d.2.4.9.dylib; path = ../../../Desktop/opencv/Build/lib/libopencv_calib3d.2.4.9.dylib; sourceTree = "<group>"; };
+		733CCCD21A9F9CD6006273CB /* libopencv_contrib.2.4.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_contrib.2.4.9.dylib; path = ../../../Desktop/opencv/Build/lib/libopencv_contrib.2.4.9.dylib; sourceTree = "<group>"; };
+		733CCCD31A9F9CD6006273CB /* libopencv_core.2.4.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_core.2.4.9.dylib; path = ../../../Desktop/opencv/Build/lib/libopencv_core.2.4.9.dylib; sourceTree = "<group>"; };
+		733CCCD41A9F9CD6006273CB /* libopencv_features2d.2.4.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_features2d.2.4.9.dylib; path = ../../../Desktop/opencv/Build/lib/libopencv_features2d.2.4.9.dylib; sourceTree = "<group>"; };
 		73BBA26D1A7D4143007C647C /* RobotKinect */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RobotKinect; sourceTree = BUILT_PRODUCTS_DIR; };
 		73BBA2771A7D41D0007C647C /* ApplicationKinect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ApplicationKinect.cpp; sourceTree = "<group>"; };
 		73BBA2781A7D41D0007C647C /* NiteSampleUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NiteSampleUtilities.h; sourceTree = "<group>"; };
@@ -185,6 +214,16 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				733CCCD51A9F9CD6006273CB /* libopencv_calib3d.2.4.9.dylib in Frameworks */,
+				733CCCD61A9F9CD6006273CB /* libopencv_contrib.2.4.9.dylib in Frameworks */,
+				733CCCD71A9F9CD6006273CB /* libopencv_core.2.4.9.dylib in Frameworks */,
+				733CCCD81A9F9CD6006273CB /* libopencv_features2d.2.4.9.dylib in Frameworks */,
+				733CCCCB1A9F9C93006273CB /* libopencv_gpu.2.4.9.dylib in Frameworks */,
+				733CCCCC1A9F9C93006273CB /* libopencv_highgui.2.4.9.dylib in Frameworks */,
+				733CCCCD1A9F9C93006273CB /* libopencv_imgproc.2.4.9.dylib in Frameworks */,
+				733CCCCE1A9F9C93006273CB /* libopencv_legacy.2.4.9.dylib in Frameworks */,
+				733CCCCF1A9F9C93006273CB /* libopencv_objdetect.2.4.9.dylib in Frameworks */,
+				733CCCD01A9F9C93006273CB /* libopencv_photo.2.4.9.dylib in Frameworks */,
 				73BBA2AF1A7D438C007C647C /* OpenGL.framework in Frameworks */,
 				73BBA2AD1A7D4382007C647C /* GLUT.framework in Frameworks */,
 				73BBA2A01A7D42F6007C647C /* libOpenNI2.dylib in Frameworks */,
@@ -217,7 +256,13 @@
 			isa = PBXGroup;
 			children = (
 				73BBA2771A7D41D0007C647C /* ApplicationKinect.cpp */,
+				733CCCB81A8E2944006273CB /* ApplicationKinect.h */,
+				733CCCBB1A8E39EC006273CB /* Kinect.cpp */,
+				733CCCBE1A9F8147006273CB /* KinectDisplay.cpp */,
+				733CCCBF1A9F8147006273CB /* KinectDisplay.h */,
+				733CCCBC1A8E39EC006273CB /* Kinect.h */,
 				73261B321A826027008C37B5 /* Device.h */,
+				733CCCB91A8E2EE6006273CB /* Device.cpp */,
 				73BBA2781A7D41D0007C647C /* NiteSampleUtilities.h */,
 				73BBA2791A7D41D0007C647C /* Viewer.cpp */,
 				73BBA27A1A7D41D0007C647C /* Viewer.h */,
@@ -228,7 +273,16 @@
 		73BBA27D1A7D4249007C647C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				73BBA2B01A7D439A007C647C /* OpenCV */,
+				733CCCD11A9F9CD6006273CB /* libopencv_calib3d.2.4.9.dylib */,
+				733CCCD21A9F9CD6006273CB /* libopencv_contrib.2.4.9.dylib */,
+				733CCCD31A9F9CD6006273CB /* libopencv_core.2.4.9.dylib */,
+				733CCCD41A9F9CD6006273CB /* libopencv_features2d.2.4.9.dylib */,
+				733CCCC51A9F9C93006273CB /* libopencv_gpu.2.4.9.dylib */,
+				733CCCC61A9F9C93006273CB /* libopencv_highgui.2.4.9.dylib */,
+				733CCCC71A9F9C93006273CB /* libopencv_imgproc.2.4.9.dylib */,
+				733CCCC81A9F9C93006273CB /* libopencv_legacy.2.4.9.dylib */,
+				733CCCC91A9F9C93006273CB /* libopencv_objdetect.2.4.9.dylib */,
+				733CCCCA1A9F9C93006273CB /* libopencv_photo.2.4.9.dylib */,
 				73BBA2AE1A7D438C007C647C /* OpenGL.framework */,
 				73BBA2AC1A7D4382007C647C /* GLUT.framework */,
 				73BBA28F1A7D42F6007C647C /* libOpenNI2.dylib */,
@@ -297,13 +351,6 @@
 				73BBA2FE1A7D46F5007C647C /* PSLink.ini */,
 			);
 			path = Drivers;
-			sourceTree = "<group>";
-		};
-		73BBA2B01A7D439A007C647C /* OpenCV */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = OpenCV;
 			sourceTree = "<group>";
 		};
 		73BBA2CF1A7D451D007C647C /* Includes */ = {
@@ -467,7 +514,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				733CCCC01A9F8147006273CB /* KinectDisplay.cpp in Sources */,
 				73BBA27B1A7D41D0007C647C /* ApplicationKinect.cpp in Sources */,
+				733CCCBD1A8E39EC006273CB /* Kinect.cpp in Sources */,
+				733CCCBA1A8E2EE6006273CB /* Device.cpp in Sources */,
 				73BBA27C1A7D41D0007C647C /* Viewer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -552,11 +602,19 @@
 		73BBA2751A7D4143007C647C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+					/usr/lib,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/mikael/Kinect/NiTE-MacOSX-x64-2.2/Redist",
 					"/Users/mikael/Kinect/OpenNI-MacOSX-x64-2.2/Redist",
 					"/Users/mikael/Kinect/OpenNI-MacOSX-x64-2.2/Redist/OpenNI2/Drivers",
+					/usr/local/lib,
+					/Users/mikael/Desktop/opencv/Build/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -565,11 +623,19 @@
 		73BBA2761A7D4143007C647C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/usr/local/include,
+					/usr/lib,
+				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/mikael/Kinect/NiTE-MacOSX-x64-2.2/Redist",
 					"/Users/mikael/Kinect/OpenNI-MacOSX-x64-2.2/Redist",
 					"/Users/mikael/Kinect/OpenNI-MacOSX-x64-2.2/Redist/OpenNI2/Drivers",
+					/usr/local/lib,
+					/Users/mikael/Desktop/opencv/Build/lib,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

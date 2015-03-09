@@ -338,6 +338,7 @@ void DrawSkeleton(nite::UserTracker* pUserTracker, const nite::UserData& userDat
 void SampleViewer::Display()
 {
 	nite::UserTrackerFrameRef userTrackerFrame;
+    
 	openni::VideoFrameRef depthFrame;
 	nite::Status rc = m_pUserTracker->readFrame(&userTrackerFrame);
 	if (rc != nite::STATUS_OK)
