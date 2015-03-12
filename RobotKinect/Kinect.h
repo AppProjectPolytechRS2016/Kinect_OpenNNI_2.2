@@ -28,7 +28,6 @@ public:
     
 private:
     
-    bool dislpay();
     openni::Status poseDetect();
     
     nite::HandTracker myHandTracker;

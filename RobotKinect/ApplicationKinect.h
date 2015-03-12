@@ -23,6 +23,7 @@ public:
     virtual void receiveMsg();
     void runApp();
     int selectRobot(Kinect &myKinect, std::vector<std::string> robotList);
+    int selectRobotSkeleton(Kinect &myKinect, std::vector<std::string> robotList);
     int selectAction();
     
 };

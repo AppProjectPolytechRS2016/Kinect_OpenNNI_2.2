@@ -44,6 +44,15 @@ int ApplicationKinect::selectRobot(Kinect &myKinect, vector<string> robotList){
     return robotSelected;
 }
 
+int ApplicationKinect::selectRobotSkeleton(Kinect &myKinect, std::vector<std::string> robotList){
+    int robotSelected=-1;
+    
+    
+    
+    return robotSelected;
+}
+
+
 int ApplicationKinect::selectAction(){
     int actionSelected;
     
@@ -71,6 +80,10 @@ void ApplicationKinect::runApp(){
     //listeCas.push_back("test7");
     robotSelected = selectRobot(kinect1, listeCas);
     cout<<"Robot selected : "<<robotSelected<<endl;
+    /*kinect1.initSkeletonTracker();
+    while (true) {
+        kinect1.trackSkeleton();
+    }*/
     
     nite::NiTE::shutdown();
     

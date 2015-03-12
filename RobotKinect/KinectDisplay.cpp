@@ -30,8 +30,11 @@ void KinectDisplay::displayFrame(const openni::RGB888Pixel* imageBuffer,openni::
     cv::Mat frame;
     frame.create(videoFrame.getHeight(), videoFrame.getWidth(), CV_8UC3);
     memcpy( frame.data, imageBuffer, 3*videoFrame.getHeight()*videoFrame.getWidth()*sizeof(uint8_t) );
+    std::cout<<"frame created"<<std::endl;
     
     cv::cvtColor(frame,frame,CV_BGR2RGB); //this will put colors right
+    cv::imshow("Image :",frame);
+    int c = cvWaitKey (2); //attente de 2ms qu'une touche soit pressée, !! permet le rafraîchissement des images !!
     
 }
 
