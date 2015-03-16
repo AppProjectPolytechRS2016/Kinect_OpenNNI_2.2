@@ -17,7 +17,7 @@ class KinectDisplay{
 public:
     KinectDisplay();
     ~KinectDisplay();
-    void displayFrame(const openni::RGB888Pixel* imageBuffer,openni::VideoFrameRef videoFrame);
+    void displayFrame(const openni::DepthPixel* depthData,int resolutionX, int resolutionY, int dataSize, std::vector<float>jointPositions);
     int displayPad(int positionX, int positionY, std::vector<std::string> cases) const;
     void setFrameX(int frameX);
     void setFrameY(int frameY);

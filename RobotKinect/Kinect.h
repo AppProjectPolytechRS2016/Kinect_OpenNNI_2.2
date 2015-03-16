@@ -17,7 +17,7 @@ public:
     Kinect(int kinectID);
     ~Kinect();
     openni::Status initKinect();
-    nite::Status trackSkeleton();
+    nite::Status trackSkeleton(int &robotSelected,std::vector<std::string> cases);
     nite::Status trackHand(int &robotSelected,std::vector<std::string> cases);
     nite::Status initHandTracker();
     nite::Status initSkeletonTracker();
@@ -31,16 +31,18 @@ private:
     openni::Status poseDetect();
     
     nite::HandTracker myHandTracker;
-    nite::UserTracker myUserTracker;
+    nite::UserTracker *myUserTracker;
     nite::UserId myPoseUser;
     openni::Device myNiDevice;
-    openni::VideoStream myVideoStream;
-    openni::VideoFrameRef videoFrame;
+    //openni::VideoStream myVideoStream;
+    //openni::VideoFrameRef videoFrame;
+    openni::VideoFrameRef depthFrame;
     nite::HandTrackerFrameRef myHandTrackerFrame;
+    nite::UserTrackerFrameRef myUserTrackerFrame;
     
     KinectDisplay myKinectDisplay;
     
     int myKinectID;
-    
+    bool aUserIsTracked;
     
 };

@@ -26,14 +26,29 @@ void KinectDisplay::setPadY(int padY){
     this->mPadY=padY;
 }
 
-void KinectDisplay::displayFrame(const openni::RGB888Pixel* imageBuffer,openni::VideoFrameRef videoFrame){
+void KinectDisplay::displayFrame(const openni::DepthPixel* depthData,int resolutionX, int resolutionY, int dataSize, std::vector<float>jointPositions){
     cv::Mat frame;
-    frame.create(videoFrame.getHeight(), videoFrame.getWidth(), CV_8UC3);
-    memcpy( frame.data, imageBuffer, 3*videoFrame.getHeight()*videoFrame.getWidth()*sizeof(uint8_t) );
-    std::cout<<"frame created"<<std::endl;
     
-    cv::cvtColor(frame,frame,CV_BGR2RGB); //this will put colors right
-    cv::imshow("Image :",frame);
+    frame.create(resolutionY, resolutionX, CV_8UC4);
+    
+    /*Filling the matrix with the pixel data*/
+    for(int i=0; i<(dataSize/sizeof(openni::DepthPixel));i++){
+        int index = i*4;
+        uchar * data = &frame.data[index];
+        int gray = ~((depthData[i] * 255) / 10000);
+        data[0] = gray;
+        data[1] = gray;
+        data[2] = gray;
+    }
+    /*Drawing a circle around each tracked joint*/
+    for(int i =0; i < (jointPositions.size()/2); i++){
+        cv::circle( frame, cvPoint( jointPositions[i*2], jointPositions[i*2+1] ), 5, cv::Scalar( 0, 0, 255 ), 5 );
+    }
+
+    /*Flip horizontaly the image due to openni data flipped*/
+    cv::flip(frame,frame,1);
+    
+    cv::imshow("Depth frame",frame);
     int c = cvWaitKey (2); //attente de 2ms qu'une touche soit pressée, !! permet le rafraîchissement des images !!
     
 }
@@ -85,8 +100,8 @@ int KinectDisplay::displayPad(int positionX, int positionY, std::vector<std::str
         }
     }
     
-    //cvNamedWindow("Image :");
-    cv::imshow("Image :",imagePad);
+
+    cv::imshow("selection Pad",imagePad);
     int c = cvWaitKey (2); //attente de 2ms qu'une touche soit pressée, !! permet le rafraîchissement des images !!
     return selectedCase;
 }

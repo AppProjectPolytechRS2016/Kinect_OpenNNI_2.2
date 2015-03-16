@@ -47,7 +47,24 @@ int ApplicationKinect::selectRobot(Kinect &myKinect, vector<string> robotList){
 int ApplicationKinect::selectRobotSkeleton(Kinect &myKinect, std::vector<std::string> robotList){
     int robotSelected=-1;
     
+    nite::Status checkResult = nite::STATUS_OK;
     
+    checkResult = myKinect.initSkeletonTracker();
+    if (checkResult!=nite::STATUS_OK) {
+        cout<<"Error in : "<<checkResult<<endl;
+        exit(1);
+    }
+    
+    while (robotSelected==-1) {
+        checkResult = myKinect.trackSkeleton(robotSelected, robotList);
+        if (checkResult!=nite::STATUS_OK) {
+            cout<<"Error in : "<<checkResult<<endl;
+            exit(1);
+        }
+    }
+    
+    myKinect.stopSkeletonTracker();
+
     
     return robotSelected;
 }
@@ -78,8 +95,12 @@ void ApplicationKinect::runApp(){
     listeCas.push_back("test5");
     //listeCas.push_back("test6");
     //listeCas.push_back("test7");
-    robotSelected = selectRobot(kinect1, listeCas);
+    
+    //robotSelected = selectRobot(kinect1, listeCas);
+    
+    robotSelected = selectRobotSkeleton(kinect1, listeCas);
     cout<<"Robot selected : "<<robotSelected<<endl;
+    
     /*kinect1.initSkeletonTracker();
     while (true) {
         kinect1.trackSkeleton();
@@ -102,7 +123,7 @@ int main(int argc, char** argv)
     
     appKinect.runApp();
     
-    std::vector<std::string> listeCas;
+    /*std::vector<std::string> listeCas;
     listeCas.push_back("test1");
     listeCas.push_back("test2");
     listeCas.push_back("test3");
@@ -119,7 +140,7 @@ int main(int argc, char** argv)
         
 
 
-    }
+    }*/
     
     
     
