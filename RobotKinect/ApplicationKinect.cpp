@@ -44,8 +44,8 @@ int ApplicationKinect::selectRobot(Kinect &myKinect, vector<string> robotList){
     return robotSelected;
 }
 
-int ApplicationKinect::selectRobotSkeleton(Kinect &myKinect, std::vector<std::string> robotList){
-    int robotSelected=-1;
+int ApplicationKinect::selectCaseSkeleton(Kinect &myKinect, std::vector<std::string> caseList){
+    int caseSelected=-1;
     
     nite::Status checkResult = nite::STATUS_OK;
     
@@ -55,30 +55,24 @@ int ApplicationKinect::selectRobotSkeleton(Kinect &myKinect, std::vector<std::st
         exit(1);
     }
     
-    while (robotSelected==-1) {
-        checkResult = myKinect.trackSkeleton(robotSelected, robotList);
+    while (caseSelected==-1) {
+        checkResult = myKinect.trackSkeleton(caseSelected, caseList);
         if (checkResult!=nite::STATUS_OK) {
             cout<<"Error in : "<<checkResult<<endl;
             exit(1);
         }
     }
     
-    cout<<"You selected : "<<robotList[robotSelected]<<endl;
+    //cout<<"You selected : "<<robotList[robotSelected]<<endl;
     
     //myKinect.displayChoice(robotList[robotSelected]);
     
     myKinect.stopSkeletonTracker();
 
     
-    return robotSelected;
+    return caseSelected;
 }
 
-
-int ApplicationKinect::selectAction(){
-    int actionSelected;
-    
-    return actionSelected;
-}
 
 void ApplicationKinect::runApp(){
     openni::Status checkResult = openni::STATUS_OK;
@@ -90,7 +84,7 @@ void ApplicationKinect::runApp(){
         exit(1);
     }
     
-    int robotSelected;
+    int caseSelected;
     std::vector<std::string> listeCas;
     listeCas.push_back("test1");
     listeCas.push_back("test2");
@@ -102,8 +96,8 @@ void ApplicationKinect::runApp(){
     
     //robotSelected = selectRobot(kinect1, listeCas);
     
-    robotSelected = selectRobotSkeleton(kinect1, listeCas);
-    cout<<"Robot selected : "<<robotSelected<<endl;
+    caseSelected = selectCaseSkeleton(kinect1, listeCas);
+    cout<<"Robot selected : "<<caseSelected<<endl;
     
     /*kinect1.initSkeletonTracker();
     while (true) {

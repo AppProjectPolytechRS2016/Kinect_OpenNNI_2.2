@@ -56,7 +56,7 @@ void KinectDisplay::displayFrame(const openni::DepthPixel* depthData,int resolut
     
 }
 
-int KinectDisplay::displayPad(int positionX, int positionY, std::vector<std::string> cases) const{
+int KinectDisplay::displayPad(int positionX, int positionY, std::vector<std::string> cases, bool selectionDone) const{
     int selectedCase = -1;
     int mPosX = positionX;
     int mPosY = positionY;
@@ -69,6 +69,13 @@ int KinectDisplay::displayPad(int positionX, int positionY, std::vector<std::str
     int rectXEnd;
     int rectYEnd;
     int i=0;
+    int rectThickness=2;
+    int pauseTime=2;
+    
+    if (selectionDone) {
+        rectThickness=-1;
+        pauseTime=1000;
+    }
     
     /*Create OpenCV image*/
     cv::Mat imagePad;
@@ -88,11 +95,12 @@ int KinectDisplay::displayPad(int positionX, int positionY, std::vector<std::str
             /*The case is selected*/
             if( rectXOrg<mPosX && mPosX<rectXEnd && rectYOrg<mPosY && mPosY<rectYEnd ){
                 /*Drawing a red rectangle in the black box*/
-                cv::rectangle(imagePad,cv::Point(rectXOrg+2,rectYOrg+2),cv::Point(rectXEnd-2,rectYEnd-2),CV_RGB(255,0,0),2);
+                cv::rectangle(imagePad,cv::Point(rectXOrg+2,rectYOrg+2),cv::Point(rectXEnd-2,rectYEnd-2),CV_RGB(255,0,0),rectThickness);
                 selectedCase=i;
             }
             /*Drawing all the cases*/
-            cv::rectangle(imagePad,cv::Point(rectXOrg,rectYOrg),cv::Point(rectXEnd,rectYEnd),CV_RGB(0,0,0),2);
+            cv::rectangle(imagePad,cv::Point(rectXOrg,rectYOrg),cv::Point(rectXEnd,rectYEnd),CV_RGB(0,0,0),2
+                          );
             /*There is a text for this cases*/
             if (i<mNumCase) {
                 word = cases[i];
@@ -105,7 +113,8 @@ int KinectDisplay::displayPad(int positionX, int positionY, std::vector<std::str
     
     cv::imshow("selection Pad",imagePad);
     
-    int c = cvWaitKey (2); //attente de 2ms qu'une touche soit pressée, !! permet le rafraîchissement des images !!
+    int c = cvWaitKey (pauseTime); //attente de 2ms qu'une touche soit pressée, !! permet le rafraîchissement des images !!
+    
     return selectedCase;
 }
 

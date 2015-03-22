@@ -18,7 +18,7 @@ public:
     KinectDisplay();
     ~KinectDisplay();
     void displayFrame(const openni::DepthPixel* depthData,int resolutionX, int resolutionY, int dataSize, std::vector<float>jointPositions, int areaX, int areaY);
-    int displayPad(int positionX, int positionY, std::vector<std::string> cases) const;
+    int displayPad(int positionX, int positionY, std::vector<std::string> cases, bool selectionDone) const;
     void setFrameX(int frameX);
     void setFrameY(int frameY);
     void setPadX(int padX);

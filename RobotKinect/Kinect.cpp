@@ -150,7 +150,7 @@ nite::Status Kinect::trackHand(int &robotSelected,std::vector<std::string> cases
             handProjectivePostionX = (resolutionX-handProjectivePostionX-resolutionX/3)*PAD_WIDTH/(resolutionX/3) ;
             handProjectivePostionY = (handProjectivePostionY-resolutionY/6)*PAD_HEIGHT/(resolutionY/6) ;
             /*Displating the Pad and the position of the hand on it*/
-            caseSelected = myKinectDisplay.displayPad((int)(handProjectivePostionX), (int)(handProjectivePostionY), cases);
+            //caseSelected = myKinectDisplay.displayPad((int)(handProjectivePostionX), (int)(handProjectivePostionY), cases);
         }
     }
     
@@ -180,7 +180,7 @@ nite::Status Kinect::initSkeletonTracker(){
     return checkResult;
 };
 
-nite::Status Kinect::trackSkeleton(int &robotSelected,std::vector<std::string> cases){
+nite::Status Kinect::trackSkeleton(int &caseSelected,std::vector<std::string> cases){
     
     nite::Status checkResult=nite::STATUS_OK;
     openni::Status checkResult2=openni::STATUS_OK;
@@ -188,7 +188,7 @@ nite::Status Kinect::trackSkeleton(int &robotSelected,std::vector<std::string> c
     
     float leftHandX = 0, leftHandY = 0, rightHandX = 0, rightHandY = 0, torsoX = 0, torsoY = 0, rightShoulderX = 0, rightShoulderY = 0, rightHandZ = 0, torsoZ = 0;
     vector<float> jointPositions;
-    int caseSelected;
+    int casePosition;
 
     /*Reading the frame from the UserTracker*/
     checkResult = myUserTracker->readFrame(&myUserTrackerFrame);
@@ -270,14 +270,16 @@ nite::Status Kinect::trackSkeleton(int &robotSelected,std::vector<std::string> c
         leftHandY = (leftHandY-resolutionY/6)*PAD_HEIGHT/(resolutionY/6) ;
         
         /*On which case is the left hand*/
-        caseSelected = myKinectDisplay.displayPad(leftHandX, leftHandY, cases);
+        casePosition = myKinectDisplay.displayPad(leftHandX, leftHandY, cases, false);
         cout<<"X : "<<leftHandX<<" Y : "<<leftHandY<<endl;
         
         /*Validating the choice by putting right hand on torso*/
         /*Calculating the distance between right hand and torso*/
         float validationVector = sqrt(pow((rightHandX-torsoX),2)+pow((rightHandY-torsoY), 2)+pow((rightHandZ - torsoZ), 2));
         if((validationVector < 100) && (rightHandX!=0)){
-            robotSelected = caseSelected;
+            caseSelected = casePosition;
+            casePosition = myKinectDisplay.displayPad(leftHandX, leftHandY, cases, true);
+
         }
     }
     
