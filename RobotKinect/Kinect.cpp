@@ -266,8 +266,8 @@ nite::Status Kinect::trackSkeleton(int &caseSelected,std::vector<std::string> ca
     
     if (aUserIsTracked) {
         /*Adapting left hand coordinates for best comfort for users*/
-        leftHandX = (resolutionX-leftHandX-resolutionX/3)*PAD_WIDTH/(resolutionX/3) ;
-        leftHandY = (leftHandY-resolutionY/6)*PAD_HEIGHT/(resolutionY/6) ;
+        leftHandX = (resolutionX-leftHandX/*-resolutionX/AREA_X*/)*PAD_WIDTH/(resolutionX/AREA_X) ;
+        leftHandY = (leftHandY-resolutionY/AREA_Y)*PAD_HEIGHT/(resolutionY/AREA_Y) ;
         
         /*On which case is the left hand*/
         casePosition = myKinectDisplay.displayPad(leftHandX, leftHandY, cases, false);

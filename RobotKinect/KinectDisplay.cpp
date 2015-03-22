@@ -7,6 +7,10 @@
 
 #include "KinectDisplay.h"
 
+#define MAX_COL 3
+#define SHORT_PAUSE 2
+#define LONG_PAUSE 1000
+
 /*Builder*/
 KinectDisplay::KinectDisplay(){}
 
@@ -45,11 +49,11 @@ void KinectDisplay::displayFrame(const openni::DepthPixel* depthData,int resolut
         cv::circle( frame, cvPoint( jointPositions[i*2], jointPositions[i*2+1] ), 5, cv::Scalar( 0, 0, 255 ), 5 );
     }
     
-    /*Drawing a rectangle for the selection space*/
-    cv::rectangle(frame, cv::Point(resolutionX/areaX,resolutionY/areaY), cv::Point(resolutionX*2/3,resolutionY/3), cv::Scalar(0,0,255),3);
-    
     /*Flip horizontaly the image due to openni data flipped*/
     cv::flip(frame,frame,1);
+    
+    /*Drawing a rectangle for the selection space*/
+    cv::rectangle(frame, cv::Point(0/*resolutionX/areaX*/,resolutionY/areaY), cv::Point(resolutionX/**2*//3,resolutionY/3), cv::Scalar(0,0,255),3);
     
     cv::imshow("Depth frame",frame);
     int c = cvWaitKey (2); //attente de 2ms qu'une touche soit pressée, !! permet le rafraîchissement des images !!
@@ -61,7 +65,7 @@ int KinectDisplay::displayPad(int positionX, int positionY, std::vector<std::str
     int mPosX = positionX;
     int mPosY = positionY;
     unsigned long mNumCase = cases.size();
-    int numCol = 3;
+    int numCol = MAX_COL;
     int numRow = ceil(mNumCase/(float)numCol);
     std::string  word;
     int rectXOrg;
@@ -70,11 +74,11 @@ int KinectDisplay::displayPad(int positionX, int positionY, std::vector<std::str
     int rectYEnd;
     int i=0;
     int rectThickness=2;
-    int pauseTime=2;
+    int pauseTime=SHORT_PAUSE;
     
     if (selectionDone) {
         rectThickness=-1;
-        pauseTime=1000;
+        pauseTime=LONG_PAUSE;
     }
     
     /*Create OpenCV image*/
