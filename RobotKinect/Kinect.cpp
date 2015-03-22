@@ -247,13 +247,19 @@ nite::Status Kinect::trackSkeleton(int &caseSelected,std::vector<std::string> ca
         }
         
         /*The PSI pose is needed to track, thus the app isn't disturbed by other detected users*/
-        const nite::PoseData& pose = user.getPose(nite::POSE_PSI);
-        if (pose.isHeld() && !aUserIsTracked) {
+        const nite::PoseData& posePSI = user.getPose(nite::POSE_PSI);
+        if (posePSI.isHeld() && !aUserIsTracked) {
             myUserTracker->startSkeletonTracking( user.getId() );
             aUserIsTracked = true;
             userTracked = user.getId();
             cout<<"User tracked !";
-            
+            myUserTracker->startPoseDetection(user.getId(), nite::POSE_CROSSED_HANDS);
+        }
+        
+        /*The Crossed Hands pose allow to exit case selection without a choice*/
+        const nite::PoseData& poseCrossed = user.getPose(nite::POSE_CROSSED_HANDS);
+        if (poseCrossed.isHeld()) {
+            caseSelected=-2;
         }
         
     }
