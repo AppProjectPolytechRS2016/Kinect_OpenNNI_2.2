@@ -12,11 +12,11 @@ using namespace std;
 ApplicationKinect::ApplicationKinect(const char* deviceName, const char* deviceIP) : Device(deviceName,deviceIP){}
 ApplicationKinect::~ApplicationKinect(){}
 
-void ApplicationKinect::connectGesCom(){}
+void ApplicationKinect::logInCM(){}
 
-void ApplicationKinect::disconnectGesCom(){}
+void ApplicationKinect::logOutCM(){}
 
-void ApplicationKinect::sendMsg(){}
+void ApplicationKinect::sendOrder(){}
 
 void ApplicationKinect::receiveMsg(){}
 
@@ -63,6 +63,10 @@ int ApplicationKinect::selectRobotSkeleton(Kinect &myKinect, std::vector<std::st
         }
     }
     
+    cout<<"You selected : "<<robotList[robotSelected]<<endl;
+    
+    //myKinect.displayChoice(robotList[robotSelected]);
+    
     myKinect.stopSkeletonTracker();
 
     
@@ -93,8 +97,8 @@ void ApplicationKinect::runApp(){
     listeCas.push_back("test3");
     listeCas.push_back("test4");
     listeCas.push_back("test5");
-    //listeCas.push_back("test6");
-    //listeCas.push_back("test7");
+    listeCas.push_back("test6");
+    listeCas.push_back("test7");
     
     //robotSelected = selectRobot(kinect1, listeCas);
     

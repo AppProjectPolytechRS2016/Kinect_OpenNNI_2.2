@@ -13,9 +13,9 @@ public :
     Device(const char* deviceName, const char* deviceIP);
     virtual ~Device();
     
-    virtual void connectGesCom()=0;
-    virtual void disconnectGesCom()=0;
-    virtual void sendMsg()=0;
+    virtual void logInCM()=0;
+    virtual void logOutCM()=0;
+    virtual void sendOrder()=0;
     virtual void receiveMsg()=0;
     
 protected :

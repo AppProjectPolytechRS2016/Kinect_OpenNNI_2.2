@@ -11,6 +11,8 @@ using namespace std;
 
 #define PAD_WIDTH 1024
 #define PAD_HEIGHT 720
+#define AREA_X 3 //Scale of the selection area for the hand
+#define AREA_Y 6
 
 Kinect::Kinect(int kinectID) : myPoseUser(0){
     myKinectID=kinectID;
@@ -184,7 +186,7 @@ nite::Status Kinect::trackSkeleton(int &robotSelected,std::vector<std::string> c
     openni::Status checkResult2=openni::STATUS_OK;
     nite::UserTrackerFrameRef myUserTrackerFrame;
     
-    float leftHandX = 0, leftHandY = 0, rightHandX = 0, rightHandY = 0, torsoX = 0, torsoY = 0, rightShoulderX = 0, rightShoulderY = 0;
+    float leftHandX = 0, leftHandY = 0, rightHandX = 0, rightHandY = 0, torsoX = 0, torsoY = 0, rightShoulderX = 0, rightShoulderY = 0, rightHandZ = 0, torsoZ = 0;
     vector<float> jointPositions;
     int caseSelected;
 
@@ -204,7 +206,7 @@ nite::Status Kinect::trackSkeleton(int &robotSelected,std::vector<std::string> c
     const nite::Array<nite::UserData>& users = myUserTrackerFrame.getUsers();
     for ( int i = 0; i < users.getSize(); ++i ) {
         const nite::UserData& user = users[i];
-        if (user.isNew() /*& !aUserIsTracked*/) {
+        if (user.isNew() && !aUserIsTracked) {
             myUserTracker->startPoseDetection( user.getId(), nite::POSE_PSI );
         }
         else if (!user.isLost()) {
@@ -214,38 +216,42 @@ nite::Status Kinect::trackSkeleton(int &robotSelected,std::vector<std::string> c
             if (skeelton.getState() == nite::SkeletonState::SKELETON_TRACKED) {
                 /*Following the choosen joints*/
                 const nite::SkeletonJoint& joint = skeelton.getJoint(nite::JOINT_RIGHT_HAND);/*Attention : the data are hrizontally flipped*/
-                if (joint.getPositionConfidence() >= 0.1f) {
+                if (joint.getPositionConfidence() >= 0.5f) {
                     const nite::Point3f& leftHand = joint.getPosition();
                     myUserTracker->convertJointCoordinatesToDepth(leftHand.x, leftHand.y, leftHand.z, &leftHandX, &leftHandY);
                     jointPositions.push_back(leftHandX);
                     jointPositions.push_back(leftHandY);
                 }
                 const nite::SkeletonJoint& joint2 = skeelton.getJoint(nite::JOINT_LEFT_HAND);/*Attention : the data are hrizontally flipped*/
-                if (joint.getPositionConfidence() >= 0.1f) {
+                if (joint.getPositionConfidence() >= 0.5f) {
                     const nite::Point3f& rightHand = joint2.getPosition();
                     myUserTracker->convertJointCoordinatesToDepth(rightHand.x, rightHand.y, rightHand.z, &rightHandX, &rightHandY);
+                    rightHandZ = rightHand.z;
                     jointPositions.push_back(rightHandX);
                     jointPositions.push_back(rightHandY);
                 }
                 const nite::SkeletonJoint& joint3 = skeelton.getJoint(nite::JOINT_TORSO);
-                if (joint.getPositionConfidence() >= 0.1f) {
+                if (joint.getPositionConfidence() >= 0.5f) {
                     const nite::Point3f& torso = joint3.getPosition();
                     myUserTracker->convertJointCoordinatesToDepth(torso.x, torso.y, torso.z, &torsoX, &torsoY);
+                    torsoZ = torso.z;
                     jointPositions.push_back(torsoX);
                     jointPositions.push_back(torsoY);
                 }
             }
         }
-        /*else if (user.isLost() & (user.getSkeleton().getState()==nite::SkeletonState::SKELETON_TRACKED)){
+        else if (user.isLost() && user.getId()==userTracked){
+            cout<<"User lost !"<<endl;
             myUserTracker->stopSkeletonTracking(user.getId());
             aUserIsTracked = false;
-        }*/
+        }
         
         /*The PSI pose is needed to track, thus the app isn't disturbed by other detected users*/
         const nite::PoseData& pose = user.getPose(nite::POSE_PSI);
-        if (pose.isHeld() /*& !aUserIsTracked*/) {
+        if (pose.isHeld() && !aUserIsTracked) {
             myUserTracker->startSkeletonTracking( user.getId() );
             aUserIsTracked = true;
+            userTracked = user.getId();
             cout<<"User tracked !";
             
         }
@@ -256,17 +262,21 @@ nite::Status Kinect::trackSkeleton(int &robotSelected,std::vector<std::string> c
     const openni::DepthPixel* depthData = (const openni::DepthPixel*)depthFrame.getData();
     
     /*Displaying the depth data and the Pad if the user is tracked*/
-    myKinectDisplay.displayFrame(depthData, resolutionX, resolutionY, depthFrame.getDataSize(), jointPositions);
+    myKinectDisplay.displayFrame(depthData, resolutionX, resolutionY, depthFrame.getDataSize(), jointPositions, AREA_X, AREA_Y);
     
     if (aUserIsTracked) {
         /*Adapting left hand coordinates for best comfort for users*/
         leftHandX = (resolutionX-leftHandX-resolutionX/3)*PAD_WIDTH/(resolutionX/3) ;
         leftHandY = (leftHandY-resolutionY/6)*PAD_HEIGHT/(resolutionY/6) ;
+        
         /*On which case is the left hand*/
         caseSelected = myKinectDisplay.displayPad(leftHandX, leftHandY, cases);
         cout<<"X : "<<leftHandX<<" Y : "<<leftHandY<<endl;
+        
         /*Validating the choice by putting right hand on torso*/
-        if((rightHandX-torsoX)<2 & (rightHandY-torsoY)<2 & rightHandX!=0 & rightHandY!=0){
+        /*Calculating the distance between right hand and torso*/
+        float validationVector = sqrt(pow((rightHandX-torsoX),2)+pow((rightHandY-torsoY), 2)+pow((rightHandZ - torsoZ), 2));
+        if((validationVector < 100) && (rightHandX!=0)){
             robotSelected = caseSelected;
         }
     }
@@ -283,10 +293,15 @@ nite::Status Kinect::stopSkeletonTracker(){
     /*Releasing ressources used by UserTracker*/
     myUserTracker->destroy();
     
+    /*Closing all windows*/
+    myKinectDisplay.clearWindow();
+    
     return checkResult;
 };
 
-
+void Kinect::displayChoice(std::string choice){
+    myKinectDisplay.displayChoice(choice);
+}
 
 
 

@@ -26,7 +26,7 @@ void KinectDisplay::setPadY(int padY){
     this->mPadY=padY;
 }
 
-void KinectDisplay::displayFrame(const openni::DepthPixel* depthData,int resolutionX, int resolutionY, int dataSize, std::vector<float>jointPositions){
+void KinectDisplay::displayFrame(const openni::DepthPixel* depthData,int resolutionX, int resolutionY, int dataSize, std::vector<float>jointPositions, int areaX, int areaY){
     cv::Mat frame;
     
     frame.create(resolutionY, resolutionX, CV_8UC4);
@@ -44,7 +44,10 @@ void KinectDisplay::displayFrame(const openni::DepthPixel* depthData,int resolut
     for(int i =0; i < (jointPositions.size()/2); i++){
         cv::circle( frame, cvPoint( jointPositions[i*2], jointPositions[i*2+1] ), 5, cv::Scalar( 0, 0, 255 ), 5 );
     }
-
+    
+    /*Drawing a rectangle for the selection space*/
+    cv::rectangle(frame, cv::Point(resolutionX/areaX,resolutionY/areaY), cv::Point(resolutionX*2/3,resolutionY/3), cv::Scalar(0,0,255),3);
+    
     /*Flip horizontaly the image due to openni data flipped*/
     cv::flip(frame,frame,1);
     
@@ -100,8 +103,17 @@ int KinectDisplay::displayPad(int positionX, int positionY, std::vector<std::str
         }
     }
     
-
     cv::imshow("selection Pad",imagePad);
+    
     int c = cvWaitKey (2); //attente de 2ms qu'une touche soit pressée, !! permet le rafraîchissement des images !!
     return selectedCase;
+}
+
+void KinectDisplay::clearWindow(){
+    cv::destroyAllWindows();
+    
+}
+
+void KinectDisplay::displayChoice(std::string choice){
+    cv::displayOverlay("Choice", choice, 2000);
 }
