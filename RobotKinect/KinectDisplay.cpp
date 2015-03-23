@@ -39,8 +39,8 @@ void KinectDisplay::displayFrame(const openni::DepthPixel* depthData,int resolut
     for(int i=0; i<(dataSize/sizeof(openni::DepthPixel));i++){
         int index = i*4;
         uchar * data = &frame.data[index];
-        int gray = ~((depthData[i] * 255) / 10000);
-        data[0] = gray;
+        int gray = ~((depthData[i] * 255) / 8192);
+        data[0] = 0;
         data[1] = gray;
         data[2] = gray;
     }
@@ -127,6 +127,3 @@ void KinectDisplay::clearWindow(){
     
 }
 
-void KinectDisplay::displayChoice(std::string choice){
-    cv::displayOverlay("Choice", choice, 2000);
-}

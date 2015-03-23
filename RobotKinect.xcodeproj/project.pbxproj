@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		73153FEA1AC08BA0004C1C52 /* ComBridge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73153FE81AC08BA0004C1C52 /* ComBridge.cpp */; };
+		73153FED1AC08BC8004C1C52 /* EventObserver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73153FEB1AC08BC8004C1C52 /* EventObserver.cpp */; };
+		73153FF01AC08BE3004C1C52 /* EventSource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73153FEE1AC08BE3004C1C52 /* EventSource.cpp */; };
+		73153FF31AC08C00004C1C52 /* Event.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73153FF11AC08C00004C1C52 /* Event.cpp */; };
+		73153FF61AC08C1C004C1C52 /* RobotListEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73153FF41AC08C1C004C1C52 /* RobotListEvent.cpp */; };
+		73153FF91AC08C44004C1C52 /* FeatureListEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73153FF71AC08C44004C1C52 /* FeatureListEvent.cpp */; };
+		73153FFC1AC08C53004C1C52 /* OrderAcceptedEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73153FFA1AC08C53004C1C52 /* OrderAcceptedEvent.cpp */; };
+		73153FFF1AC08C6D004C1C52 /* ConnectToRobotEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73153FFD1AC08C6D004C1C52 /* ConnectToRobotEvent.cpp */; };
+		731540021AC08C7D004C1C52 /* SendOrderEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 731540001AC08C7D004C1C52 /* SendOrderEvent.cpp */; };
+		731540051AC08C9E004C1C52 /* IdentToComManagerEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 731540031AC08C9E004C1C52 /* IdentToComManagerEvent.cpp */; };
+		731540081AC08CC3004C1C52 /* LogOutFromComManagerEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 731540061AC08CC3004C1C52 /* LogOutFromComManagerEvent.cpp */; };
 		733CCCBA1A8E2EE6006273CB /* Device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 733CCCB91A8E2EE6006273CB /* Device.cpp */; };
 		733CCCBD1A8E39EC006273CB /* Kinect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 733CCCBB1A8E39EC006273CB /* Kinect.cpp */; };
 		733CCCC01A9F8147006273CB /* KinectDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 733CCCBE1A9F8147006273CB /* KinectDisplay.cpp */; };
@@ -128,6 +139,28 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		73153FE81AC08BA0004C1C52 /* ComBridge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ComBridge.cpp; sourceTree = "<group>"; };
+		73153FE91AC08BA0004C1C52 /* ComBridge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ComBridge.h; sourceTree = "<group>"; };
+		73153FEB1AC08BC8004C1C52 /* EventObserver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventObserver.cpp; sourceTree = "<group>"; };
+		73153FEC1AC08BC8004C1C52 /* EventObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventObserver.h; sourceTree = "<group>"; };
+		73153FEE1AC08BE3004C1C52 /* EventSource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventSource.cpp; sourceTree = "<group>"; };
+		73153FEF1AC08BE3004C1C52 /* EventSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventSource.h; sourceTree = "<group>"; };
+		73153FF11AC08C00004C1C52 /* Event.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Event.cpp; sourceTree = "<group>"; };
+		73153FF21AC08C00004C1C52 /* Event.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Event.h; sourceTree = "<group>"; };
+		73153FF41AC08C1C004C1C52 /* RobotListEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RobotListEvent.cpp; sourceTree = "<group>"; };
+		73153FF51AC08C1C004C1C52 /* RobotListEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RobotListEvent.h; sourceTree = "<group>"; };
+		73153FF71AC08C44004C1C52 /* FeatureListEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FeatureListEvent.cpp; sourceTree = "<group>"; };
+		73153FF81AC08C44004C1C52 /* FeatureListEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeatureListEvent.h; sourceTree = "<group>"; };
+		73153FFA1AC08C53004C1C52 /* OrderAcceptedEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OrderAcceptedEvent.cpp; sourceTree = "<group>"; };
+		73153FFB1AC08C53004C1C52 /* OrderAcceptedEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OrderAcceptedEvent.h; sourceTree = "<group>"; };
+		73153FFD1AC08C6D004C1C52 /* ConnectToRobotEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConnectToRobotEvent.cpp; sourceTree = "<group>"; };
+		73153FFE1AC08C6D004C1C52 /* ConnectToRobotEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectToRobotEvent.h; sourceTree = "<group>"; };
+		731540001AC08C7D004C1C52 /* SendOrderEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SendOrderEvent.cpp; sourceTree = "<group>"; };
+		731540011AC08C7D004C1C52 /* SendOrderEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SendOrderEvent.h; sourceTree = "<group>"; };
+		731540031AC08C9E004C1C52 /* IdentToComManagerEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = IdentToComManagerEvent.cpp; sourceTree = "<group>"; };
+		731540041AC08C9E004C1C52 /* IdentToComManagerEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IdentToComManagerEvent.h; sourceTree = "<group>"; };
+		731540061AC08CC3004C1C52 /* LogOutFromComManagerEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogOutFromComManagerEvent.cpp; sourceTree = "<group>"; };
+		731540071AC08CC3004C1C52 /* LogOutFromComManagerEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogOutFromComManagerEvent.h; sourceTree = "<group>"; };
 		73261B321A826027008C37B5 /* Device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
 		733CCCB81A8E2944006273CB /* ApplicationKinect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationKinect.h; sourceTree = "<group>"; };
 		733CCCB91A8E2EE6006273CB /* Device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Device.cpp; sourceTree = "<group>"; };
@@ -257,15 +290,37 @@
 			children = (
 				73BBA2771A7D41D0007C647C /* ApplicationKinect.cpp */,
 				733CCCB81A8E2944006273CB /* ApplicationKinect.h */,
+				73153FE81AC08BA0004C1C52 /* ComBridge.cpp */,
+				73153FE91AC08BA0004C1C52 /* ComBridge.h */,
 				733CCCBB1A8E39EC006273CB /* Kinect.cpp */,
+				733CCCBC1A8E39EC006273CB /* Kinect.h */,
 				733CCCBE1A9F8147006273CB /* KinectDisplay.cpp */,
 				733CCCBF1A9F8147006273CB /* KinectDisplay.h */,
-				733CCCBC1A8E39EC006273CB /* Kinect.h */,
 				73261B321A826027008C37B5 /* Device.h */,
 				733CCCB91A8E2EE6006273CB /* Device.cpp */,
 				73BBA2781A7D41D0007C647C /* NiteSampleUtilities.h */,
 				73BBA2791A7D41D0007C647C /* Viewer.cpp */,
 				73BBA27A1A7D41D0007C647C /* Viewer.h */,
+				73153FEB1AC08BC8004C1C52 /* EventObserver.cpp */,
+				73153FEC1AC08BC8004C1C52 /* EventObserver.h */,
+				73153FEE1AC08BE3004C1C52 /* EventSource.cpp */,
+				73153FEF1AC08BE3004C1C52 /* EventSource.h */,
+				73153FF11AC08C00004C1C52 /* Event.cpp */,
+				73153FF21AC08C00004C1C52 /* Event.h */,
+				73153FF41AC08C1C004C1C52 /* RobotListEvent.cpp */,
+				73153FF51AC08C1C004C1C52 /* RobotListEvent.h */,
+				73153FF71AC08C44004C1C52 /* FeatureListEvent.cpp */,
+				73153FF81AC08C44004C1C52 /* FeatureListEvent.h */,
+				73153FFA1AC08C53004C1C52 /* OrderAcceptedEvent.cpp */,
+				73153FFB1AC08C53004C1C52 /* OrderAcceptedEvent.h */,
+				73153FFD1AC08C6D004C1C52 /* ConnectToRobotEvent.cpp */,
+				73153FFE1AC08C6D004C1C52 /* ConnectToRobotEvent.h */,
+				731540001AC08C7D004C1C52 /* SendOrderEvent.cpp */,
+				731540011AC08C7D004C1C52 /* SendOrderEvent.h */,
+				731540031AC08C9E004C1C52 /* IdentToComManagerEvent.cpp */,
+				731540041AC08C9E004C1C52 /* IdentToComManagerEvent.h */,
+				731540061AC08CC3004C1C52 /* LogOutFromComManagerEvent.cpp */,
+				731540071AC08CC3004C1C52 /* LogOutFromComManagerEvent.h */,
 			);
 			path = RobotKinect;
 			sourceTree = "<group>";
@@ -515,9 +570,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				733CCCC01A9F8147006273CB /* KinectDisplay.cpp in Sources */,
+				73153FFF1AC08C6D004C1C52 /* ConnectToRobotEvent.cpp in Sources */,
 				73BBA27B1A7D41D0007C647C /* ApplicationKinect.cpp in Sources */,
 				733CCCBD1A8E39EC006273CB /* Kinect.cpp in Sources */,
+				73153FF31AC08C00004C1C52 /* Event.cpp in Sources */,
+				73153FF01AC08BE3004C1C52 /* EventSource.cpp in Sources */,
 				733CCCBA1A8E2EE6006273CB /* Device.cpp in Sources */,
+				73153FFC1AC08C53004C1C52 /* OrderAcceptedEvent.cpp in Sources */,
+				731540081AC08CC3004C1C52 /* LogOutFromComManagerEvent.cpp in Sources */,
+				73153FEA1AC08BA0004C1C52 /* ComBridge.cpp in Sources */,
+				731540051AC08C9E004C1C52 /* IdentToComManagerEvent.cpp in Sources */,
+				73153FF91AC08C44004C1C52 /* FeatureListEvent.cpp in Sources */,
+				73153FF61AC08C1C004C1C52 /* RobotListEvent.cpp in Sources */,
+				731540021AC08C7D004C1C52 /* SendOrderEvent.cpp in Sources */,
+				73153FED1AC08BC8004C1C52 /* EventObserver.cpp in Sources */,
 				73BBA27C1A7D41D0007C647C /* Viewer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

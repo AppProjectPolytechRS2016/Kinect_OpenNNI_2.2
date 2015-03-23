@@ -307,9 +307,6 @@ nite::Status Kinect::stopSkeletonTracker(){
     return checkResult;
 };
 
-void Kinect::displayChoice(std::string choice){
-    myKinectDisplay.displayChoice(choice);
-}
 
 
 

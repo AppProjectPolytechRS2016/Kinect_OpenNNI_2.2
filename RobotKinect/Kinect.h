@@ -23,7 +23,6 @@ public:
     nite::Status initSkeletonTracker();
     nite::Status stopHandTracker();
     nite::Status stopSkeletonTracker();
-    void displayChoice(std::string choice);
 
 
     

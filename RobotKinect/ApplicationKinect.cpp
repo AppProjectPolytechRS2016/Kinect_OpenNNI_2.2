@@ -106,6 +106,8 @@ void ApplicationKinect::runApp(){
     
     nite::NiTE::shutdown();
     
+    
+    
 }
 
 

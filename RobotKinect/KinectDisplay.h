@@ -24,7 +24,6 @@ public:
     void setPadX(int padX);
     void setPadY(int padY);
     void clearWindow();
-    void displayChoice(std::string choice);
     
 private:
     int mFrameX;
