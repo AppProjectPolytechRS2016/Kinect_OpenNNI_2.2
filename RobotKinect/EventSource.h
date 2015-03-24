@@ -1,14 +1,28 @@
-//
-//  EventSource.h
-//  RobotKinect
-//
-//  Created by Mikael on 23/03/2015.
-//  Copyright (c) 2015 mikael. All rights reserved.
-//
+/*******************************************************************************
+ *                                                                              *
+ *   APP RS 2016 - ApplicationKinect                                            *
+ *   Polytech Annecy Chambery                                                   *
+ *                                                                              *
+ *******************************************************************************/
 
-#ifndef __RobotKinect__EventSource__
-#define __RobotKinect__EventSource__
+#ifndef __EventSource__
+#define __EventSource__
 
 #include <stdio.h>
+#include "Event.h"
+#include "EventObserver.h"
+#include <set>
 
-#endif /* defined(__RobotKinect__EventSource__) */
+
+class EventSource{
+public:
+    void notify(Event* e);
+    void addObserver(EventObserver* o);
+    void removeObserver(EventObserver* o);
+    
+protected:
+    std::set<EventObserver*>listObservers;
+    
+};
+
+#endif

@@ -1,14 +1,17 @@
-//
-//  Event.h
-//  RobotKinect
-//
-//  Created by Mikael on 23/03/2015.
-//  Copyright (c) 2015 mikael. All rights reserved.
-//
+/*******************************************************************************
+ *                                                                              *
+ *   APP RS 2016 - ApplicationKinect                                            *
+ *   Polytech Annecy Chambery                                                   *
+ *                                                                              *
+ *******************************************************************************/
 
-#ifndef __RobotKinect__Event__
-#define __RobotKinect__Event__
+#ifndef __Event__
+#define __Event__
 
 #include <stdio.h>
 
-#endif /* defined(__RobotKinect__Event__) */
+class Event {
+
+};
+
+#endif

@@ -1,14 +1,22 @@
-//
-//  LogOutFromComManagerEvent.h
-//  RobotKinect
-//
-//  Created by Mikael on 23/03/2015.
-//  Copyright (c) 2015 mikael. All rights reserved.
-//
+/*******************************************************************************
+ *                                                                              *
+ *   APP RS 2016 - ApplicationKinect                                            *
+ *   Polytech Annecy Chambery                                                   *
+ *                                                                              *
+ *******************************************************************************/
 
 #ifndef __RobotKinect__LogOutFromComManagerEvent__
 #define __RobotKinect__LogOutFromComManagerEvent__
 
 #include <stdio.h>
+#include "Event.h"
+#include "EventSource.h"
+
+class LogOutFromComManagerEvent : public Event {
+private:
+    EventSource* source;
+public:
+    LogOutFromComManagerEvent(EventSource* source);
+};
 
 #endif /* defined(__RobotKinect__LogOutFromComManagerEvent__) */

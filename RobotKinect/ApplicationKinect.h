@@ -11,8 +11,14 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include "EventObserver.h"
+#include "EventSource.h"
+#include "ConnectToRobotEvent.h"
+#include "SendOrderEvent.h"
+#include "IdentToComManagerEvent.h"
+#include "LogOutFromComManagerEvent.h"
 
-class ApplicationKinect : public Device
+class ApplicationKinect : public Device, public EventObserver, public EventSource
 {
 public:
     ApplicationKinect(const char* deviceName, const char* deviceIP);
@@ -21,8 +27,19 @@ public:
     virtual void logOutCM();
     virtual void sendOrder();
     virtual void receiveMsg();
+    
+    virtual void update(Event* e);
+    
     void runApp();
-    int selectRobot(Kinect &myKinect, std::vector<std::string> robotList);
-    int selectCaseSkeleton(Kinect &myKinect, std::vector<std::string> caseList);
+    void selectRobot(std::vector<std::string> robotList);
+    void selectFeature(std::vector<std::string> featureList);
+    int selectCaseSkeleton(Kinect* myKinect, std::vector<std::string> caseList);
+    
+    std::vector<std::string> getRobotList();
+    void setRobotList(std::vector<std::string> robotList);
+    
+private:
+    Kinect* myKinect;
+    std::vector<std::string> robotList;
     
 };

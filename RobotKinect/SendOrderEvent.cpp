@@ -1,9 +1,22 @@
-//
-//  SendOrderEvent.cpp
-//  RobotKinect
-//
-//  Created by Mikael on 23/03/2015.
-//  Copyright (c) 2015 mikael. All rights reserved.
-//
+/*******************************************************************************
+ *                                                                              *
+ *   APP RS 2016 - ApplicationKinect                                            *
+ *   Polytech Annecy Chambery                                                   *
+ *                                                                              *
+ *******************************************************************************/
 
 #include "SendOrderEvent.h"
+
+SendOrderEvent::SendOrderEvent(EventSource* source, std::string robot){
+    this->source=source;
+    this->robot=robot;
+    this->feature=feature;
+}
+
+std::string SendOrderEvent::getRobot(){
+    return robot;
+}
+
+std::string SendOrderEvent::getFeature(){
+    return feature;
+}

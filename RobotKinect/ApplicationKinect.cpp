@@ -9,8 +9,29 @@
 
 using namespace std;
 
-ApplicationKinect::ApplicationKinect(const char* deviceName, const char* deviceIP) : Device(deviceName,deviceIP){}
+ApplicationKinect::ApplicationKinect(const char* deviceName, const char* deviceIP) : Device(deviceName,deviceIP){
+    Kinect kinect_1(0);
+    myKinect = &kinect_1;
+    
+    openni::Status checkResult = openni::STATUS_OK;
+    checkResult = myKinect->initKinect();
+    if (checkResult != openni::STATUS_OK)
+    {
+        cout<<"Error : "<<checkResult<<endl;
+        exit(1);
+    }
+
+}
+
 ApplicationKinect::~ApplicationKinect(){}
+
+void ApplicationKinect::setRobotList(std::vector<std::string> robotList){
+    this->robotList = robotList;
+}
+
+std::vector<std::string> ApplicationKinect::getRobotList(){
+    return robotList;
+}
 
 void ApplicationKinect::logInCM(){}
 
@@ -20,59 +41,63 @@ void ApplicationKinect::sendOrder(){}
 
 void ApplicationKinect::receiveMsg(){}
 
-int ApplicationKinect::selectRobot(Kinect &myKinect, vector<string> robotList){
-    int robotSelected=-1;
-    nite::Status checkResult = nite::STATUS_OK;
+void ApplicationKinect::selectRobot(vector<string> robotList){
+    int robot=-1;
     
-    checkResult = myKinect.initHandTracker();
-    if (checkResult!=nite::STATUS_OK) {
-        cout<<"Error in : "<<checkResult<<endl;
-        exit(1);
+    robot = selectCaseSkeleton(myKinect, robotList);
+    
+    if (robot==-2) {
+        cout<<"Fin du programme "<<endl;
+        exit(0);
     }
-    
-    while (robotSelected==-1) {
-        checkResult = myKinect.trackHand(robotSelected, robotList);
-        if (checkResult!=nite::STATUS_OK) {
-            cout<<"Error in : "<<checkResult<<endl;
-            exit(1);
-        }
+    else if (robot!=-1){
+        ConnectToRobotEvent e(this, robotList[robot]);
+        notify(&e);
     }
-    
-    myKinect.stopHandTracker();
-    
-    
-    return robotSelected;
 }
 
-int ApplicationKinect::selectCaseSkeleton(Kinect &myKinect, std::vector<std::string> caseList){
+void ApplicationKinect::selectFeature(vector<std::string> featureList){
+    int feature=-1;
+    
+    feature = selectCaseSkeleton(myKinect, featureList);
+    
+    if (feature==-2) {
+        selectRobot(robotList);
+    }
+    else if (feature!=-1){
+        SendOrderEvent e(this, featureList[feature]);
+        notify(&e);
+    }
+
+}
+
+int ApplicationKinect::selectCaseSkeleton(Kinect* myKinect, std::vector<std::string> caseList){
     int caseSelected=-1;
     
     nite::Status checkResult = nite::STATUS_OK;
     
-    checkResult = myKinect.initSkeletonTracker();
+    checkResult = myKinect->initSkeletonTracker();
     if (checkResult!=nite::STATUS_OK) {
         cout<<"Error in : "<<checkResult<<endl;
         exit(1);
     }
     
     while (caseSelected==-1) {
-        checkResult = myKinect.trackSkeleton(caseSelected, caseList);
+        checkResult = myKinect->trackSkeleton(caseSelected, caseList);
         if (checkResult!=nite::STATUS_OK) {
             cout<<"Error in : "<<checkResult<<endl;
             exit(1);
         }
     }
     
-    //cout<<"You selected : "<<robotList[robotSelected]<<endl;
-    
-    //myKinect.displayChoice(robotList[robotSelected]);
-    
-    myKinect.stopSkeletonTracker();
+    myKinect->stopSkeletonTracker();
 
-    
     return caseSelected;
 }
 
+void ApplicationKinect::update(Event *e){
+    //string eType = typeof(e);
+}
 
 void ApplicationKinect::runApp(){
     openni::Status checkResult = openni::STATUS_OK;
@@ -96,7 +121,7 @@ void ApplicationKinect::runApp(){
     
     //robotSelected = selectRobot(kinect1, listeCas);
     
-    caseSelected = selectCaseSkeleton(kinect1, listeCas);
+    //caseSelected = selectCaseSkeleton(kinect1, listeCas);
     cout<<"Robot selected : "<<caseSelected<<endl;
     
     /*kinect1.initSkeletonTracker();
@@ -110,42 +135,3 @@ void ApplicationKinect::runApp(){
     
 }
 
-
-int main(int argc, char** argv)
-{
-    ApplicationKinect appKinect("AppKinect1","127.0.0.1");
-    
-    /*appKinect.connectGesCom();
-    
-    
-    
-    appKinect.disconnectGesCom();*/
-    
-    appKinect.runApp();
-    
-    /*std::vector<std::string> listeCas;
-    listeCas.push_back("test1");
-    listeCas.push_back("test2");
-    listeCas.push_back("test3");
-    listeCas.push_back("test4");
-    listeCas.push_back("test5");
-    //listeCas.push_back("test6");
-    //listeCas.push_back("test7");
-
-    KinectDisplay myKinectDisplay;
-    myKinectDisplay.setPadX(900);
-    myKinectDisplay.setPadY(600);
-    while (true) {
-        myKinectDisplay.displayPad(700,250,listeCas);
-        
-
-
-    }*/
-    
-    
-    
-    //SampleViewer sampleViewer("User Viewer");
-    //checkResult = sampleViewer.Init(argc, argv);
-    
-        //sampleViewer.Run();
-}

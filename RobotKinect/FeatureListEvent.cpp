@@ -1,9 +1,17 @@
-//
-//  FeatureListEvent.cpp
-//  RobotKinect
-//
-//  Created by Mikael on 23/03/2015.
-//  Copyright (c) 2015 mikael. All rights reserved.
-//
+/*******************************************************************************
+ *                                                                              *
+ *   APP RS 2016 - ApplicationKinect                                            *
+ *   Polytech Annecy Chambery                                                   *
+ *                                                                              *
+ *******************************************************************************/
 
 #include "FeatureListEvent.h"
+
+FeatureListEvent::FeatureListEvent(EventSource* source, std::vector<std::string>featureList){
+    this->source = source;
+    this->featureList = featureList;
+}
+
+std::vector<std::string> FeatureListEvent::getFeatureList(){
+    return featureList;
+}

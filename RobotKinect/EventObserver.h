@@ -1,14 +1,19 @@
-//
-//  EventObserver.h
-//  RobotKinect
-//
-//  Created by Mikael on 23/03/2015.
-//  Copyright (c) 2015 mikael. All rights reserved.
-//
+/*******************************************************************************
+ *                                                                              *
+ *   APP RS 2016 - ApplicationKinect                                            *
+ *   Polytech Annecy Chambery                                                   *
+ *                                                                              *
+ *******************************************************************************/
 
-#ifndef __RobotKinect__EventObserver__
-#define __RobotKinect__EventObserver__
+#ifndef __EventObserver__
+#define __EventObserver__
 
 #include <stdio.h>
+#include "Event.h"
+
+class EventObserver{
+public:
+    virtual void update(Event* e)=0;
+};
 
 #endif /* defined(__RobotKinect__EventObserver__) */

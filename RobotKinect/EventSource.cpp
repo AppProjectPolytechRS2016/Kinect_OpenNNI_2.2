@@ -1,9 +1,21 @@
-//
-//  EventSource.cpp
-//  RobotKinect
-//
-//  Created by Mikael on 23/03/2015.
-//  Copyright (c) 2015 mikael. All rights reserved.
-//
+/*******************************************************************************
+ *                                                                              *
+ *   APP RS 2016 - ApplicationKinect                                            *
+ *   Polytech Annecy Chambery                                                   *
+ *                                                                              *
+ *******************************************************************************/
 
 #include "EventSource.h"
+
+void EventSource::addObserver(EventObserver *o){
+    listObservers.insert(o);
+}
+
+void EventSource::removeObserver(EventObserver *o){
+    listObservers.erase(o);
+}
+
+void EventSource::notify(Event *e){
+    for (std::set<EventObserver*>::const_iterator it = listObservers.begin();it != listObservers.end(); ++it)
+        (*it)->update(e);
+}
