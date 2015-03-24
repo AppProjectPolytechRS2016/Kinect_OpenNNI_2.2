@@ -12,7 +12,9 @@
 
 int main(int argc, char** argv)
 {
-    ApplicationKinect appKinect("AppKinect1","127.0.0.1");
+    Kinect kinect_1(0);
+    
+    ApplicationKinect appKinect("AppKinect1","127.0.0.1", &kinect_1);
     
     ComBridge comBridge;
     

@@ -9,9 +9,9 @@
 
 using namespace std;
 
-ApplicationKinect::ApplicationKinect(const char* deviceName, const char* deviceIP) : Device(deviceName,deviceIP){
-    Kinect kinect_1(0);
-    myKinect = &kinect_1;
+ApplicationKinect::ApplicationKinect(const char* deviceName, const char* deviceIP, Kinect* mKinect) : Device(deviceName,deviceIP){
+
+    myKinect = mKinect;
     
     openni::Status checkResult = openni::STATUS_OK;
     checkResult = myKinect->initKinect();
@@ -19,6 +19,9 @@ ApplicationKinect::ApplicationKinect(const char* deviceName, const char* deviceI
     {
         cout<<"Error : "<<checkResult<<endl;
         exit(1);
+    }
+    else{
+        cout<<"kinect initialized !"<<endl;
     }
 
 }
@@ -101,13 +104,13 @@ void ApplicationKinect::update(Event *e){
 
 void ApplicationKinect::runApp(){
     openni::Status checkResult = openni::STATUS_OK;
-    Kinect kinect1(0);
+    /*Kinect kinect1(0);
     checkResult = kinect1.initKinect();
     if (checkResult != openni::STATUS_OK)
     {
         cout<<"Error : "<<checkResult<<endl;
         exit(1);
-    }
+    }*/
     
     int caseSelected;
     std::vector<std::string> listeCas;
@@ -121,7 +124,7 @@ void ApplicationKinect::runApp(){
     
     //robotSelected = selectRobot(kinect1, listeCas);
     
-    //caseSelected = selectCaseSkeleton(kinect1, listeCas);
+    caseSelected = selectCaseSkeleton(myKinect, listeCas);
     cout<<"Robot selected : "<<caseSelected<<endl;
     
     /*kinect1.initSkeletonTracker();

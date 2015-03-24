@@ -21,7 +21,7 @@
 class ApplicationKinect : public Device, public EventObserver, public EventSource
 {
 public:
-    ApplicationKinect(const char* deviceName, const char* deviceIP);
+    ApplicationKinect(const char* deviceName, const char* deviceIP, Kinect* mKinect);
     virtual ~ApplicationKinect();
     virtual void logInCM();
     virtual void logOutCM();
