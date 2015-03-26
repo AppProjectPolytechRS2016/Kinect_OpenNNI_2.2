@@ -10,10 +10,11 @@
 
 #include <stdio.h>
 #include "Event.h"
+#include "document.h"
 
 class EventObserver{
 public:
-    virtual void update(Event* e)=0;
+    virtual void update(rapidjson::Document& d)=0;
 };
 
 #endif /* defined(__RobotKinect__EventObserver__) */

@@ -54,8 +54,8 @@ void ApplicationKinect::selectRobot(vector<string> robotList){
         exit(0);
     }
     else if (robot!=-1){
-        ConnectToRobotEvent e(this, robotList[robot]);
-        notify(&e);
+        jsonDocument = myJsonHandler.createJsonConnectToRobot(robotList[robot], myDeviceIP);
+        notify(jsonDocument);
     }
 }
 
@@ -68,8 +68,8 @@ void ApplicationKinect::selectFeature(vector<std::string> featureList){
         selectRobot(robotList);
     }
     else if (feature!=-1){
-        SendOrderEvent e(this, featureList[feature]);
-        notify(&e);
+        //SendOrderEvent e(this, featureList[feature]);
+        //notify(&e);
     }
 
 }
@@ -98,8 +98,10 @@ int ApplicationKinect::selectCaseSkeleton(Kinect* myKinect, std::vector<std::str
     return caseSelected;
 }
 
-void ApplicationKinect::update(Event *e){
-    //string eType = typeof(e);
+void ApplicationKinect::update(rapidjson::Document& d){
+    string msgType;
+    //msgType = d["MsgType"]; //Getting message json type
+    
 }
 
 void ApplicationKinect::runApp(){

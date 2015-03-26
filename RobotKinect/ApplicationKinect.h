@@ -13,10 +13,11 @@
 #include <vector>
 #include "EventObserver.h"
 #include "EventSource.h"
-#include "ConnectToRobotEvent.h"
+#include "JsonHandler.h"
+/*#include "ConnectToRobotEvent.h"
 #include "SendOrderEvent.h"
 #include "IdentToComManagerEvent.h"
-#include "LogOutFromComManagerEvent.h"
+#include "LogOutFromComManagerEvent.h"*/
 
 class ApplicationKinect : public Device, public EventObserver, public EventSource
 {
@@ -28,7 +29,7 @@ public:
     virtual void sendOrder();
     virtual void receiveMsg();
     
-    virtual void update(Event* e);
+    virtual void update(rapidjson::Document& d);
     
     void runApp();
     void selectRobot(std::vector<std::string> robotList);
@@ -40,6 +41,7 @@ public:
     
 private:
     Kinect* myKinect;
-    std::vector<std::string> robotList;
+    std::vector<std::string> robotList; /*IP address of the robots*/
+    JsonHandler myJsonHandler;
     
 };

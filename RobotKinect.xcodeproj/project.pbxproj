@@ -19,6 +19,7 @@
 		731540051AC08C9E004C1C52 /* IdentToComManagerEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 731540031AC08C9E004C1C52 /* IdentToComManagerEvent.cpp */; };
 		731540081AC08CC3004C1C52 /* LogOutFromComManagerEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 731540061AC08CC3004C1C52 /* LogOutFromComManagerEvent.cpp */; };
 		7315400A1AC0C0D7004C1C52 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 731540091AC0C0D7004C1C52 /* main.cpp */; };
+		7315402E1AC16306004C1C52 /* JsonHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7315402C1AC16306004C1C52 /* JsonHandler.cpp */; };
 		733CCCBA1A8E2EE6006273CB /* Device.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 733CCCB91A8E2EE6006273CB /* Device.cpp */; };
 		733CCCBD1A8E39EC006273CB /* Kinect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 733CCCBB1A8E39EC006273CB /* Kinect.cpp */; };
 		733CCCC01A9F8147006273CB /* KinectDisplay.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 733CCCBE1A9F8147006273CB /* KinectDisplay.cpp */; };
@@ -163,34 +164,8 @@
 		731540061AC08CC3004C1C52 /* LogOutFromComManagerEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LogOutFromComManagerEvent.cpp; sourceTree = "<group>"; };
 		731540071AC08CC3004C1C52 /* LogOutFromComManagerEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LogOutFromComManagerEvent.h; sourceTree = "<group>"; };
 		731540091AC0C0D7004C1C52 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		7315400C1AC157F2004C1C52 /* allocators.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = allocators.h; sourceTree = "<group>"; };
-		7315400D1AC157F2004C1C52 /* document.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = document.h; sourceTree = "<group>"; };
-		7315400E1AC157F2004C1C52 /* encodedstream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = encodedstream.h; sourceTree = "<group>"; };
-		7315400F1AC157F2004C1C52 /* encodings.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = encodings.h; sourceTree = "<group>"; };
-		731540111AC157F2004C1C52 /* en.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = en.h; sourceTree = "<group>"; };
-		731540121AC157F2004C1C52 /* error.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = error.h; sourceTree = "<group>"; };
-		731540131AC157F2004C1C52 /* filereadstream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = filereadstream.h; sourceTree = "<group>"; };
-		731540141AC157F2004C1C52 /* filestream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = filestream.h; sourceTree = "<group>"; };
-		731540151AC157F2004C1C52 /* filewritestream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = filewritestream.h; sourceTree = "<group>"; };
-		731540171AC157F2004C1C52 /* biginteger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = biginteger.h; sourceTree = "<group>"; };
-		731540181AC157F2004C1C52 /* diyfp.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = diyfp.h; sourceTree = "<group>"; };
-		731540191AC157F2004C1C52 /* dtoa.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dtoa.h; sourceTree = "<group>"; };
-		7315401A1AC157F2004C1C52 /* ieee754.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ieee754.h; sourceTree = "<group>"; };
-		7315401B1AC157F2004C1C52 /* itoa.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = itoa.h; sourceTree = "<group>"; };
-		7315401C1AC157F2004C1C52 /* meta.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = meta.h; sourceTree = "<group>"; };
-		7315401D1AC157F2004C1C52 /* pow10.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = pow10.h; sourceTree = "<group>"; };
-		7315401E1AC157F2004C1C52 /* stack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stack.h; sourceTree = "<group>"; };
-		7315401F1AC157F2004C1C52 /* strfunc.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = strfunc.h; sourceTree = "<group>"; };
-		731540201AC157F2004C1C52 /* strtod.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = strtod.h; sourceTree = "<group>"; };
-		731540211AC157F2004C1C52 /* memorybuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = memorybuffer.h; sourceTree = "<group>"; };
-		731540221AC157F2004C1C52 /* memorystream.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = memorystream.h; sourceTree = "<group>"; };
-		731540241AC157F2004C1C52 /* inttypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = inttypes.h; sourceTree = "<group>"; };
-		731540251AC157F2004C1C52 /* stdint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stdint.h; sourceTree = "<group>"; };
-		731540261AC157F2004C1C52 /* prettywriter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = prettywriter.h; sourceTree = "<group>"; };
-		731540271AC157F2004C1C52 /* rapidjson.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = rapidjson.h; sourceTree = "<group>"; };
-		731540281AC157F2004C1C52 /* reader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = reader.h; sourceTree = "<group>"; };
-		731540291AC157F2004C1C52 /* stringbuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = stringbuffer.h; sourceTree = "<group>"; };
-		7315402A1AC157F2004C1C52 /* writer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = writer.h; sourceTree = "<group>"; };
+		7315402C1AC16306004C1C52 /* JsonHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JsonHandler.cpp; sourceTree = "<group>"; };
+		7315402D1AC16306004C1C52 /* JsonHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JsonHandler.h; sourceTree = "<group>"; };
 		73261B321A826027008C37B5 /* Device.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
 		733CCCB81A8E2944006273CB /* ApplicationKinect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationKinect.h; sourceTree = "<group>"; };
 		733CCCB91A8E2EE6006273CB /* Device.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Device.cpp; sourceTree = "<group>"; };
@@ -297,64 +272,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7315400B1AC157F2004C1C52 /* rapidjson */ = {
+		7315402B1AC15854004C1C52 /* old event */ = {
 			isa = PBXGroup;
 			children = (
-				7315400C1AC157F2004C1C52 /* allocators.h */,
-				7315400D1AC157F2004C1C52 /* document.h */,
-				7315400E1AC157F2004C1C52 /* encodedstream.h */,
-				7315400F1AC157F2004C1C52 /* encodings.h */,
-				731540101AC157F2004C1C52 /* error */,
-				731540131AC157F2004C1C52 /* filereadstream.h */,
-				731540141AC157F2004C1C52 /* filestream.h */,
-				731540151AC157F2004C1C52 /* filewritestream.h */,
-				731540161AC157F2004C1C52 /* internal */,
-				731540211AC157F2004C1C52 /* memorybuffer.h */,
-				731540221AC157F2004C1C52 /* memorystream.h */,
-				731540231AC157F2004C1C52 /* msinttypes */,
-				731540261AC157F2004C1C52 /* prettywriter.h */,
-				731540271AC157F2004C1C52 /* rapidjson.h */,
-				731540281AC157F2004C1C52 /* reader.h */,
-				731540291AC157F2004C1C52 /* stringbuffer.h */,
-				7315402A1AC157F2004C1C52 /* writer.h */,
+				73153FF11AC08C00004C1C52 /* Event.cpp */,
+				73153FF21AC08C00004C1C52 /* Event.h */,
+				73153FF41AC08C1C004C1C52 /* RobotListEvent.cpp */,
+				73153FF51AC08C1C004C1C52 /* RobotListEvent.h */,
+				73153FF71AC08C44004C1C52 /* FeatureListEvent.cpp */,
+				73153FF81AC08C44004C1C52 /* FeatureListEvent.h */,
+				73153FFA1AC08C53004C1C52 /* OrderAcceptedEvent.cpp */,
+				73153FFB1AC08C53004C1C52 /* OrderAcceptedEvent.h */,
+				73153FFD1AC08C6D004C1C52 /* ConnectToRobotEvent.cpp */,
+				73153FFE1AC08C6D004C1C52 /* ConnectToRobotEvent.h */,
+				731540001AC08C7D004C1C52 /* SendOrderEvent.cpp */,
+				731540011AC08C7D004C1C52 /* SendOrderEvent.h */,
+				731540031AC08C9E004C1C52 /* IdentToComManagerEvent.cpp */,
+				731540041AC08C9E004C1C52 /* IdentToComManagerEvent.h */,
+				731540061AC08CC3004C1C52 /* LogOutFromComManagerEvent.cpp */,
+				731540071AC08CC3004C1C52 /* LogOutFromComManagerEvent.h */,
 			);
-			name = rapidjson;
-			path = ../../../../../usr/include/rapidjson;
-			sourceTree = "<group>";
-		};
-		731540101AC157F2004C1C52 /* error */ = {
-			isa = PBXGroup;
-			children = (
-				731540111AC157F2004C1C52 /* en.h */,
-				731540121AC157F2004C1C52 /* error.h */,
-			);
-			path = error;
-			sourceTree = "<group>";
-		};
-		731540161AC157F2004C1C52 /* internal */ = {
-			isa = PBXGroup;
-			children = (
-				731540171AC157F2004C1C52 /* biginteger.h */,
-				731540181AC157F2004C1C52 /* diyfp.h */,
-				731540191AC157F2004C1C52 /* dtoa.h */,
-				7315401A1AC157F2004C1C52 /* ieee754.h */,
-				7315401B1AC157F2004C1C52 /* itoa.h */,
-				7315401C1AC157F2004C1C52 /* meta.h */,
-				7315401D1AC157F2004C1C52 /* pow10.h */,
-				7315401E1AC157F2004C1C52 /* stack.h */,
-				7315401F1AC157F2004C1C52 /* strfunc.h */,
-				731540201AC157F2004C1C52 /* strtod.h */,
-			);
-			path = internal;
-			sourceTree = "<group>";
-		};
-		731540231AC157F2004C1C52 /* msinttypes */ = {
-			isa = PBXGroup;
-			children = (
-				731540241AC157F2004C1C52 /* inttypes.h */,
-				731540251AC157F2004C1C52 /* stdint.h */,
-			);
-			path = msinttypes;
+			name = "old event";
 			sourceTree = "<group>";
 		};
 		73BBA2641A7D4143007C647C = {
@@ -396,22 +334,9 @@
 				73153FEC1AC08BC8004C1C52 /* EventObserver.h */,
 				73153FEE1AC08BE3004C1C52 /* EventSource.cpp */,
 				73153FEF1AC08BE3004C1C52 /* EventSource.h */,
-				73153FF11AC08C00004C1C52 /* Event.cpp */,
-				73153FF21AC08C00004C1C52 /* Event.h */,
-				73153FF41AC08C1C004C1C52 /* RobotListEvent.cpp */,
-				73153FF51AC08C1C004C1C52 /* RobotListEvent.h */,
-				73153FF71AC08C44004C1C52 /* FeatureListEvent.cpp */,
-				73153FF81AC08C44004C1C52 /* FeatureListEvent.h */,
-				73153FFA1AC08C53004C1C52 /* OrderAcceptedEvent.cpp */,
-				73153FFB1AC08C53004C1C52 /* OrderAcceptedEvent.h */,
-				73153FFD1AC08C6D004C1C52 /* ConnectToRobotEvent.cpp */,
-				73153FFE1AC08C6D004C1C52 /* ConnectToRobotEvent.h */,
-				731540001AC08C7D004C1C52 /* SendOrderEvent.cpp */,
-				731540011AC08C7D004C1C52 /* SendOrderEvent.h */,
-				731540031AC08C9E004C1C52 /* IdentToComManagerEvent.cpp */,
-				731540041AC08C9E004C1C52 /* IdentToComManagerEvent.h */,
-				731540061AC08CC3004C1C52 /* LogOutFromComManagerEvent.cpp */,
-				731540071AC08CC3004C1C52 /* LogOutFromComManagerEvent.h */,
+				7315402C1AC16306004C1C52 /* JsonHandler.cpp */,
+				7315402D1AC16306004C1C52 /* JsonHandler.h */,
+				7315402B1AC15854004C1C52 /* old event */,
 			);
 			path = RobotKinect;
 			sourceTree = "<group>";
@@ -502,7 +427,6 @@
 		73BBA2CF1A7D451D007C647C /* Includes */ = {
 			isa = PBXGroup;
 			children = (
-				7315400B1AC157F2004C1C52 /* rapidjson */,
 				73BBA2D11A7D4533007C647C /* OpenNI2 */,
 				73BBA2D01A7D4529007C647C /* NiTE2 */,
 			);
@@ -671,6 +595,7 @@
 				733CCCBA1A8E2EE6006273CB /* Device.cpp in Sources */,
 				73153FFC1AC08C53004C1C52 /* OrderAcceptedEvent.cpp in Sources */,
 				731540081AC08CC3004C1C52 /* LogOutFromComManagerEvent.cpp in Sources */,
+				7315402E1AC16306004C1C52 /* JsonHandler.cpp in Sources */,
 				73153FEA1AC08BA0004C1C52 /* ComBridge.cpp in Sources */,
 				731540051AC08C9E004C1C52 /* IdentToComManagerEvent.cpp in Sources */,
 				73153FF91AC08C44004C1C52 /* FeatureListEvent.cpp in Sources */,
@@ -766,6 +691,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/usr/local/include,
 					/usr/lib,
+					/usr/include/rapidjson,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -787,6 +713,7 @@
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					/usr/local/include,
 					/usr/lib,
+					/usr/include/rapidjson,
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

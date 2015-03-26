@@ -12,11 +12,11 @@
 
 int main(int argc, char** argv)
 {
-    Kinect kinect_1(0);
+    /*Kinect kinect_1(0);
     
     ApplicationKinect appKinect("AppKinect1","127.0.0.1", &kinect_1);
     
-    ComBridge comBridge;
+    ComBridge comBridge("127.0.0.1");
     
     appKinect.addObserver(&comBridge);
     comBridge.addObserver(&appKinect);
@@ -27,6 +27,9 @@ int main(int argc, char** argv)
      
      appKinect.disconnectGesCom();*/
     
-    appKinect.runApp();
+    /*appKinect.runApp();*/
+    
+    JsonHandler jH;
+    jH.createJsonLogOutFromComManager("test IP");
     
 }

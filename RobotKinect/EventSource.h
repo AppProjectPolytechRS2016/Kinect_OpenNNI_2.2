@@ -11,17 +11,19 @@
 #include <stdio.h>
 #include "Event.h"
 #include "EventObserver.h"
+#include "document.h"
 #include <set>
 
 
 class EventSource{
 public:
-    void notify(Event* e);
+    void notify(rapidjson::Document& d);
     void addObserver(EventObserver* o);
     void removeObserver(EventObserver* o);
     
 protected:
     std::set<EventObserver*>listObservers;
+    rapidjson::Document jsonDocument;
     
 };
 

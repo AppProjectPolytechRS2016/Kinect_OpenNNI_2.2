@@ -15,7 +15,8 @@ void EventSource::removeObserver(EventObserver *o){
     listObservers.erase(o);
 }
 
-void EventSource::notify(Event *e){
-    for (std::set<EventObserver*>::const_iterator it = listObservers.begin();it != listObservers.end(); ++it)
-        (*it)->update(e);
+void EventSource::notify(rapidjson::Document& d){
+    for (std::set<EventObserver*>::const_iterator it = listObservers.begin();it != listObservers.end(); ++it){
+        (*it)->update(d);
+    }
 }

@@ -15,11 +15,17 @@
 
 class ComBridge : public EventSource, public EventObserver {
 public:
-    virtual void update(Event* e);
+    ComBridge(std::string comManagerIP);
+    
+    virtual void update(rapidjson::Document& d);
     
     std::string readMessage();
     void writeMessage(std::string msg);
 
+private:
+    void initComBridge();
+    
+    std::string myComManagerIP;
     
 };
 
