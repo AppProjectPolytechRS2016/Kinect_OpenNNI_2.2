@@ -42,6 +42,7 @@ void ComBridge::initComBridge(){
     cout<<"back num for connection : "<<rcon<<endl;
     if (rcon<0) {
         cout<<"Failed connection to ComManager !"<<endl;
+        exit(1);
     }
 }
 
