@@ -10,6 +10,7 @@
 
 #include <stdio.h>
 #include <iostream>
+#include <vector>
 #include "document.h"
 #include "stringbuffer.h"
 #include "writer.h"
@@ -27,6 +28,11 @@ public:
     void addComManagerIPToDocument(Document &doc, string comManagerIP);
     
     string convertJsonToString(Document &doc);
+    string extractMessageType(Document &doc);
+    string extractOrderName(Document &doc);
+    string extractAckType(Document &doc);
+    
+    vector<string> extractList(string listType,Document &doc);
 };
 
 #endif /* defined(__RobotKinect__jsonHandler__) */

@@ -20,7 +20,9 @@ Kinect::Kinect(int kinectID) : myPoseUser(0){
     aUserIsTracked = false;
 }
 
-Kinect::~Kinect(){}
+Kinect::~Kinect(){
+    nite::NiTE::shutdown();
+}
 
 /*Initialisation of the Kinect*/
 openni::Status Kinect::initKinect(){

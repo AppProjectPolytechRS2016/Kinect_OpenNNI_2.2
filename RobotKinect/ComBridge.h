@@ -31,18 +31,16 @@ public:
     
     virtual void update(rapidjson::Document& d);
     
-    void readMessage();
 
 private:
     void initComBridge();
     
-    
+    void readMessage();
     void writeMessage(rapidjson::Document& d);
     
     string myComManagerIP;
     
     struct sockaddr_in server_addr;
-    struct hostent* server;
     int socketFD, portNum;
     string buffer;
     char bufferIn[256];

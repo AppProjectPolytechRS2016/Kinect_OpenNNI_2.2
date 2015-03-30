@@ -16,7 +16,6 @@ public :
     virtual void logInCM()=0;
     virtual void logOutCM()=0;
     virtual void sendOrder(std::string targetIP)=0;
-    virtual void receiveMsg()=0;
     
 protected :
     

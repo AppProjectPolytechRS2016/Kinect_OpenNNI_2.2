@@ -132,7 +132,7 @@ void JsonHandler::addComManagerIPToDocument(Document &doc, string comManagerIP){
     
     /*Adding the device IP*/
     myVal.SetString(comManagerIP.c_str(), doc.GetAllocator());
-    doc.AddMember("From", myVal, doc.GetAllocator());
+    doc.AddMember("To", myVal, doc.GetAllocator());
 }
 
 string JsonHandler::convertJsonToString(Document &doc){
@@ -146,6 +146,68 @@ string JsonHandler::convertJsonToString(Document &doc){
     return s;
 }
 
+string JsonHandler::extractMessageType(Document &doc){
+    string s;
+    
+    if(doc.HasMember("MsgType")){
+        s = doc["MsgType"].GetString();
+    }
+    else{
+        s = "error";
+    }
+    
+    return s;
+}
 
+string JsonHandler::extractOrderName(Document &doc){
+    string s;
+    
+    if(doc.HasMember("OrderName")){
+        s = doc["OrderName"].GetString();
+    }
+    else{
+        s = "error";
+    }
+    
+    return s;
+    
+}
+
+string JsonHandler::extractAckType(Document &doc){
+    string s;
+    
+    if(doc.HasMember("Received")){
+        s = doc["Received"].GetString();
+    }
+    else if (doc.HasMember("FeatureList")){
+        s = doc["FeatureList"].GetString();
+    }
+    else if (doc.HasMember("OrderAccepted")){
+        s = doc["OrderAccepted"].GetString();
+    }
+    else{
+        s = "error";
+    }
+    
+    return s;
+    
+}
+
+vector<string> JsonHandler::extractList(string listType,Document &doc){
+    vector<string> list;
+    
+    if (doc.HasMember(listType.c_str())) {
+        const Value& val = doc[listType.c_str()];
+        if(val.IsArray()){
+            for (SizeType i = 0; i < val.Size(); i++) // Uses SizeType instead of size_t
+                list.push_back(val[i].GetString());
+        }
+        else{
+            list.push_back(val.GetString());
+        }
+    }
+    
+    return list;
+}
 
 

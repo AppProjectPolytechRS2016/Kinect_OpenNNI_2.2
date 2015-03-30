@@ -52,8 +52,6 @@ void ApplicationKinect::sendOrder(string targetIP){
     notify(jsonDocument);
 }
 
-void ApplicationKinect::receiveMsg(){}
-
 void ApplicationKinect::selectRobot(vector<string> robotList){
     int robot=-1;
     
@@ -111,42 +109,37 @@ int ApplicationKinect::selectCaseSkeleton(Kinect* myKinect, std::vector<std::str
 void ApplicationKinect::update(rapidjson::Document& d){
     string msgType;
     
+    msgType = myJsonHandler.extractMessageType(d);
+    
+    if(msgType=="error"){
+        cout<<"Error getting message type !"<<endl;
+    }
+    else if (msgType=="Order"){
+        if (myJsonHandler.extractOrderName(d)=="UpdateList") {
+            robotList = myJsonHandler.extractList("RobotList", d);
+            selectRobot(robotList);
+        }
+        else{
+            cout<<"Unknown order !"<<endl;
+        }
+    }
+    else if (msgType=="Ack"){
+        string ackType = myJsonHandler.extractAckType(d);
+        if (ackType=="FeatureList") {
+            selectFeature(myJsonHandler.extractList("FeatureList", d), d["From"].GetString());
+        }
+        else if (ackType=="OrderAccepted"){
+            if (d["OrderAccepted"].GetBool()==true) {
+                cout<<"Order accepted by the robot"<<endl;
+            }
+            else{
+                cout<<"Robot denied order !"<<endl;
+            }
+            selectRobot(robotList);
+        }
+    }
     
 }
 
-void ApplicationKinect::runApp(){
-    openni::Status checkResult = openni::STATUS_OK;
-    /*Kinect kinect1(0);
-    checkResult = kinect1.initKinect();
-    if (checkResult != openni::STATUS_OK)
-    {
-        cout<<"Error : "<<checkResult<<endl;
-        exit(1);
-    }*/
-    
-    int caseSelected;
-    std::vector<std::string> listeCas;
-    listeCas.push_back("test1");
-    listeCas.push_back("test2");
-    listeCas.push_back("test3");
-    listeCas.push_back("test4");
-    listeCas.push_back("test5");
-    listeCas.push_back("test6");
-    listeCas.push_back("test7");
-    
-    //robotSelected = selectRobot(kinect1, listeCas);
-    
-    caseSelected = selectCaseSkeleton(myKinect, listeCas);
-    cout<<"Robot selected : "<<caseSelected<<endl;
-    
-    /*kinect1.initSkeletonTracker();
-    while (true) {
-        kinect1.trackSkeleton();
-    }*/
-    
-    nite::NiTE::shutdown();
-    
-    
-    
-}
+
 

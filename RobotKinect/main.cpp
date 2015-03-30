@@ -22,7 +22,11 @@ int main(int argc, char** argv)
     comBridge.addObserver(&appKinect);
     
     appKinect.logInCM();
-     
+    
+    appKinect.sendOrder("193.48.125.67");
+    
     appKinect.logOutCM();
+    
+    
     
 }

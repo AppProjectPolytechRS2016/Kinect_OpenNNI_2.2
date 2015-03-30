@@ -14,10 +14,6 @@
 #include "EventObserver.h"
 #include "EventSource.h"
 #include "JsonHandler.h"
-/*#include "ConnectToRobotEvent.h"
-#include "SendOrderEvent.h"
-#include "IdentToComManagerEvent.h"
-#include "LogOutFromComManagerEvent.h"*/
 
 class ApplicationKinect : public Device, public EventObserver, public EventSource
 {
@@ -27,11 +23,9 @@ public:
     virtual void logInCM();
     virtual void logOutCM();
     virtual void sendOrder(string targetIP);
-    virtual void receiveMsg();
     
     virtual void update(rapidjson::Document& d);
     
-    void runApp();
     void selectRobot(std::vector<std::string> robotList);
     void selectFeature(std::vector<std::string> featureList, string robot);
     int selectCaseSkeleton(Kinect* myKinect, std::vector<std::string> caseList);

@@ -47,19 +47,21 @@ void ComBridge::initComBridge(){
 
 void ComBridge::update(rapidjson::Document& d){
     
+    string msgType = myJsonHandler.extractMessageType(d);
     /*If the message is for the ComManager*/
-    if (!d.HasMember("To")) {
-        rapidjson::Value myVal;
-        /*Adding the comManager IP*/
-        myVal.SetString(myComManagerIP.c_str(), d.GetAllocator());
-        d.AddMember("To", myVal, d.GetAllocator());
+    if (msgType=="Ident") {
+        myJsonHandler.addComManagerIPToDocument(d, myComManagerIP);
+        
+        /*Sending message*/
+        writeMessage(d);
     }
-    
+    else{
     /*Sending message*/
     writeMessage(d);
     
     /*Waiting for answer*/
     readMessage();
+    }
 
 }
 
@@ -68,23 +70,29 @@ void ComBridge::readMessage(){
     
     /*Waiting for data from socket*/
     ssize_t numOfCharRecv = recv(socketFD, &bufferIn, 255,0);
-    //ssize_t numOfCharRecv = read(socketFD,&bufferIn,255);
     
     if (numOfCharRecv < 0)
         cout<<"ERROR reading socket"<<endl;
+    else{
+        /*Storing the string received in a jsonDocument*/
+        jsonDocument.Parse(bufferIn);
+        
+        cout<<"message : "<<bufferIn<<endl;
+        
+        /*Notifying observers of event*/
+        notify(jsonDocument);
+    }
     
-    /*Storing the string received in a jsonDocument*/
-    jsonDocument.Parse(bufferIn);
-    cout<<"message : "<<bufferIn<<endl;
-    /*Notifying observers of event*/
-    //notify(jsonDocument);
 }
 
 void ComBridge::writeMessage(rapidjson::Document& d){
     buffer = myJsonHandler.convertJsonToString(d);
+    /*Adding character for the readline method of comManager*/
     buffer+="\n\r";
+    
     cout<<buffer<<endl;
 
+    /*Sending data*/
     ssize_t writeRes = send(socketFD,buffer.c_str(),strlen(buffer.c_str()),0);
     if (writeRes < 0)
         cout<<"ERROR writing to socket"<<endl;
