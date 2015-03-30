@@ -26,14 +26,14 @@ public:
     virtual ~ApplicationKinect();
     virtual void logInCM();
     virtual void logOutCM();
-    virtual void sendOrder();
+    virtual void sendOrder(string targetIP);
     virtual void receiveMsg();
     
     virtual void update(rapidjson::Document& d);
     
     void runApp();
     void selectRobot(std::vector<std::string> robotList);
-    void selectFeature(std::vector<std::string> featureList);
+    void selectFeature(std::vector<std::string> featureList, string robot);
     int selectCaseSkeleton(Kinect* myKinect, std::vector<std::string> caseList);
     
     std::vector<std::string> getRobotList();
@@ -42,6 +42,6 @@ public:
 private:
     Kinect* myKinect;
     std::vector<std::string> robotList; /*IP address of the robots*/
-    JsonHandler myJsonHandler;
+    
     
 };

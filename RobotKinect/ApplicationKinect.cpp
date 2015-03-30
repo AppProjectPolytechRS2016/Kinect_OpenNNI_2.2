@@ -36,11 +36,21 @@ std::vector<std::string> ApplicationKinect::getRobotList(){
     return robotList;
 }
 
-void ApplicationKinect::logInCM(){}
+void ApplicationKinect::logInCM(){
+    jsonDocument = myJsonHandler.createJsonIdentToComManager(myDeviceIP);
+    notify(jsonDocument);
+}
 
-void ApplicationKinect::logOutCM(){}
+void ApplicationKinect::logOutCM(){
+    jsonDocument = myJsonHandler.createJsonLogOutFromComManager(myDeviceIP);
+    notify(jsonDocument);
+}
 
-void ApplicationKinect::sendOrder(){}
+/*Test method for communication*/
+void ApplicationKinect::sendOrder(string targetIP){
+    jsonDocument = myJsonHandler.createJsonConnectToRobot(targetIP, myDeviceIP);
+    notify(jsonDocument);
+}
 
 void ApplicationKinect::receiveMsg(){}
 
@@ -51,7 +61,7 @@ void ApplicationKinect::selectRobot(vector<string> robotList){
     
     if (robot==-2) {
         cout<<"Fin du programme "<<endl;
-        exit(0);
+        //exit(0);
     }
     else if (robot!=-1){
         jsonDocument = myJsonHandler.createJsonConnectToRobot(robotList[robot], myDeviceIP);
@@ -59,7 +69,7 @@ void ApplicationKinect::selectRobot(vector<string> robotList){
     }
 }
 
-void ApplicationKinect::selectFeature(vector<std::string> featureList){
+void ApplicationKinect::selectFeature(vector<std::string> featureList, string robot){
     int feature=-1;
     
     feature = selectCaseSkeleton(myKinect, featureList);
@@ -68,8 +78,8 @@ void ApplicationKinect::selectFeature(vector<std::string> featureList){
         selectRobot(robotList);
     }
     else if (feature!=-1){
-        //SendOrderEvent e(this, featureList[feature]);
-        //notify(&e);
+        jsonDocument = myJsonHandler.createJsonSendOrder(robot, featureList[feature], myDeviceIP);
+        notify(jsonDocument);
     }
 
 }
@@ -100,7 +110,7 @@ int ApplicationKinect::selectCaseSkeleton(Kinect* myKinect, std::vector<std::str
 
 void ApplicationKinect::update(rapidjson::Document& d){
     string msgType;
-    //msgType = d["MsgType"]; //Getting message json type
+    
     
 }
 

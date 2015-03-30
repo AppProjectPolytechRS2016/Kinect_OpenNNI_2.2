@@ -135,5 +135,17 @@ void JsonHandler::addComManagerIPToDocument(Document &doc, string comManagerIP){
     doc.AddMember("From", myVal, doc.GetAllocator());
 }
 
+string JsonHandler::convertJsonToString(Document &doc){
+    string s;
+    
+    StringBuffer buffer;
+    Writer<StringBuffer> writer(buffer);
+    doc.Accept(writer);
+    s = buffer.GetString();
+    
+    return s;
+}
+
+
 
 

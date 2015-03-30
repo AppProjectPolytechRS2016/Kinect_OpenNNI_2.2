@@ -11,6 +11,9 @@
 #include <stdio.h>
 #include <iostream>
 #include "document.h"
+#include "stringbuffer.h"
+#include "writer.h"
+
 using namespace rapidjson;
 using namespace std;
 
@@ -23,7 +26,7 @@ public:
     
     void addComManagerIPToDocument(Document &doc, string comManagerIP);
     
-    
+    string convertJsonToString(Document &doc);
 };
 
 #endif /* defined(__RobotKinect__jsonHandler__) */

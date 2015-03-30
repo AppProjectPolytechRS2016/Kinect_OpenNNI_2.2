@@ -12,6 +12,7 @@
 #include "Event.h"
 #include "EventObserver.h"
 #include "document.h"
+#include "JsonHandler.h"
 #include <set>
 
 
@@ -24,7 +25,7 @@ public:
 protected:
     std::set<EventObserver*>listObservers;
     rapidjson::Document jsonDocument;
-    
+    JsonHandler myJsonHandler;
 };
 
 #endif
