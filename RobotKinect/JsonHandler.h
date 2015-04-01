@@ -24,6 +24,7 @@ public:
     Document createJsonSendOrder(string robot, string feature, string deviceIP);
     Document createJsonIdentToComManager(string deviceIP);
     Document createJsonLogOutFromComManager(string deviceIP);
+    Document createJsonAskForUpdateList(string deviceIP);
     
     void addComManagerIPToDocument(Document &doc, string comManagerIP);
     

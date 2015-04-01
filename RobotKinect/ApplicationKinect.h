@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <iostream>
 #include <vector>
+#include <unistd.h>
 #include "EventObserver.h"
 #include "EventSource.h"
 #include "JsonHandler.h"

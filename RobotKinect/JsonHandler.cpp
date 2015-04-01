@@ -101,6 +101,34 @@ Document JsonHandler::createJsonIdentToComManager(string deviceIP){
     return d;
 }
 
+Document JsonHandler::createJsonAskForUpdateList(string deviceIP){
+    Document d;
+    
+    /*Parse an empty JSON objext to initialize the document*/
+    char json[IBUFSIZE] = "{  }";
+    if (d.Parse<0>(json).HasParseError())
+    {
+        // Oops, something went wrong
+    }
+    else
+    {
+        Value myVal;
+        
+        /*Adding the device IP*/
+        myVal.SetString(deviceIP.c_str(), d.GetAllocator());
+        d.AddMember("From", myVal, d.GetAllocator());
+        
+        /*Adding the msg type*/
+        myVal.SetString("UpdateList", d.GetAllocator());
+        d.AddMember("MsgType", myVal, d.GetAllocator());
+        
+    }
+    
+    return d;
+
+}
+
+
 Document JsonHandler::createJsonLogOutFromComManager(string deviceIP){
     Document d;
     
@@ -177,13 +205,13 @@ string JsonHandler::extractAckType(Document &doc){
     string s;
     
     if(doc.HasMember("Received")){
-        s = doc["Received"].GetString();
+        s = "Received";
     }
     else if (doc.HasMember("FeatureList")){
-        s = doc["FeatureList"].GetString();
+        s = "FeatureList";
     }
     else if (doc.HasMember("OrderAccepted")){
-        s = doc["OrderAccepted"].GetString();
+        s = "OrderAccepted";
     }
     else{
         s = "error";

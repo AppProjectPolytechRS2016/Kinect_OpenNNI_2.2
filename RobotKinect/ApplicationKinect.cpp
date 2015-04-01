@@ -117,6 +117,11 @@ void ApplicationKinect::update(rapidjson::Document& d){
     else if (msgType=="Order"){
         if (myJsonHandler.extractOrderName(d)=="UpdateList") {
             robotList = myJsonHandler.extractList("RobotList", d);
+            if (robotList[0]=="null") {
+                sleep(10.0f);
+                jsonDocument = myJsonHandler.createJsonAskForUpdateList(myDeviceIP);
+                notify(jsonDocument);
+            }
             selectRobot(robotList);
         }
         else{
@@ -131,11 +136,15 @@ void ApplicationKinect::update(rapidjson::Document& d){
         else if (ackType=="OrderAccepted"){
             if (d["OrderAccepted"].GetBool()==true) {
                 cout<<"Order accepted by the robot"<<endl;
+                jsonDocument = myJsonHandler.createJsonConnectToRobot(d["From"].GetString(), myDeviceIP);
+                notify(jsonDocument);
             }
             else{
                 cout<<"Robot denied order !"<<endl;
+                jsonDocument = myJsonHandler.createJsonAskForUpdateList(myDeviceIP);
+                notify(jsonDocument);
             }
-            selectRobot(robotList);
+            
         }
     }
     
