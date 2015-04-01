@@ -14,17 +14,15 @@ int main(int argc, char** argv)
 {
     Kinect kinect_1(0);
     
-    ApplicationKinect appKinect("AppKinect1","193.48.125.117", &kinect_1);
+    ApplicationKinect appKinect("AppKinect1","169.254.232.126", &kinect_1);
     
-    ComBridge comBridge("193.48.125.68",6020);
+    ComBridge comBridge("172.26.101.10",6020);
     
     appKinect.addObserver(&comBridge);
     comBridge.addObserver(&appKinect);
     
     appKinect.logInCM();
-    
-    appKinect.sendOrder("193.48.125.67");
-    
+        
     appKinect.logOutCM();
     
     

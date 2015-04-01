@@ -25,6 +25,7 @@ public:
     Document createJsonIdentToComManager(string deviceIP);
     Document createJsonLogOutFromComManager(string deviceIP);
     Document createJsonAskForUpdateList(string deviceIP);
+    Document createJsonErrorRecv();
     
     void addComManagerIPToDocument(Document &doc, string comManagerIP);
     

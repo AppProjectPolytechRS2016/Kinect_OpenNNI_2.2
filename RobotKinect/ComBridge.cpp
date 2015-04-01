@@ -66,20 +66,38 @@ void ComBridge::update(rapidjson::Document& d){
 void ComBridge::readMessage(){
     bzero(bufferIn,256);
     
-    /*Waiting for data from socket*/
-    ssize_t numOfCharRecv = recv(socketFD, &bufferIn, 255,0);
+    /*Definition of timeout*/
+    struct timeval tv;
+    tv.tv_sec = 60;
+    tv.tv_usec = 0;
     
-    if (numOfCharRecv < 0){
-        cout<<"ERROR reading socket"<<endl;
-        exit(1);
+    fd_set input_set;
+    
+    FD_ZERO(&input_set);
+    FD_SET(socketFD,&input_set);
+    
+    /*Waiting for data from socket*/
+    int sel =0;
+    sel = select(0, &input_set, NULL, NULL, &tv);
+    if (sel>0) {
+        ssize_t numOfCharRecv = recv(socketFD, &bufferIn, 255,0);
+    
+        if (numOfCharRecv < 0){
+            cout<<"ERROR reading socket"<<endl;
+            exit(1);
+        }
+        else{
+            /*Storing the string received in a jsonDocument*/
+            jsonDocument.Parse(bufferIn);
+        
+            cout<<"Received message : "<<bufferIn<<endl;
+        
+            /*Notifying observers of event*/
+            notify(jsonDocument);
+        }
     }
     else{
-        /*Storing the string received in a jsonDocument*/
-        jsonDocument.Parse(bufferIn);
-        
-        cout<<"Received message : "<<bufferIn<<endl;
-        
-        /*Notifying observers of event*/
+        jsonDocument = myJsonHandler.createJsonErrorRecv();
         notify(jsonDocument);
     }
     

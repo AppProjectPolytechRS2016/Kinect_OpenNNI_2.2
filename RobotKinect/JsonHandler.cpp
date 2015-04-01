@@ -155,6 +155,29 @@ Document JsonHandler::createJsonLogOutFromComManager(string deviceIP){
     return d;
 }
 
+Document JsonHandler::createJsonErrorRecv(){
+    Document d;
+    
+    /*Parse an empty JSON objext to initialize the document*/
+    char json[IBUFSIZE] = "{  }";
+    if (d.Parse<0>(json).HasParseError())
+    {
+        // Oops, something went wrong
+    }
+    else
+    {
+        Value myVal;
+        
+        /*Adding the msg type*/
+        myVal.SetString("ErrorReceiving", d.GetAllocator());
+        d.AddMember("MsgType", myVal, d.GetAllocator());
+        
+    }
+    
+    return d;
+}
+
+
 void JsonHandler::addComManagerIPToDocument(Document &doc, string comManagerIP){
     Value myVal;
     
@@ -212,6 +235,9 @@ string JsonHandler::extractAckType(Document &doc){
     }
     else if (doc.HasMember("OrderAccepted")){
         s = "OrderAccepted";
+    }
+    else if (doc.HasMember("End")){
+        s = "End";
     }
     else{
         s = "error";

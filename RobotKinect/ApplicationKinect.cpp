@@ -111,8 +111,10 @@ void ApplicationKinect::update(rapidjson::Document& d){
     
     msgType = myJsonHandler.extractMessageType(d);
     
-    if(msgType=="error"){
-        cout<<"Error getting message type !"<<endl;
+    if(msgType=="ErrorReceiving"){
+        cout<<"Error receiving message ! Asking for UpdateList"<<endl;
+        jsonDocument = myJsonHandler.createJsonAskForUpdateList(myDeviceIP);
+        notify(jsonDocument);
     }
     else if (msgType=="Order"){
         if (myJsonHandler.extractOrderName(d)=="UpdateList") {
@@ -144,8 +146,15 @@ void ApplicationKinect::update(rapidjson::Document& d){
                 jsonDocument = myJsonHandler.createJsonAskForUpdateList(myDeviceIP);
                 notify(jsonDocument);
             }
-            
         }
+        else if (ackType=="End" && d["End"].GetBool()==true){
+            sleep(5.0f);
+            jsonDocument = myJsonHandler.createJsonAskForUpdateList(myDeviceIP);
+            notify(jsonDocument);
+        }
+    }
+    else{
+        cout<<"Message type unknown !"<<endl;
     }
     
 }

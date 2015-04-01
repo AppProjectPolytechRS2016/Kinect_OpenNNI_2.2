@@ -305,7 +305,7 @@ nite::Status Kinect::stopSkeletonTracker(){
     
     /*Closing all windows*/
     myKinectDisplay.clearWindow();
-    
+    aUserIsTracked=false;
     return checkResult;
 };
 
