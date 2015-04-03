@@ -16,14 +16,22 @@ int main(int argc, char** argv)
     
     ApplicationKinect appKinect("AppKinect1","169.254.232.126", &kinect_1);
     
-    ComBridge comBridge("172.26.101.10",6020);
+    /*ComBridge comBridge("172.26.101.10",6020);
     
     appKinect.addObserver(&comBridge);
     comBridge.addObserver(&appKinect);
     
     appKinect.logInCM();
         
-    appKinect.logOutCM();
+    appKinect.logOutCM();*/
+    
+    std::vector<std::string> robotList;
+    robotList.push_back("test1");
+    robotList.push_back("test1");
+    robotList.push_back("test1");
+    robotList.push_back("test1");
+    
+    appKinect.selectRobot(robotList);
     
     
     

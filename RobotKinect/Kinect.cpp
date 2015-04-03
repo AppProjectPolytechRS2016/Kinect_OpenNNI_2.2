@@ -9,7 +9,7 @@
 
 using namespace std;
 
-#define PAD_WIDTH 1024
+#define PAD_WIDTH 800
 #define PAD_HEIGHT 720
 #define AREA_X 3 //Scale of the selection area for the hand
 #define AREA_Y 6
@@ -52,13 +52,6 @@ openni::Status Kinect::initKinect(){
         cout<<"Failed to initialize NiTE !"<<endl;
         exit(1);
     }
-    
-    /*if (myUserTracker.create(&myNiDevice) != nite::STATUS_OK)
-    {
-        return openni::STATUS_ERROR;
-    }*/
-    
-
     
     /*Setting the size of the displayPad*/
     myKinectDisplay.setPadX(PAD_WIDTH);
@@ -171,7 +164,7 @@ nite::Status Kinect::initSkeletonTracker(){
     nite::Status checkResult=nite::STATUS_OK;
     openni::Status checkResult2=openni::STATUS_OK;
     
-    
+    myKinectDisplay.initWindows();
     
     checkResult = myUserTracker->create(&myNiDevice);
     if (checkResult !=nite::STATUS_OK) {
@@ -300,12 +293,15 @@ nite::Status Kinect::trackSkeleton(int &caseSelected,std::vector<std::string> ca
 nite::Status Kinect::stopSkeletonTracker(){
     nite::Status checkResult=nite::STATUS_OK;
 
+    /*Reinit aUserIsTracked*/
+    aUserIsTracked=false;
+    
     /*Releasing ressources used by UserTracker*/
     myUserTracker->destroy();
     
     /*Closing all windows*/
     myKinectDisplay.clearWindow();
-    aUserIsTracked=false;
+    
     return checkResult;
 };
 

@@ -30,6 +30,13 @@ void KinectDisplay::setPadY(int padY){
     this->mPadY=padY;
 }
 
+void KinectDisplay::initWindows(){
+    cv::namedWindow("selection Pad");
+    cv::namedWindow("Depth frame",cv::WINDOW_AUTOSIZE);
+    cv::moveWindow("Depth frame", mPadX, 0);
+    cv::moveWindow("selection Pad", 0, 0);
+}
+
 void KinectDisplay::displayFrame(const openni::DepthPixel* depthData,int resolutionX, int resolutionY, int dataSize, std::vector<float>jointPositions, int areaX, int areaY){
     cv::Mat frame;
     

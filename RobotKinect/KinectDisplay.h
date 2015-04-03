@@ -24,6 +24,7 @@ public:
     void setPadX(int padX);
     void setPadY(int padY);
     void clearWindow();
+    void initWindows();
     
 private:
     int mFrameX;
