@@ -7,7 +7,7 @@
 
 #include "KinectDisplay.h"
 
-#define MAX_COL 3
+#define MAX_COL 2
 #define SHORT_PAUSE 2
 #define LONG_PAUSE 1000
 
@@ -60,7 +60,7 @@ void KinectDisplay::displayFrame(const openni::DepthPixel* depthData,int resolut
     cv::flip(frame,frame,1);
     
     /*Drawing a rectangle for the selection space*/
-    cv::rectangle(frame, cv::Point(0/*resolutionX/areaX*/,resolutionY/areaY), cv::Point(resolutionX/**2*//3,resolutionY/3), cv::Scalar(0,0,255),3);
+    cv::rectangle(frame, cv::Point(0/*resolutionX/areaX*/,resolutionY/areaY), cv::Point(resolutionX/**2*//3,resolutionY/2), cv::Scalar(0,0,255),3);
     
     cv::imshow("Depth frame",frame);
     int c = cvWaitKey (2); //attente de 2ms qu'une touche soit pressée, !! permet le rafraîchissement des images !!
@@ -106,16 +106,16 @@ int KinectDisplay::displayPad(int positionX, int positionY, std::vector<std::str
             /*The case is selected*/
             if( rectXOrg<mPosX && mPosX<rectXEnd && rectYOrg<mPosY && mPosY<rectYEnd ){
                 /*Drawing a red rectangle in the black box*/
-                cv::rectangle(imagePad,cv::Point(rectXOrg+2,rectYOrg+2),cv::Point(rectXEnd-2,rectYEnd-2),CV_RGB(255,0,0),rectThickness);
+                cv::rectangle(imagePad,cv::Point(rectXOrg+2,rectYOrg+2),cv::Point(rectXEnd-2,rectYEnd-2),CV_RGB(255,80,80),rectThickness);
                 selectedCase=i;
             }
             /*Drawing all the cases*/
             cv::rectangle(imagePad,cv::Point(rectXOrg,rectYOrg),cv::Point(rectXEnd,rectYEnd),CV_RGB(0,0,0),2
                           );
-            /*There is a text for this cases*/
+            /*There is a text for this case*/
             if (i<mNumCase) {
                 word = cases[i];
-                cv::putText(imagePad, word, cv::Point(rectXOrg+15,rectYOrg+(rectYEnd-rectYOrg)/2), CV_FONT_HERSHEY_PLAIN, 3.0f, CV_RGB(0,0,0),1);
+                cv::putText(imagePad, word, cv::Point(rectXOrg+15,rectYOrg+(rectYEnd-rectYOrg)/2), CV_FONT_HERSHEY_PLAIN, 3.0f, CV_RGB(0,0,0),2);
                 i++;
             }
             

@@ -13,6 +13,7 @@ using namespace std;
 #define PAD_HEIGHT 720
 #define AREA_X 3 //Scale of the selection area for the hand
 #define AREA_Y 6
+#define AREA_Y_H 3
 
 Kinect::Kinect(int kinectID) : myPoseUser(0){
     myKinectID=kinectID;
@@ -268,7 +269,7 @@ nite::Status Kinect::trackSkeleton(int &caseSelected,std::vector<std::string> ca
     if (aUserIsTracked) {
         /*Adapting left hand coordinates for best comfort for users*/
         leftHandX = (resolutionX-leftHandX/*-resolutionX/AREA_X*/)*PAD_WIDTH/(resolutionX/AREA_X) ;
-        leftHandY = (leftHandY-resolutionY/AREA_Y)*PAD_HEIGHT/(resolutionY/AREA_Y) ;
+        leftHandY = (leftHandY-resolutionY/AREA_Y)*PAD_HEIGHT/(resolutionY/AREA_Y_H) ;
         
         /*On which case is the left hand*/
         casePosition = myKinectDisplay.displayPad(leftHandX, leftHandY, cases, false);

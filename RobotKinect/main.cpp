@@ -26,10 +26,11 @@ int main(int argc, char** argv)
     appKinect.logOutCM();*/
     
     std::vector<std::string> robotList;
-    robotList.push_back("test1");
-    robotList.push_back("test1");
-    robotList.push_back("test1");
-    robotList.push_back("test1");
+    robotList.push_back("172.26.101.10");
+    robotList.push_back("172.26.101.10");
+    robotList.push_back("172.26.101.10");
+    robotList.push_back("172.26.101.10");
+    robotList.push_back("172.26.101.10");
     
     appKinect.selectRobot(robotList);
     
