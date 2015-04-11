@@ -56,7 +56,7 @@ void ComBridge::update(rapidjson::Document& d){
     
     /*Waiting for answer*/
     readMessage();
-    //}
+    
 
 }
 
