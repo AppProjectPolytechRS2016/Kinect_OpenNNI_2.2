@@ -73,7 +73,8 @@ void ApplicationKinect::selectFeature(vector<std::string> featureList, string ro
     feature = selectCaseSkeleton(myKinect, featureList);
     
     if (feature==-2) {
-        selectRobot(robotList);
+        jsonDocument = myJsonHandler.createJsonSendOrder(robot, "Disconnect", myDeviceIP);
+        notify(jsonDocument);
     }
     else if (feature!=-1){
         jsonDocument = myJsonHandler.createJsonSendOrder(robot, featureList[feature], myDeviceIP);
@@ -105,6 +106,30 @@ int ApplicationKinect::selectCaseSkeleton(Kinect* myKinect, std::vector<std::str
 
     return caseSelected;
 }
+
+void ApplicationKinect::mimeHumanArms(string robot){
+    nite::Status checkResult = nite::STATUS_OK;
+    vector<nite::Quaternion> jointOrientation;
+    
+    checkResult = myKinect->initSkeletonTracker();
+    if (checkResult!=nite::STATUS_OK) {
+        cout<<"Error in : "<<checkResult<<endl;
+        exit(1);
+    }
+    
+    do {
+        jointOrientation = myKinect->trackSkeletonMime();
+        if (jointOrientation[0].w!=0 || jointOrientation[0].x!=0 || jointOrientation[0].y!=0 || jointOrientation[0].z!=0) {
+            jsonDocument = myJsonHandler.createJsonMime(robot, myDeviceIP, jointOrientation);
+            notify(jsonDocument);
+        }
+    }
+    while (!jointOrientation.empty());
+    
+    myKinect->stopSkeletonTracker();
+
+}
+
 
 void ApplicationKinect::update(rapidjson::Document& d){
     string msgType;
@@ -147,10 +172,20 @@ void ApplicationKinect::update(rapidjson::Document& d){
                 notify(jsonDocument);
             }
         }
-        else if (ackType=="End" && d["End"].GetBool()==true){
+        else if ((ackType=="End" && d["End"].GetBool()==true) || (ackType=="Disconnected" && d["Disconnected"].GetBool()==true)){
             sleep(5.0f);
             jsonDocument = myJsonHandler.createJsonAskForUpdateList(myDeviceIP);
             notify(jsonDocument);
+        }
+        else if (ackType=="MimeAccepted"){
+            if (d["MimeAccepted"].GetBool()==true) {
+                mimeHumanArms(d["From"].GetString());
+            }
+            else{
+                cout<<"Robot denied order !"<<endl;
+                jsonDocument = myJsonHandler.createJsonAskForUpdateList(myDeviceIP);
+                notify(jsonDocument);
+            }
         }
     }
     else{

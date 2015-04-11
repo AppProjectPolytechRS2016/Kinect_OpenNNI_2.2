@@ -155,7 +155,7 @@ Document JsonHandler::createJsonLogOutFromComManager(string deviceIP){
     return d;
 }
 
-Document JsonHandler::createJsonErrorRecv(){
+Document JsonHandler::createJsonMime(string robot, string deviceIP, vector<nite::Quaternion> jointOrientationVector){
     Document d;
     
     /*Parse an empty JSON objext to initialize the document*/
@@ -168,15 +168,36 @@ Document JsonHandler::createJsonErrorRecv(){
     {
         Value myVal;
         
+        /*Adding the device IP*/
+        myVal.SetString(deviceIP.c_str(), d.GetAllocator());
+        d.AddMember("From", myVal, d.GetAllocator());
+        
+        /*Adding the target*/
+        myVal.SetString(robot.c_str(), d.GetAllocator());
+        d.AddMember("To", myVal, d.GetAllocator());
+        
         /*Adding the msg type*/
-        myVal.SetString("ErrorReceiving", d.GetAllocator());
+        myVal.SetString("Order", d.GetAllocator());
         d.AddMember("MsgType", myVal, d.GetAllocator());
+        
+        /*Adding the order*/
+        myVal.SetString("Mime", d.GetAllocator());
+        d.AddMember("OrderName", myVal, d.GetAllocator());
+
+        /*Adding the joints orientation*/
+        std::vector<float> jointsOrientation;
+        KMath::rotation3DFromQuaternion(jointOrientationVector, jointsOrientation);
+        Value jOVal(kArrayType);
+        for (int i = 0; i<jointsOrientation.size(); i++) {
+            jOVal.PushBack(jointsOrientation[i], d.GetAllocator());
+        }
+        d.AddMember("JointOrientation", jOVal, d.GetAllocator());
         
     }
     
     return d;
-}
 
+}
 
 void JsonHandler::addComManagerIPToDocument(Document &doc, string comManagerIP){
     Value myVal;
@@ -233,8 +254,11 @@ string JsonHandler::extractAckType(Document &doc){
     else if (doc.HasMember("FeatureList")){
         s = "FeatureList";
     }
-    else if (doc.HasMember("OrderAccepted")){
+    else if (doc.HasMember("OrderAccepted") && !doc.HasMember("End") && !doc.HasMember("Disconnected")){
         s = "OrderAccepted";
+    }
+    else if (doc.HasMember("Disconnected")){
+        s = "Disconnected";
     }
     else if (doc.HasMember("End")){
         s = "End";
@@ -264,4 +288,25 @@ vector<string> JsonHandler::extractList(string listType,Document &doc){
     return list;
 }
 
+Document JsonHandler::createJsonErrorRecv(){
+    Document d;
+    
+    /*Parse an empty JSON objext to initialize the document*/
+    char json[IBUFSIZE] = "{  }";
+    if (d.Parse<0>(json).HasParseError())
+    {
+        // Oops, something went wrong
+    }
+    else
+    {
+        Value myVal;
+        
+        /*Adding the msg type*/
+        myVal.SetString("ErrorReceiving", d.GetAllocator());
+        d.AddMember("MsgType", myVal, d.GetAllocator());
+        
+    }
+    
+    return d;
+}
 

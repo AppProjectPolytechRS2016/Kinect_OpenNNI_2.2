@@ -49,11 +49,8 @@ void ComBridge::update(rapidjson::Document& d){
     /*If the message is for the ComManager*/
     if (msgType=="Ident" || msgType=="UpdateList") {
         myJsonHandler.addComManagerIPToDocument(d, myComManagerIP);
-        
-        /*Sending message*/
-       // writeMessage(d);
     }
-    //else{
+    
     /*Sending message*/
     writeMessage(d);
     
@@ -78,7 +75,7 @@ void ComBridge::readMessage(){
     
     /*Waiting for data from socket*/
     int sel =0;
-    sel = select(0, &input_set, NULL, NULL, &tv);
+    sel = select(socketFD+1, &input_set, NULL, NULL, &tv);
     if (sel>0) {
         ssize_t numOfCharRecv = recv(socketFD, &bufferIn, 255,0);
     

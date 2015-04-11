@@ -68,6 +68,7 @@
 		73BBA3161A7D4763007C647C /* libXnFormats.dylib in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA2FC1A7D46F5007C647C /* libXnFormats.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		73BBA3171A7D4763007C647C /* PS1080.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA2FD1A7D46F5007C647C /* PS1080.ini */; };
 		73BBA3181A7D4763007C647C /* PSLink.ini in CopyFiles */ = {isa = PBXBuildFile; fileRef = 73BBA2FE1A7D46F5007C647C /* PSLink.ini */; };
+		73CB89801AD7E79300DE8ED4 /* KinectMath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73CB897E1AD7E79300DE8ED4 /* KinectMath.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -241,6 +242,8 @@
 		73BBA2FC1A7D46F5007C647C /* libXnFormats.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; path = libXnFormats.dylib; sourceTree = "<group>"; };
 		73BBA2FD1A7D46F5007C647C /* PS1080.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PS1080.ini; sourceTree = "<group>"; };
 		73BBA2FE1A7D46F5007C647C /* PSLink.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PSLink.ini; sourceTree = "<group>"; };
+		73CB897E1AD7E79300DE8ED4 /* KinectMath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = KinectMath.cpp; sourceTree = "<group>"; };
+		73CB897F1AD7E79300DE8ED4 /* KinectMath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KinectMath.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -329,6 +332,8 @@
 				73153FEF1AC08BE3004C1C52 /* EventSource.h */,
 				7315402C1AC16306004C1C52 /* JsonHandler.cpp */,
 				7315402D1AC16306004C1C52 /* JsonHandler.h */,
+				73CB897E1AD7E79300DE8ED4 /* KinectMath.cpp */,
+				73CB897F1AD7E79300DE8ED4 /* KinectMath.h */,
 				7315402B1AC15854004C1C52 /* old event */,
 			);
 			path = RobotKinect;
@@ -589,6 +594,7 @@
 				73153FFC1AC08C53004C1C52 /* OrderAcceptedEvent.cpp in Sources */,
 				731540081AC08CC3004C1C52 /* LogOutFromComManagerEvent.cpp in Sources */,
 				7315402E1AC16306004C1C52 /* JsonHandler.cpp in Sources */,
+				73CB89801AD7E79300DE8ED4 /* KinectMath.cpp in Sources */,
 				73153FEA1AC08BA0004C1C52 /* ComBridge.cpp in Sources */,
 				731540051AC08C9E004C1C52 /* IdentToComManagerEvent.cpp in Sources */,
 				73153FF91AC08C44004C1C52 /* FeatureListEvent.cpp in Sources */,

@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include "NiTE.h"
 #include <opencv/cv.h>
+#include <math.h>
 #include "KinectDisplay.h"
 
 
@@ -18,6 +19,7 @@ public:
     ~Kinect();
     openni::Status initKinect();
     nite::Status trackSkeleton(int &robotSelected,std::vector<std::string> cases);
+    std::vector<nite::Quaternion> trackSkeletonMime();
     nite::Status trackHand(int &robotSelected,std::vector<std::string> cases);
     nite::Status initHandTracker();
     nite::Status initSkeletonTracker();
@@ -27,9 +29,7 @@ public:
 
     
 private:
-    
-    openni::Status poseDetect();
-    
+        
     nite::HandTracker myHandTracker;
     nite::UserTracker *myUserTracker;
     nite::UserId myPoseUser;

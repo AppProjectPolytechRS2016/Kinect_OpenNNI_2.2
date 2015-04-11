@@ -14,6 +14,8 @@
 #include "document.h"
 #include "stringbuffer.h"
 #include "writer.h"
+#include "NiTE.h"
+#include "KinectMath.h"
 
 using namespace rapidjson;
 using namespace std;
@@ -26,6 +28,7 @@ public:
     Document createJsonLogOutFromComManager(string deviceIP);
     Document createJsonAskForUpdateList(string deviceIP);
     Document createJsonErrorRecv();
+    Document createJsonMime(string robot, string deviceIP, vector<nite::Quaternion> jointOrientationVector);
     
     void addComManagerIPToDocument(Document &doc, string comManagerIP);
     

@@ -30,6 +30,7 @@ public:
     void selectRobot(std::vector<std::string> robotList);
     void selectFeature(std::vector<std::string> featureList, string robot);
     int selectCaseSkeleton(Kinect* myKinect, std::vector<std::string> caseList);
+    void mimeHumanArms(string robot);
     
     std::vector<std::string> getRobotList();
     void setRobotList(std::vector<std::string> robotList);
@@ -37,6 +38,5 @@ public:
 private:
     Kinect* myKinect;
     std::vector<std::string> robotList; /*IP address of the robots*/
-    
     
 };
