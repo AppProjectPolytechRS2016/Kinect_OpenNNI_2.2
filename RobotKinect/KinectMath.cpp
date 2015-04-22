@@ -44,6 +44,27 @@ namespace KMath {
             jointsOrientation.push_back(wz);
         }
     };
+    
+    void rotation3DFromQuaternion2(const std::vector<nite::Quaternion> pQuaternion, std::vector<float>& jointsOrientation){
+        
+        for (int i =0; i<pQuaternion.size(); i++) {
+            //rotationFromQuaternion
+            nite::Quaternion quat = pQuaternion[i];
+            float w = quat.w;
+            float x = quat.x;
+            float y = quat.y;
+            float z = quat.z;
+            float wy = atan2(2 * ((y * z) + (w * x)), (w * w) - (x * x) - (y * y) + (z * z));
+            float wz = asin(2 * ((w * y) - (x * z)));
+            float wx= atan2(2 * ((x * y) + (w * z)), (w * w) + (x * x) - (y * y) - (z * z));
+            
+            jointsOrientation.push_back(wx);
+            jointsOrientation.push_back(wy);
+            jointsOrientation.push_back(wz);
+        }
+
+    };
+
 
 };
 

@@ -186,7 +186,7 @@ Document JsonHandler::createJsonMime(string robot, string deviceIP, vector<nite:
 
         /*Adding the joints orientation*/
         std::vector<float> jointsOrientation;
-        KMath::rotation3DFromQuaternion(jointOrientationVector, jointsOrientation);
+        KMath::rotation3DFromQuaternion2(jointOrientationVector, jointsOrientation);
         cout<<"taille du vecteur orientation : "<<jointsOrientation.size()<<endl;
         Value jOVal(kArrayType);
         for (int i = 0; i<jointsOrientation.size(); i++) {

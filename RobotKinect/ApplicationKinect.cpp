@@ -60,6 +60,7 @@ void ApplicationKinect::selectRobot(vector<string> robotList){
     
     if (robot==-2) {
         cout<<"Fin du programme "<<endl;
+        //logOutCM();
         //exit(0);
     }
     else if (robot!=-1){
@@ -121,7 +122,7 @@ void ApplicationKinect::mimeHumanArms(string robot){
     }
     
     do {
-        jointOrientation = myKinect->trackSkeletonMime(timeStamp, countDown); //timestamp in nanoseconds !!
+        jointOrientation = myKinect->trackSkeletonMime(timeStamp, countDown); //timestamp in whateverseconds !!
         
         if (startMimeTime==0) {
             startMimeTime = timeStamp;

@@ -352,7 +352,7 @@ std::vector<nite::Quaternion> Kinect::trackSkeletonMime(int64& timeStamp, int co
                 
                 jointOrientation.clear();
                 
-                toDo = &"Wait for the picture : "[countDown];
+                toDo = "Wait for the picture : "+std::to_string(countDown);
                 
                 /*Following the choosen joints*/
                 
