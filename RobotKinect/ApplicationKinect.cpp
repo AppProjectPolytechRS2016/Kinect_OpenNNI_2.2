@@ -12,6 +12,7 @@ using namespace std;
 ApplicationKinect::ApplicationKinect(const char* deviceName, const char* deviceIP, Kinect* mKinect) : Device(deviceName,deviceIP){
 
     myKinect = mKinect;
+    startMimeTime=0;
     
     openni::Status checkResult = openni::STATUS_OK;
     checkResult = myKinect->initKinect();
@@ -55,7 +56,7 @@ void ApplicationKinect::sendOrder(string targetIP){
 void ApplicationKinect::selectRobot(vector<string> robotList){
     int robot=-1;
     
-    robot = selectCaseSkeleton(myKinect, robotList);
+    robot = selectCaseSkeleton(myKinect, robotList, "Select a robot");
     
     if (robot==-2) {
         cout<<"Fin du programme "<<endl;
@@ -70,7 +71,7 @@ void ApplicationKinect::selectRobot(vector<string> robotList){
 void ApplicationKinect::selectFeature(vector<std::string> featureList, string robot){
     int feature=-1;
     
-    feature = selectCaseSkeleton(myKinect, featureList);
+    feature = selectCaseSkeleton(myKinect, featureList, "Select a feature");
     
     if (feature==-2) {
         jsonDocument = myJsonHandler.createJsonSendOrder(robot, "Disconnect", myDeviceIP);
@@ -83,7 +84,7 @@ void ApplicationKinect::selectFeature(vector<std::string> featureList, string ro
 
 }
 
-int ApplicationKinect::selectCaseSkeleton(Kinect* myKinect, std::vector<std::string> caseList){
+int ApplicationKinect::selectCaseSkeleton(Kinect* myKinect, std::vector<std::string> caseList, const std::string what){
     int caseSelected=-1;
     
     nite::Status checkResult = nite::STATUS_OK;
@@ -95,7 +96,7 @@ int ApplicationKinect::selectCaseSkeleton(Kinect* myKinect, std::vector<std::str
     }
     
     while (caseSelected==-1) {
-        checkResult = myKinect->trackSkeleton(caseSelected, caseList);
+        checkResult = myKinect->trackSkeleton(caseSelected, caseList, what);
         if (checkResult!=nite::STATUS_OK) {
             cout<<"Error in : "<<checkResult<<endl;
             exit(1);
@@ -110,6 +111,8 @@ int ApplicationKinect::selectCaseSkeleton(Kinect* myKinect, std::vector<std::str
 void ApplicationKinect::mimeHumanArms(string robot){
     nite::Status checkResult = nite::STATUS_OK;
     vector<nite::Quaternion> jointOrientation;
+    int64 timeStamp;
+    int countDown = 8;
     
     checkResult = myKinect->initSkeletonTracker();
     if (checkResult!=nite::STATUS_OK) {
@@ -118,15 +121,19 @@ void ApplicationKinect::mimeHumanArms(string robot){
     }
     
     do {
-        jointOrientation = myKinect->trackSkeletonMime();
-        if (jointOrientation[0].w!=0 || jointOrientation[0].x!=0 || jointOrientation[0].y!=0 || jointOrientation[0].z!=0) {
-            jsonDocument = myJsonHandler.createJsonMime(robot, myDeviceIP, jointOrientation);
-            notify(jsonDocument);
+        jointOrientation = myKinect->trackSkeletonMime(timeStamp, countDown); //timestamp in nanoseconds !!
+        
+        if (startMimeTime==0) {
+            startMimeTime = timeStamp;
         }
+        countDown = 8 - (int)((timeStamp-startMimeTime)/100000000);
     }
-    while (!jointOrientation.empty());
-    
+    while (!jointOrientation.empty() && (timeStamp-startMimeTime<800000000));
+    jsonDocument = myJsonHandler.createJsonMime(robot, myDeviceIP, jointOrientation);
     myKinect->stopSkeletonTracker();
+    startMimeTime=0;
+    notify(jsonDocument);
+    
 
 }
 

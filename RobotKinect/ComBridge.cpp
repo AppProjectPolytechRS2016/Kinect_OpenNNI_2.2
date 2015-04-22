@@ -51,12 +51,17 @@ void ComBridge::update(rapidjson::Document& d){
         myJsonHandler.addComManagerIPToDocument(d, myComManagerIP);
     }
     
-    /*Sending message*/
-    writeMessage(d);
+    if (msgType=="Logout") {
+        /*Sending message*/
+        writeMessage(d);
+    }
+    else{
+        /*Sending message*/
+        writeMessage(d);
     
-    /*Waiting for answer*/
-    readMessage();
-    
+        /*Waiting for answer*/
+        readMessage();
+    }
 
 }
 
@@ -80,7 +85,7 @@ void ComBridge::readMessage(){
         ssize_t numOfCharRecv = recv(socketFD, &bufferIn, 255,0);
     
         if (numOfCharRecv < 0){
-            cout<<"ERROR reading socket"<<endl;
+            cout<<"ERROR reading socket, time out"<<endl;
             exit(1);
         }
         else{

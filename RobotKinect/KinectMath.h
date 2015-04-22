@@ -13,11 +13,12 @@
 #include <stdio.h>
 #include <vector>
 #include <math.h>
+#include <iostream>
 
 namespace KMath {
-    void rotationFromQuaternion(const nite::Quaternion pQua, std::vector<float> rotations);
+    void rotationFromQuaternion(const nite::Quaternion pQua, std::vector<float>& rotations);
     
-    void rotation3DFromQuaternion(const std::vector<nite::Quaternion> pQuaternion, std::vector<float> jointsOrientation);
+    void rotation3DFromQuaternion(const std::vector<nite::Quaternion> pQuaternion, std::vector<float>& jointsOrientation);
 
 }
 

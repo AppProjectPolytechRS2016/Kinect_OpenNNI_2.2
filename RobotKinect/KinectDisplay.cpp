@@ -37,7 +37,7 @@ void KinectDisplay::initWindows(){
     cv::moveWindow("selection Pad", 0, 0);
 }
 
-void KinectDisplay::displayFrame(const openni::DepthPixel* depthData,int resolutionX, int resolutionY, int dataSize, std::vector<float>jointPositions, int areaX, int areaY){
+void KinectDisplay::displayFrame(const openni::DepthPixel* depthData,int resolutionX, int resolutionY, int dataSize, std::vector<float>jointPositions, int areaX, int areaY, const std::string what, std::string toDo){
     cv::Mat frame;
     
     frame.create(resolutionY, resolutionX, CV_8UC4);
@@ -61,6 +61,10 @@ void KinectDisplay::displayFrame(const openni::DepthPixel* depthData,int resolut
     
     /*Drawing a rectangle for the selection space*/
     cv::rectangle(frame, cv::Point(0/*resolutionX/areaX*/,resolutionY/areaY), cv::Point(resolutionX/**2*//3,resolutionY/2), cv::Scalar(0,0,255),3);
+    
+    //Adding text for what you're doing
+    cv::putText(frame, what, cv::Point(15,40), CV_FONT_HERSHEY_PLAIN, 2.2f, CV_RGB(0,0,0),2.5);
+    cv::putText(frame, toDo, cv::Point(15,resolutionY-40), CV_FONT_HERSHEY_PLAIN, 2.2f, CV_RGB(0,0,0),2.5);
     
     cv::imshow("Depth frame",frame);
     int c = cvWaitKey (2); //attente de 2ms qu'une touche soit pressée, !! permet le rafraîchissement des images !!

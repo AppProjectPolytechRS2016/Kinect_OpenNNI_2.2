@@ -147,7 +147,7 @@ Document JsonHandler::createJsonLogOutFromComManager(string deviceIP){
         d.AddMember("From", myVal, d.GetAllocator());
         
         /*Adding the msg type*/
-        myVal.SetString("LogOut", d.GetAllocator());
+        myVal.SetString("Logout", d.GetAllocator());
         d.AddMember("MsgType", myVal, d.GetAllocator());
         
     }
@@ -187,10 +187,12 @@ Document JsonHandler::createJsonMime(string robot, string deviceIP, vector<nite:
         /*Adding the joints orientation*/
         std::vector<float> jointsOrientation;
         KMath::rotation3DFromQuaternion(jointOrientationVector, jointsOrientation);
+        cout<<"taille du vecteur orientation : "<<jointsOrientation.size()<<endl;
         Value jOVal(kArrayType);
         for (int i = 0; i<jointsOrientation.size(); i++) {
             jOVal.PushBack(jointsOrientation[i], d.GetAllocator());
         }
+        cout<<"taille tableau orientation json : "<<jOVal.Size()<<endl;
         d.AddMember("JointOrientation", jOVal, d.GetAllocator());
         
     }
@@ -254,7 +256,7 @@ string JsonHandler::extractAckType(Document &doc){
     else if (doc.HasMember("FeatureList")){
         s = "FeatureList";
     }
-    else if (doc.HasMember("OrderAccepted") && !doc.HasMember("End") && !doc.HasMember("Disconnected")){
+    else if (doc.HasMember("OrderAccepted") && !doc.HasMember("End") && !doc.HasMember("Disconnected") && !doc.HasMember("MimeAccepted")){
         s = "OrderAccepted";
     }
     else if (doc.HasMember("Disconnected")){
@@ -262,6 +264,9 @@ string JsonHandler::extractAckType(Document &doc){
     }
     else if (doc.HasMember("End")){
         s = "End";
+    }
+    else if (doc.HasMember("MimeAccepted")){
+        s = "MimeAccepted";
     }
     else{
         s = "error";

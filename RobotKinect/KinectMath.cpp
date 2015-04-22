@@ -9,7 +9,7 @@
 #include "KinectMath.h"
 
 namespace KMath {
-    void rotationFromQuaternion(const nite::Quaternion pQua, std::vector<float> rotations)
+    void rotationFromQuaternion(const nite::Quaternion pQua, std::vector<float>& rotations)
     {
         rotations.push_back(1.0f - 2.0f*(pow(pQua.y, 2) + pow(pQua.z, 2)));
         rotations.push_back(2.0f*(pQua.x*pQua.y - pQua.z*pQua.w));
@@ -25,8 +25,9 @@ namespace KMath {
     };
     
 
-    void rotation3DFromQuaternion(const std::vector<nite::Quaternion> pQuaternion, std::vector<float> jointsOrientation)
+    void rotation3DFromQuaternion(const std::vector<nite::Quaternion> pQuaternion, std::vector<float>& jointsOrientation)
     {
+        std::cout<<"taille du vecteur de quaternion : "<<pQuaternion.size()<<std::endl;
         for (int i =0; i<pQuaternion.size(); i++) {
             //rotationFromQuaternion
             std::vector<float> rotations;

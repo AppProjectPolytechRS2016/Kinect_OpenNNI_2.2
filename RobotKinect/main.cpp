@@ -14,7 +14,7 @@ int main(int argc, char** argv)
 {
     Kinect kinect_1(0);
     
-    ApplicationKinect appKinect("AppKinect1","169.254.165.171", &kinect_1);
+    ApplicationKinect appKinect("AppKinect1","169.254.51.108", &kinect_1);
     
     ComBridge comBridge("172.26.101.10",6020);
     
@@ -34,7 +34,6 @@ int main(int argc, char** argv)
     
     appKinect.selectRobot(robotList);*/
     
-    
-    
+
     
 }
