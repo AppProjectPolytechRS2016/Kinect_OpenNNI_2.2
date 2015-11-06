@@ -64,6 +64,13 @@ namespace KMath {
         }
 
     };
+    
+    void rotationsFromSegment(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z, float &jointPitch, float &jointRoll){
+        float norm;
+        norm = sqrtf(pow((joint1X-joint2X),2)+pow((joint1Y-joint2Y),2)+pow((joint1Z-joint2Z),2));
+        jointPitch = M_PI/2 - acos((-joint2Z+joint1Z)/norm);
+        jointRoll = M_PI/2 + acos((joint2Y-joint1Y)/norm);
+    };
 
 
 };

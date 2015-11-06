@@ -28,7 +28,7 @@ public:
     Document createJsonLogOutFromComManager(string deviceIP);
     Document createJsonAskForUpdateList(string deviceIP);
     Document createJsonErrorRecv();
-    Document createJsonMime(string robot, string deviceIP, vector<nite::Quaternion> jointOrientationVector);
+    Document createJsonMime(string robot, string deviceIP, vector<float> jointOrientationVector);
     
     void addComManagerIPToDocument(Document &doc, string comManagerIP);
     

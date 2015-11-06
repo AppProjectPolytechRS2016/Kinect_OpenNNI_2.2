@@ -11,6 +11,7 @@
 #include <opencv/cv.h>
 #include <math.h>
 #include "KinectDisplay.h"
+#include "KinectMath.h"
 
 
 class Kinect{
@@ -19,7 +20,7 @@ public:
     ~Kinect();
     openni::Status initKinect();
     nite::Status trackSkeleton(int &robotSelected,std::vector<std::string> cases, const std::string what);
-    std::vector<nite::Quaternion> trackSkeletonMime(int64& timeStamp, int countDown);
+    std::vector<float> trackSkeletonMime(int64& timeStamp, int countDown);
     nite::Status trackHand(int &robotSelected,std::vector<std::string> cases);
     nite::Status initHandTracker();
     nite::Status initSkeletonTracker();

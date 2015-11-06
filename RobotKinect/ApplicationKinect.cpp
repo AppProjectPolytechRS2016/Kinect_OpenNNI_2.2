@@ -111,7 +111,7 @@ int ApplicationKinect::selectCaseSkeleton(Kinect* myKinect, std::vector<std::str
 
 void ApplicationKinect::mimeHumanArms(string robot){
     nite::Status checkResult = nite::STATUS_OK;
-    vector<nite::Quaternion> jointOrientation;
+    vector<float> jointOrientation;
     int64 timeStamp;
     int countDown = 8;
     
