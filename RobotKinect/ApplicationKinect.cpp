@@ -129,7 +129,7 @@ void ApplicationKinect::mimeHumanArms(string robot){
         }
         countDown = 8 - (int)((timeStamp-startMimeTime)/100000000);
     }
-    while (!jointOrientation.empty() && (timeStamp-startMimeTime<800000000));
+    while (/*!jointOrientation.empty() &&*/ (timeStamp-startMimeTime<800000000));
     jsonDocument = myJsonHandler.createJsonMime(robot, myDeviceIP, jointOrientation);
     myKinect->stopSkeletonTracker();
     startMimeTime=0;
