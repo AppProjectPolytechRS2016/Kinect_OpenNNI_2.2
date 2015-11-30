@@ -11,9 +11,10 @@
 #include <opencv/cv.h>
 #include <math.h>
 #include "KinectDisplay.h"
+#include <thread>
 
 
-class Kinect{
+class Kinect : public std::thread{
 public:
     Kinect(int kinectID);
     ~Kinect();
