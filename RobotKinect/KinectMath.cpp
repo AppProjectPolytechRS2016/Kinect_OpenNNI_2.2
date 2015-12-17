@@ -65,13 +65,60 @@ namespace KMath {
 
     };
     
-    void rotationsFromSegment(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z, float &jointPitch, float &jointRoll){
+    /*void rotationsFromSegment(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z, float &jointPitch, float &jointRoll){
         float norm;
         norm = sqrtf(pow((joint1X-joint2X),2)+pow((joint1Y-joint2Y),2)+pow((joint1Z-joint2Z),2));
         jointPitch = M_PI/2 - acos((-joint2Z+joint1Z)/norm);
         jointRoll = M_PI/2 + acos((joint2Y-joint1Y)/norm);
+    };*/
+    void rotationsFromSegment(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z, float &jointPitch, float &jointRoll){
+        /*float norm;
+         norm = sqrtf(pow((joint1X-joint2X),2)+pow((joint1Y-joint2Y),2)+pow((joint1Z-joint2Z),2));
+         jointPitch = M_PI/2 - acos((-joint2Z+joint1Z)/norm);
+         jointRoll = M_PI/2 + acos((joint2Y-joint1Y)/norm);*/
+        float y = joint2Y-joint1Y;
+        float z = joint2Z-joint1Z;
+        float x = joint2X-joint1X;
+        if (y==0) {
+            jointPitch = 0.01;
+        }
+        else if (y>0) {
+            jointPitch = -atan(y/(-z));
+        }
+        else if (y<0){
+            if(z<0){
+                jointPitch = atan(y/z);
+            }
+            else if (z==0){
+                jointPitch = M_PI/2;
+            }
+            else if (z>0){
+                jointPitch = M_PI/2 + atan(z/(-y));
+            }
+        }
+        
+        if (y>=0) {
+            jointRoll = M_PI/2;
+        }
+        else{
+            if(x<=0){
+                jointRoll = 0.01;
+            }
+            else{
+                jointRoll = atan(x/(-y));
+            }
+        }
     };
-
+    
+    void elbowRoll(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z,int joint3X,int joint3Y, int joint3Z,float &jointRoll){
+        float y1 = joint1Y-joint2Y;
+        float z1 = joint1Z-joint2Z;
+        float x1 = joint1X-joint2X;
+        float y2 = joint3Y-joint2Y;
+        float z2 = joint3Z-joint2Z;
+        float x2 = joint3X-joint2X;
+        jointRoll=acos((x1*x2+y1*y2+z1*z2)/(sqrt(y1*y1+z1*z1+x1*x1)*sqrt(y2*y2+z2*z2+x2*x2)))-M_PI;
+    };
 
 };
 

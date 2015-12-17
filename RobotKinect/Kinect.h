@@ -5,49 +5,44 @@
  *                                                                              *
  *******************************************************************************/
 
+#ifndef __RobotKinect__Kinect__
+#define __RobotKinect__Kinect__
 
 #include <stdio.h>
 #include "NiTE.h"
 #include <opencv/cv.h>
 #include <math.h>
+#include "Thread.h"
+#include "KinectMath.h"
 #include "KinectDisplay.h"
-#include <thread>
 
 
-class Kinect : public std::thread{
+class Kinect : public Thread{
+
 public:
-    Kinect(int kinectID);
+    Kinect(int kinectID, std::vector<jointPositions> &jointsPositions, std::vector<jointPositions> &jointsPositionsDisplay, int &resolutionX, int &resolutionY, bool &exitB, bool &aUserTracked);
     ~Kinect();
-    openni::Status initKinect();
-    nite::Status trackSkeleton(int &robotSelected,std::vector<std::string> cases, const std::string what);
-    std::vector<float> trackSkeletonMime(int64& timeStamp, int countDown);
-    nite::Status trackHand(int &robotSelected,std::vector<std::string> cases);
-    nite::Status initHandTracker();
-    nite::Status initSkeletonTracker();
-    nite::Status stopHandTracker();
-    nite::Status stopSkeletonTracker();
-
-
+    
+    void *run();
     
 private:
-        
-    nite::HandTracker myHandTracker;
+    
+    openni::Status initKinect();
+    nite::Status trackSkeleton();
+    nite::Status initSkeletonTracker();
+    nite::Status stopSkeletonTracker();
+    
     nite::UserTracker *myUserTracker;
     nite::UserId myPoseUser;
     openni::Device myNiDevice;
-    //openni::VideoStream myVideoStream;
-    //openni::VideoFrameRef videoFrame;
-    openni::VideoFrameRef depthFrame;
-    nite::HandTrackerFrameRef myHandTrackerFrame;
-    nite::UserTrackerFrameRef myUserTrackerFrame;
-    
-    KinectDisplay myKinectDisplay;
-    
-    void rotationsFromSegment(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z, float &jointPitch, float &jointRoll);
-    void elbowRoll(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z,int joint3X,int joint3Y, int joint3Z,float &jointRoll);
-    
+    std::vector<jointPositions> *myJointsPositions;
+    std::vector<jointPositions> *myJointsPositionsDisplay;
+    int myResolutionX, myResolutionY;
+    bool myExit;
     int myKinectID;
     bool aUserIsTracked;
     int userTracked;
-    
+    KinectDisplay myKinectDisplay;
+
 };
+#endif

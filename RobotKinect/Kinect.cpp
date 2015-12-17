@@ -7,25 +7,45 @@
 
 #include "Kinect.h"
 
-using namespace std;
-
-#define PAD_WIDTH 800
-#define PAD_HEIGHT 720
 #define AREA_X 3 //Scale of the selection area for the hand
 #define AREA_Y 6
 #define AREA_Y_H 3
+#define PAD_WIDTH 800
+#define PAD_HEIGHT 720
 
-Kinect::Kinect(int kinectID) : myPoseUser(0){
+using namespace std;
+
+Kinect::Kinect(int kinectID,std::vector<jointPositions> &jointsPositions, std::vector<jointPositions> &jointsPositionsDisplay, int &resolutionX,int &resolutionY, bool &exitB, bool &aUserTracked) : myPoseUser(0){
     myKinectID=kinectID;
     myUserTracker = new nite::UserTracker;
     aUserIsTracked = false;
+    myJointsPositions = &jointsPositions;
+    myJointsPositionsDisplay = &jointsPositionsDisplay;
+    myExit = exitB;
+    aUserIsTracked = aUserTracked;
+    myKinectDisplay.setPadX(PAD_WIDTH);
+    myKinectDisplay.setPadY(PAD_HEIGHT);
+    myKinectDisplay.initWindows();
+;
+    
 }
 
 Kinect::~Kinect(){
+    
     nite::NiTE::shutdown();
 }
 
-/*Initialisation of the Kinect*/
+//Itinitialisation of the thread
+void* Kinect::run(){
+    this->initKinect();
+    this->initSkeletonTracker();
+    while (true) {
+        this->trackSkeleton();
+    }
+    this->stopSkeletonTracker();
+    return NULL;
+}
+//Initialisation of the Kinect
 openni::Status Kinect::initKinect(){
     
     /*Openni init*/
@@ -54,12 +74,8 @@ openni::Status Kinect::initKinect(){
         exit(1);
     }
     
-    /*Setting the size of the displayPad*/
-    myKinectDisplay.setPadX(PAD_WIDTH);
-    myKinectDisplay.setPadY(PAD_HEIGHT);
-    
     myUserTracker = new nite::UserTracker;
-    
+    cout<<"Kinect initialized !"<<endl;
     return checkResult;
 };
 
@@ -68,26 +84,32 @@ nite::Status Kinect::initSkeletonTracker(){
     nite::Status checkResult=nite::STATUS_OK;
     openni::Status checkResult2=openni::STATUS_OK;
     
-    myKinectDisplay.initWindows();
-    
     checkResult = myUserTracker->create(&myNiDevice);
     if (checkResult !=nite::STATUS_OK) {
         cout<<"Creating UserTracker failed"<<endl;
         exit(1);
     }
+    else cout<<"UserTracker initialized !"<<endl;
     
     return checkResult;
 };
 
-nite::Status Kinect::trackSkeleton(int &caseSelected,std::vector<std::string> cases, const std::string what){
-    
+nite::Status Kinect::trackSkeleton(){
+        
     nite::Status checkResult=nite::STATUS_OK;
     openni::Status checkResult2=openni::STATUS_OK;
     nite::UserTrackerFrameRef myUserTrackerFrame;
+    openni::VideoFrameRef depthFrame;
     
-    float leftHandX = 0, leftHandY = 0, rightHandX = 0, rightHandY = 0, torsoX = 0, torsoY = 0, rightShoulderX = 0, rightShoulderY = 0, rightHandZ = 0, torsoZ = 0;
-    vector<float> jointPositions;
-    int casePosition;
+    string what ="test";
+    
+    jointPositions initPosition;
+    initPosition.x=0;
+    initPosition.y=0;
+    initPosition.z=0;
+    
+    jointPositions leftShoulderP=initPosition, leftElbowP=initPosition, leftHandP=initPosition, rightShoulderP=initPosition, rightElbowP=initPosition, rightHandP=initPosition, torsoP=initPosition,leftShoulderDisplay=initPosition, leftElbowDisplay=initPosition, leftHandDisplay=initPosition, rightShoulderDisplay=initPosition, rightElbowDisplay=initPosition, rightHandDisplay=initPosition, torsoDisplay=initPosition;
+    
 
     /*Reading the frame from the UserTracker*/
     checkResult = myUserTracker->readFrame(&myUserTrackerFrame);
@@ -98,13 +120,14 @@ nite::Status Kinect::trackSkeleton(int &caseSelected,std::vector<std::string> ca
     
     depthFrame = myUserTrackerFrame.getDepthFrame();
     
-    int resolutionX = depthFrame.getWidth();
-    int resolutionY = depthFrame.getHeight();
+    myResolutionX = depthFrame.getWidth();
+    myResolutionY = depthFrame.getHeight();
     
     string toDo ="No user detected";
     
     /*Getting and tracking users detected from the UserTrackerFrame*/
     const nite::Array<nite::UserData>& users = myUserTrackerFrame.getUsers();
+    
     for ( int i = 0; i < users.getSize(); ++i ) {
         const nite::UserData& user = users[i];
         if (user.isNew() && !aUserIsTracked) {
@@ -112,37 +135,105 @@ nite::Status Kinect::trackSkeleton(int &caseSelected,std::vector<std::string> ca
         }
         else if (!user.isLost()) {
             
-            const nite::Skeleton& skeelton = user.getSkeleton();
+            const nite::Skeleton& skeleton = user.getSkeleton();
             
             toDo = "Calibration requiered";
             
-            if (skeelton.getState() == nite::SkeletonState::SKELETON_TRACKED) {
+            if (skeleton.getState() == nite::SkeletonState::SKELETON_TRACKED) {
                 
                 toDo = "Choose one, cross arms to exit";
                 
+                myJointsPositions->clear();
+                myJointsPositionsDisplay->clear();
+                
                 /*Following the choosen joints*/
-                const nite::SkeletonJoint& joint = skeelton.getJoint(nite::JOINT_RIGHT_HAND);/*Attention : the data are hrizontally flipped*/
-                if (joint.getPositionConfidence() >= 0.5f) {
-                    const nite::Point3f& leftHand = joint.getPosition();
-                    myUserTracker->convertJointCoordinatesToDepth(leftHand.x, leftHand.y, leftHand.z, &leftHandX, &leftHandY);
-                    jointPositions.push_back(leftHandX);
-                    jointPositions.push_back(leftHandY);
+                /*Left Shoulder*/
+                const nite::SkeletonJoint& joint1 = skeleton.getJoint(nite::JOINT_RIGHT_SHOULDER);/*Attention : the data are hrizontally flipped*/
+                if (joint1.getPositionConfidence() >= 0.5f) {
+                    const nite::Point3f& leftShoulder = joint1.getPosition();
+                    myUserTracker->convertJointCoordinatesToDepth(leftShoulder.x, leftShoulder.y, leftShoulder.z, &leftShoulderDisplay.x, &leftShoulderDisplay.y);
+                    leftShoulderDisplay.z=leftShoulder.z;
+                    leftShoulderP.z=leftShoulder.z;
+                    leftShoulderP.x=leftShoulder.x;
+                    leftShoulderP.y=leftShoulder.y;
+                    myJointsPositionsDisplay->push_back(leftShoulderDisplay);
+                    myJointsPositions->push_back(leftShoulderP);
                 }
-                const nite::SkeletonJoint& joint2 = skeelton.getJoint(nite::JOINT_LEFT_HAND);/*Attention : the data are hrizontally flipped*/
+                
+                /*Left Elbow*/
+                const nite::SkeletonJoint& joint2 = skeleton.getJoint(nite::JOINT_RIGHT_ELBOW);/*Attention : the data are hrizontally flipped*/
                 if (joint2.getPositionConfidence() >= 0.5f) {
-                    const nite::Point3f& rightHand = joint2.getPosition();
-                    myUserTracker->convertJointCoordinatesToDepth(rightHand.x, rightHand.y, rightHand.z, &rightHandX, &rightHandY);
-                    rightHandZ = rightHand.z;
-                    jointPositions.push_back(rightHandX);
-                    jointPositions.push_back(rightHandY);
+                    const nite::Point3f& leftElbow = joint2.getPosition();
+                    myUserTracker->convertJointCoordinatesToDepth(leftElbow.x, leftElbow.y, leftElbow.z, &leftElbowDisplay.x, &leftElbowDisplay.y);
+                    leftElbowDisplay.z=leftElbow.z;
+                    leftElbowP.z=leftElbow.z;
+                    leftElbowP.x=leftElbow.x;
+                    leftElbowP.y=leftElbow.y;
+                    myJointsPositionsDisplay->push_back(leftElbowDisplay);
+                    myJointsPositions->push_back(leftElbowP);
                 }
-                const nite::SkeletonJoint& joint3 = skeelton.getJoint(nite::JOINT_TORSO);
+                //Left hand
+                const nite::SkeletonJoint& joint3 = skeleton.getJoint(nite::JOINT_RIGHT_HAND);/*Attention : the data are hrizontally flipped*/
                 if (joint3.getPositionConfidence() >= 0.5f) {
-                    const nite::Point3f& torso = joint3.getPosition();
-                    myUserTracker->convertJointCoordinatesToDepth(torso.x, torso.y, torso.z, &torsoX, &torsoY);
-                    torsoZ = torso.z;
-                    jointPositions.push_back(torsoX);
-                    jointPositions.push_back(torsoY);
+                    const nite::Point3f& leftHand = joint3.getPosition();
+                    myUserTracker->convertJointCoordinatesToDepth(leftHand.x, leftHand.y, leftHand.z, &leftHandDisplay.x, &leftHandDisplay.y);
+                    leftHandDisplay.z=leftHand.z;
+                    leftHandP.z=leftHand.z;
+                    leftHandP.x=leftHand.x;
+                    leftHandP.y=leftHand.y;
+                    myJointsPositionsDisplay->push_back(leftHandDisplay);
+                    myJointsPositions->push_back(leftHandP);
+                }
+                
+                //Right Shoulder
+                const nite::SkeletonJoint& joint4 = skeleton.getJoint(nite::JOINT_LEFT_SHOULDER);/*Attention : the data are hrizontally flipped*/
+                if (joint4.getPositionConfidence() >= 0.5f) {
+                    const nite::Point3f& rightShoulder = joint4.getPosition();
+                    myUserTracker->convertJointCoordinatesToDepth(rightShoulder.x, rightShoulder.y, rightShoulder.z, &rightShoulderDisplay.x, &rightShoulderDisplay.y);
+                    rightShoulderDisplay.z=rightShoulder.z;
+                    rightShoulderP.z=rightShoulder.z;
+                    rightShoulderP.x=rightShoulder.x;
+                    rightShoulderP.y=rightShoulder.y;
+                    myJointsPositionsDisplay->push_back(rightShoulderDisplay);
+                    myJointsPositions->push_back(rightShoulderP);
+                }
+                
+                //Right Elbow
+                const nite::SkeletonJoint& joint5 = skeleton.getJoint(nite::JOINT_LEFT_ELBOW);/*Attention : the data are hrizontally flipped*/
+                if (joint5.getPositionConfidence() >= 0.5f) {
+                    const nite::Point3f& rightElbow = joint5.getPosition();
+                    myUserTracker->convertJointCoordinatesToDepth(rightElbow.x, rightElbow.y, rightElbow.z, &rightElbowDisplay.x, &rightElbowDisplay.y);
+                    rightElbowDisplay.z=rightElbow.z;
+                    rightElbowP.z=rightElbow.z;
+                    rightElbowP.x=rightElbow.x;
+                    rightElbowP.y=rightElbow.y;
+                    myJointsPositionsDisplay->push_back(rightElbowDisplay);
+                    myJointsPositions->push_back(rightElbowP);
+                }
+                
+                //Right hand
+                const nite::SkeletonJoint& joint6 = skeleton.getJoint(nite::JOINT_LEFT_HAND);/*Attention : the data are hrizontally flipped*/
+                if (joint6.getPositionConfidence() >= 0.5f) {
+                    const nite::Point3f& rightHand = joint6.getPosition();
+                    myUserTracker->convertJointCoordinatesToDepth(rightHand.x, rightHand.y, rightHand.z, &rightHandDisplay.x, &rightHandDisplay.y);
+                    rightHandDisplay.z=rightHand.z;
+                    rightHandP.z=rightHand.z;
+                    rightHandP.x=rightHand.x;
+                    rightHandP.y=rightHand.y;
+                    myJointsPositionsDisplay->push_back(rightHandDisplay);
+                    myJointsPositions->push_back(rightHandP);
+                }
+                //Torso
+                const nite::SkeletonJoint& joint7 = skeleton.getJoint(nite::JOINT_TORSO);
+                if (joint7.getPositionConfidence() >= 0.5f) {
+                    const nite::Point3f& torso = joint7.getPosition();
+                    myUserTracker->convertJointCoordinatesToDepth(torso.x, torso.y, torso.z, &torsoDisplay.x, &torsoDisplay.y);
+                    torsoDisplay.z=torso.z;
+                    torsoP.z=torso.z;
+                    torsoP.x=torso.x;
+                    torsoP.y=torso.y;
+                    myJointsPositionsDisplay->push_back(torsoDisplay);
+                    myJointsPositions->push_back(torsoP);
                 }
             }
         }
@@ -168,212 +259,56 @@ nite::Status Kinect::trackSkeleton(int &caseSelected,std::vector<std::string> ca
         /*The Crossed Hands pose allow to exit case selection without a choice*/
         const nite::PoseData& poseCrossed = user.getPose(nite::POSE_CROSSED_HANDS);
         if (poseCrossed.isHeld()) {
-            caseSelected=-2;
+            myExit=true;
         }
         
     }
     
     /*Getting the depth data*/
-    const openni::DepthPixel* depthData = (const openni::DepthPixel*)depthFrame.getData();
+    const openni::DepthPixel *myDepthData = (const openni::DepthPixel*)depthFrame.getData();
+    int myDataSize = depthFrame.getDataSize();
     
-    /*Displaying the depth data and the Pad if the user is tracked*/
-    myKinectDisplay.displayFrame(depthData, resolutionX, resolutionY, depthFrame.getDataSize(), jointPositions, AREA_X, AREA_Y, what, toDo);
     
-    if (aUserIsTracked) {
-        /*Adapting left hand coordinates for best comfort for users*/
-        leftHandX = (resolutionX-leftHandX/*-resolutionX/AREA_X*/)*PAD_WIDTH/(resolutionX/AREA_X) ;
-        leftHandY = (leftHandY-resolutionY/AREA_Y)*PAD_HEIGHT/(resolutionY/AREA_Y_H) ;
-        
-        /*On which case is the left hand*/
-        casePosition = myKinectDisplay.displayPad(leftHandX, leftHandY, cases, false);
-        cout<<"X : "<<leftHandX<<" Y : "<<leftHandY<<endl;
-        
-        /*Validating the choice by putting right hand on torso*/
-        /*Calculating the distance between right hand and torso*/
-        float validationVector = sqrt(pow((rightHandX-torsoX),2)+pow((rightHandY-torsoY), 2)+pow((rightHandZ - torsoZ), 2));
-        if((validationVector < 100) && (rightHandX!=0)){
-            caseSelected = casePosition;
-            casePosition = myKinectDisplay.displayPad(leftHandX, leftHandY, cases, true);
+    //Displaying the data
+    /*myKinectDisplay.displayFrame(myDepthData, myResolutionX, myResolutionY, myDataSize, myJointsPositionsDisplay, AREA_X, AREA_Y, what, toDo);
+    sleep(1);*/
+    cv::namedWindow("Depth frame",cv::WINDOW_AUTOSIZE);
 
-        }
+    cv::Mat frame;
+    
+    frame.create(myResolutionY, myResolutionX, CV_8UC4);
+    
+    /*Filling the matrix with the pixel data*/
+    for(int i=0; i<(myDataSize/sizeof(openni::DepthPixel));i++){
+        int index = i*4;
+        uchar * data = &frame.data[index];
+        uint32_t gray = ((myDepthData[i] * 255) / 8192);
+        data[0] = 0;
+        data[1] = gray;
+        data[2] = gray;
+    }
+    /*Drawing a circle around each tracked joint*/
+    for(int i =0; i < myJointsPositions->size(); i++){
+        jointPositions position = myJointsPositions->at(i);
+        cv::circle( frame, cvPoint( position.x, position.y ), 5, cv::Scalar( 0, 0, 255 ), 5 );
     }
     
+    /*Flip horizontaly the image due to openni data flipped*/
+    cv::flip(frame,frame,1);
     
+    /*Drawing a rectangle for the selection space*/
+    cv::rectangle(frame, cv::Point(0/*resolutionX/areaX*/,myResolutionY/AREA_Y), cv::Point(myResolutionX/**2*//3,myResolutionY/2), cv::Scalar(0,0,255),3);
     
+    //Adding text for what you're doing
+    cv::putText(frame, what, cv::Point(15,40), CV_FONT_HERSHEY_PLAIN, 2.2f, CV_RGB(0,0,0),2.5);
+    cv::putText(frame, toDo, cv::Point(15,myResolutionY-40), CV_FONT_HERSHEY_PLAIN, 2.2f, CV_RGB(255,255,255),2.5);
+    cv::imshow("Depth frame",frame);
+    int c = cvWaitKey (2); //attente de
+    depthFrame.release();
+    myUserTrackerFrame.release();
     return checkResult;
 };
 
-std::vector<float> Kinect::trackSkeletonMime(int64& timeStamp, int countDown){
-    
-    nite::Status checkResult=nite::STATUS_OK;
-    openni::Status checkResult2=openni::STATUS_OK;
-    nite::UserTrackerFrameRef myUserTrackerFrame;
-    
-    //vector<nite::Quaternion> jointOrientation;
-    vector<float> jointOrientation;
-    vector<float> jointPositions;
-
-    float leftShoulderX = 0, leftShoulderY = 0, rightShoulderX = 0, rightShoulderY = 0, leftElbowX = 0, leftElbowY = 0, leftHandX=0,leftHandY=0,rightElbowX = 0, rightElbowY = 0;
-    
-    /*nite::Quaternion quaternionNul;
-    quaternionNul.w=0;
-    quaternionNul.x=0;
-    quaternionNul.y=0;
-    quaternionNul.z=0;
-    jointOrientation.push_back(quaternionNul);*/
-    
-    /*Reading the frame from the UserTracker*/
-    checkResult = myUserTracker->readFrame(&myUserTrackerFrame);
-    if (checkResult !=nite::STATUS_OK) {
-        cout<<"Getting next user frame failed"<<endl;
-        exit(1);
-    }
-    
-    depthFrame = myUserTrackerFrame.getDepthFrame();
-    int resolutionX = depthFrame.getWidth();
-    int resolutionY = depthFrame.getHeight();
-    
-    timeStamp=myUserTrackerFrame.getTimestamp();
-    
-    string toDo ="No user detected";
-    
-    /*Getting and tracking users detected from the UserTrackerFrame*/
-    const nite::Array<nite::UserData>& users = myUserTrackerFrame.getUsers();
-    for ( int i = 0; i < users.getSize(); ++i ) {
-        const nite::UserData& user = users[i];
-        if (user.isNew() && !aUserIsTracked) {
-            myUserTracker->startPoseDetection( user.getId(), nite::POSE_PSI );
-        }
-        else if (!user.isLost()) {
-            
-            toDo = "Calibration requiered";
-            
-            const nite::Skeleton& skeelton = user.getSkeleton();
-            
-            if (skeelton.getState() == nite::SkeletonState::SKELETON_TRACKED) {
-                
-                jointOrientation.clear();
-                
-                toDo = "Wait for the picture : "+std::to_string(countDown);
-                
-                /*Following the choosen joints*/
-                
-                /*Left Shoulder*/
-                const nite::SkeletonJoint& joint = skeelton.getJoint(nite::JOINT_RIGHT_SHOULDER);/*Attention : the data are hrizontally flipped*/
-                /*if (joint.getOrientationConfidence() >= 0.5f) {
-                    jointOrientation.push_back(joint.getOrientation());
-                }*/
-                float leftShoulderZ;
-                if (joint.getPositionConfidence() >= 0.5f) {
-                    const nite::Point3f& leftShoulder = joint.getPosition();
-                    myUserTracker->convertJointCoordinatesToDepth(leftShoulder.x, leftShoulder.y, leftShoulder.z, &leftShoulderX, &leftShoulderY);
-                    jointPositions.push_back(leftShoulderX);
-                    jointPositions.push_back(leftShoulderY);
-                    leftShoulderZ = leftShoulder.z;
-                    leftShoulderX = leftShoulder.x;
-                    leftShoulderY = leftShoulder.y;
-                }
-
-                /*Left Elbow*/
-                float leftElbowZ;
-                const nite::SkeletonJoint& joint2 = skeelton.getJoint(nite::JOINT_RIGHT_ELBOW);/*Attention : the data are hrizontally flipped*/
-                /*if (joint2.getOrientationConfidence() >= 0.5f) {
-                    jointOrientation.push_back(joint2.getOrientation());
-                }*/
-                if (joint2.getPositionConfidence() >= 0.5f) {
-                    const nite::Point3f& leftElbow = joint2.getPosition();
-                    myUserTracker->convertJointCoordinatesToDepth(leftElbow.x, leftElbow.y, leftElbow.z, &leftElbowX, &leftElbowY);
-                    jointPositions.push_back(leftElbowX);
-                    jointPositions.push_back(leftElbowY);
-                    leftElbowZ=leftElbow.z;
-                    leftElbowX=leftElbow.x;
-                    leftElbowY=leftElbow.y;
-                }
-                
-                /*Left Hand*/
-                float leftHandZ= 0;
-                const nite::SkeletonJoint& joint5 = skeelton.getJoint(nite::JOINT_RIGHT_HAND);/*Attention : the data are hrizontally flipped*/
-                if (joint5.getPositionConfidence() >= 0.5f) {
-                    cout<<"hand tracked"<<endl;
-                    const nite::Point3f& leftHand = joint5.getPosition();
-                    myUserTracker->convertJointCoordinatesToDepth(leftHand.x, leftHand.y, leftHand.z, &leftHandX, &leftHandY);
-                    cout<<"left hand x : "<<leftHandX<<" y :"<<leftHandY<<endl;
-                    jointPositions.push_back(leftHandX);
-                    jointPositions.push_back(leftHandY);
-                    leftHandX=leftHand.x;
-                    leftHandY=leftHand.y;
-                    leftHandZ=leftHand.z;
-                }
-
-                
-                //calculate left shoulder rotations
-                float leftShoulderPitch, leftShoulderRoll;
-                rotationsFromSegment(leftShoulderX,leftShoulderY,leftShoulderZ, leftElbowX,leftElbowY,leftElbowZ,leftShoulderPitch,leftShoulderRoll);
-                jointOrientation.push_back(leftShoulderPitch);
-                jointOrientation.push_back(leftShoulderRoll);
-                float leftElbowRoll;
-                elbowRoll(leftShoulderX,leftShoulderY,leftShoulderZ, leftElbowX,leftElbowY,leftElbowZ,leftHandX,leftHandY,leftHandZ, leftElbowRoll);
-                jointOrientation.push_back(leftElbowRoll);
-
-                /*Right Shoulder*/
-                const nite::SkeletonJoint& joint3 = skeelton.getJoint(nite::JOINT_LEFT_SHOULDER);/*Attention : the data are hrizontally flipped*/
-                /*if (joint3.getOrientationConfidence() >= 0.5f) {
-                    jointOrientation.push_back(joint3.getOrientation());
-                }*/
-                if (joint3.getPositionConfidence() >= 0.5f) {
-                    const nite::Point3f& rightShoulder = joint3.getPosition();
-                    myUserTracker->convertJointCoordinatesToDepth(rightShoulder.x, rightShoulder.y, rightShoulder.z, &rightShoulderX, &rightShoulderY);
-                    jointPositions.push_back(rightShoulderX);
-                    jointPositions.push_back(rightShoulderY);
-                }
-
-                /*Right Elbow*/
-                const nite::SkeletonJoint& joint4 = skeelton.getJoint(nite::JOINT_LEFT_ELBOW);/*Attention : the data are hrizontally flipped*/
-                /*if (joint4.getOrientationConfidence() >= 0.5f) {
-                    jointOrientation.push_back(joint4.getOrientation());
-                }*/
-                if (joint4.getPositionConfidence() >= 0.5f) {
-                    const nite::Point3f& rightElbow = joint4.getPosition();
-                    myUserTracker->convertJointCoordinatesToDepth(rightElbow.x, rightElbow.y, rightElbow.z, &rightElbowX, &rightElbowY);
-                    jointPositions.push_back(rightElbowX);
-                    jointPositions.push_back(rightElbowY);
-                }
-            }
-            
-        }
-        else if (user.isLost() && user.getId()==userTracked){
-            cout<<"User lost !"<<endl;
-            myUserTracker->stopSkeletonTracking(user.getId());
-            aUserIsTracked = false;
-        }
-        
-        /*The PSI pose is needed to track, thus the app isn't disturbed by other detected users*/
-        const nite::PoseData& posePSI = user.getPose(nite::POSE_PSI);
-        if (posePSI.isHeld() && !aUserIsTracked) {
-            myUserTracker->startSkeletonTracking( user.getId() );
-            aUserIsTracked = true;
-            userTracked = user.getId();
-            cout<<"User tracked !"<<endl;
-            myUserTracker->startPoseDetection(user.getId(), nite::POSE_CROSSED_HANDS);
-        }
-        
-        /*The Crossed Hands pose allow to exit case selection without a choice*/
-        const nite::PoseData& poseCrossed = user.getPose(nite::POSE_CROSSED_HANDS);
-        if (poseCrossed.isHeld()) {
-            jointOrientation.clear();
-        }
-        
-    }
-    
-    /*Getting the depth data*/
-    const openni::DepthPixel* depthData = (const openni::DepthPixel*)depthFrame.getData();
-    
-    /*Displaying the depth data and the Pad if the user is tracked*/
-    myKinectDisplay.displayFrame(depthData, resolutionX, resolutionY, depthFrame.getDataSize(), jointPositions, 10, 10, "Strike the pose ! ",toDo);
-    
-    
-    return jointOrientation;
-};
 
 nite::Status Kinect::stopSkeletonTracker(){
     nite::Status checkResult=nite::STATUS_OK;
@@ -384,61 +319,5 @@ nite::Status Kinect::stopSkeletonTracker(){
     /*Releasing ressources used by UserTracker*/
     myUserTracker->destroy();
     
-    /*Closing all windows*/
-    myKinectDisplay.clearWindow();
-    
     return checkResult;
 };
-
-void Kinect::rotationsFromSegment(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z, float &jointPitch, float &jointRoll){
-    /*float norm;
-    norm = sqrtf(pow((joint1X-joint2X),2)+pow((joint1Y-joint2Y),2)+pow((joint1Z-joint2Z),2));
-    jointPitch = M_PI/2 - acos((-joint2Z+joint1Z)/norm);
-    jointRoll = M_PI/2 + acos((joint2Y-joint1Y)/norm);*/
-    float y = joint2Y-joint1Y;
-    float z = joint2Z-joint1Z;
-    float x = joint2X-joint1X;
-    if (y==0) {
-        jointPitch = 0.01;
-    }
-    else if (y>0) {
-        jointPitch = -atan(y/(-z));
-    }
-    else if (y<0){
-        if(z<0){
-            jointPitch = atan(y/z);
-        }
-        else if (z==0){
-            jointPitch = M_PI/2;
-        }
-        else if (z>0){
-            jointPitch = M_PI/2 + atan(z/(-y));
-        }
-    }
-
-    if (y>=0) {
-        jointRoll = M_PI/2;
-    }
-    else{
-        if(x<=0){
-            jointRoll = 0.01;
-        }
-        else{
-            jointRoll = atan(x/(-y));
-        }
-    }
-};
-
-void Kinect::elbowRoll(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z,int joint3X,int joint3Y, int joint3Z,float &jointRoll){
-    float y1 = joint1Y-joint2Y;
-    float z1 = joint1Z-joint2Z;
-    float x1 = joint1X-joint2X;
-    float y2 = joint3Y-joint2Y;
-    float z2 = joint3Z-joint2Z;
-    float x2 = joint3X-joint2X;
-    jointRoll=acos((x1*x2+y1*y2+z1*z2)/(sqrt(y1*y1+z1*z1+x1*x1)*sqrt(y2*y2+z2*z2+x2*x2)))-M_PI;
-};
-
-
-
-

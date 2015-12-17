@@ -37,6 +37,7 @@
 		733CCCD61A9F9CD6006273CB /* libopencv_contrib.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 733CCCD21A9F9CD6006273CB /* libopencv_contrib.2.4.9.dylib */; };
 		733CCCD71A9F9CD6006273CB /* libopencv_core.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 733CCCD31A9F9CD6006273CB /* libopencv_core.2.4.9.dylib */; };
 		733CCCD81A9F9CD6006273CB /* libopencv_features2d.2.4.9.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 733CCCD41A9F9CD6006273CB /* libopencv_features2d.2.4.9.dylib */; };
+		7355380D1C0C616700FEE8C9 /* Thread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7355380B1C0C616700FEE8C9 /* Thread.cpp */; };
 		73BBA27B1A7D41D0007C647C /* ApplicationKinect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 73BBA2771A7D41D0007C647C /* ApplicationKinect.cpp */; };
 		73BBA28D1A7D42A2007C647C /* libNiTE2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BBA27F1A7D42A1007C647C /* libNiTE2.dylib */; };
 		73BBA2A01A7D42F6007C647C /* libOpenNI2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 73BBA28F1A7D42F6007C647C /* libOpenNI2.dylib */; };
@@ -183,6 +184,8 @@
 		733CCCD21A9F9CD6006273CB /* libopencv_contrib.2.4.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_contrib.2.4.9.dylib; path = ../../../Desktop/opencv/Build/lib/libopencv_contrib.2.4.9.dylib; sourceTree = "<group>"; };
 		733CCCD31A9F9CD6006273CB /* libopencv_core.2.4.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_core.2.4.9.dylib; path = ../../../Desktop/opencv/Build/lib/libopencv_core.2.4.9.dylib; sourceTree = "<group>"; };
 		733CCCD41A9F9CD6006273CB /* libopencv_features2d.2.4.9.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_features2d.2.4.9.dylib; path = ../../../Desktop/opencv/Build/lib/libopencv_features2d.2.4.9.dylib; sourceTree = "<group>"; };
+		7355380B1C0C616700FEE8C9 /* Thread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Thread.cpp; sourceTree = "<group>"; };
+		7355380C1C0C616700FEE8C9 /* Thread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Thread.h; sourceTree = "<group>"; };
 		73BBA26D1A7D4143007C647C /* RobotKinect */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = RobotKinect; sourceTree = BUILT_PRODUCTS_DIR; };
 		73BBA2771A7D41D0007C647C /* ApplicationKinect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ApplicationKinect.cpp; sourceTree = "<group>"; };
 		73BBA27E1A7D42A1007C647C /* com.primesense.nite.jar */ = {isa = PBXFileReference; lastKnownFileType = archive.jar; name = com.primesense.nite.jar; path = "../../../Kinect/NiTE-MacOSX-x64-2.2/Redist/com.primesense.nite.jar"; sourceTree = "<group>"; };
@@ -332,6 +335,8 @@
 				73153FEF1AC08BE3004C1C52 /* EventSource.h */,
 				7315402C1AC16306004C1C52 /* JsonHandler.cpp */,
 				7315402D1AC16306004C1C52 /* JsonHandler.h */,
+				7355380B1C0C616700FEE8C9 /* Thread.cpp */,
+				7355380C1C0C616700FEE8C9 /* Thread.h */,
 				73CB897E1AD7E79300DE8ED4 /* KinectMath.cpp */,
 				73CB897F1AD7E79300DE8ED4 /* KinectMath.h */,
 				7315402B1AC15854004C1C52 /* old event */,
@@ -599,6 +604,7 @@
 				731540051AC08C9E004C1C52 /* IdentToComManagerEvent.cpp in Sources */,
 				73153FF91AC08C44004C1C52 /* FeatureListEvent.cpp in Sources */,
 				73153FF61AC08C1C004C1C52 /* RobotListEvent.cpp in Sources */,
+				7355380D1C0C616700FEE8C9 /* Thread.cpp in Sources */,
 				731540021AC08C7D004C1C52 /* SendOrderEvent.cpp in Sources */,
 				73153FED1AC08BC8004C1C52 /* EventObserver.cpp in Sources */,
 			);

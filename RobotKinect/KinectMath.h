@@ -15,6 +15,8 @@
 #include <math.h>
 #include <iostream>
 
+typedef struct {float x;float y;float z;} jointPositions;
+
 namespace KMath {
     void rotationFromQuaternion(const nite::Quaternion pQua, std::vector<float>& rotations);
     
@@ -24,6 +26,9 @@ namespace KMath {
     
     void rotationsFromSegment(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z, float &jointPitch, float &jointRoll);
 
+    
+    void rotationsFromSegment(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z, float &jointPitch, float &jointRoll);
+    void elbowRoll(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z,int joint3X,int joint3Y, int joint3Z,float &jointRoll);
 }
 
 #endif /* defined(__RobotKinect__KinectMath__) */

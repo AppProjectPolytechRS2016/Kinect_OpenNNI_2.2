@@ -7,27 +7,30 @@
 
 #include "ApplicationKinect.h"
 
+#define PAD_WIDTH 800
+#define PAD_HEIGHT 720
+#define AREA_X 3 //Scale of the selection area for the hand
+#define AREA_Y 6
+#define AREA_Y_H 3
+
 using namespace std;
 
-ApplicationKinect::ApplicationKinect(const char* deviceName, const char* deviceIP, Kinect* mKinect) : Device(deviceName,deviceIP){
+ApplicationKinect::ApplicationKinect(const char* deviceName, const char* deviceIP, Kinect* mKinect, std::vector<jointPositions> &jointsPositions, std::vector<jointPositions> &jointsPositionsDisplay, int &resolutionX, int &resolutionY, bool &exitB, bool &aUserTracked, KinectDisplay &mKinectDisplay) : Device(deviceName,deviceIP){
 
     myKinect = mKinect;
+    
     startMimeTime=0;
     
-    openni::Status checkResult = openni::STATUS_OK;
-    checkResult = myKinect->initKinect();
-    if (checkResult != openni::STATUS_OK)
-    {
-        cout<<"Error : "<<checkResult<<endl;
-        exit(1);
-    }
-    else{
-        cout<<"kinect initialized !"<<endl;
-    }
+    myJointsPositions = &jointsPositions;
+    myJointsPositionsDisplay = &jointsPositionsDisplay;
+    myExit = exitB;
+    aUserIsTracked = aUserTracked;
+    myKinectDisplay = &mKinectDisplay;
 
 }
 
-ApplicationKinect::~ApplicationKinect(){}
+ApplicationKinect::~ApplicationKinect(){
+}
 
 void ApplicationKinect::setRobotList(std::vector<std::string> robotList){
     this->robotList = robotList;
@@ -90,22 +93,45 @@ int ApplicationKinect::selectCaseSkeleton(Kinect* myKinect, std::vector<std::str
     
     nite::Status checkResult = nite::STATUS_OK;
     
-    checkResult = myKinect->initSkeletonTracker();
     if (checkResult!=nite::STATUS_OK) {
         cout<<"Error in : "<<checkResult<<endl;
         exit(1);
     }
     
     while (caseSelected==-1) {
-        checkResult = myKinect->trackSkeleton(caseSelected, caseList, what);
-        if (checkResult!=nite::STATUS_OK) {
-            cout<<"Error in : "<<checkResult<<endl;
-            exit(1);
+        
+        /*Displaying the Pad if the user is tracked*/
+        
+        if (aUserIsTracked) {
+            /*Adapting left hand coordinates for best comfort for users*/
+            float leftHandX = myJointsPositionsDisplay->at(2).x;
+            float leftHandY = myJointsPositionsDisplay->at(2).y;
+            leftHandX = (myResolutionX-leftHandX/*-resolutionX/AREA_X*/)*PAD_WIDTH/(myResolutionX/AREA_X) ;
+            leftHandY = (leftHandY-myResolutionY/AREA_Y)*PAD_HEIGHT/(myResolutionY/AREA_Y_H) ;
+            
+            /*On which case is the left hand*/
+            int casePosition = myKinectDisplay->displayPad(leftHandX, leftHandY, caseList, false);
+            cout<<"X : "<<leftHandX<<" Y : "<<leftHandY<<endl;
+            
+            /*Validating the choice by putting right hand on torso*/
+            /*Calculating the distance between right hand and torso*/
+            float rightHandX = myJointsPositionsDisplay->at(5).x;
+            float rightHandY = myJointsPositionsDisplay->at(5).y;
+            float rightHandZ = myJointsPositionsDisplay->at(5).z;
+            float torsoX = myJointsPositionsDisplay->at(6).x;
+            float torsoY = myJointsPositionsDisplay->at(6).y;
+            float torsoZ = myJointsPositionsDisplay->at(6).z;
+            float validationVector = sqrt(pow((rightHandX-torsoX),2)+pow((rightHandY-torsoY), 2)+pow((rightHandZ - torsoZ), 2));
+            if((validationVector < 100) && (rightHandX!=0)){
+                caseSelected = casePosition;
+                casePosition = myKinectDisplay->displayPad(leftHandX, leftHandY, caseList, true);
+                
+            }
         }
+
+        
     }
     
-    myKinect->stopSkeletonTracker();
-
     return caseSelected;
 }
 
@@ -115,14 +141,12 @@ void ApplicationKinect::mimeHumanArms(string robot){
     int64 timeStamp;
     int countDown = 8;
     
-    checkResult = myKinect->initSkeletonTracker();
     if (checkResult!=nite::STATUS_OK) {
         cout<<"Error in : "<<checkResult<<endl;
         exit(1);
     }
     
     do {
-        jointOrientation = myKinect->trackSkeletonMime(timeStamp, countDown); //timestamp in whateverseconds !!
         
         if (startMimeTime==0) {
             startMimeTime = timeStamp;
@@ -131,7 +155,6 @@ void ApplicationKinect::mimeHumanArms(string robot){
     }
     while (/*!jointOrientation.empty() &&*/ (timeStamp-startMimeTime<800000000));
     jsonDocument = myJsonHandler.createJsonMime(robot, myDeviceIP, jointOrientation);
-    myKinect->stopSkeletonTracker();
     startMimeTime=0;
     notify(jsonDocument);
     
