@@ -12,7 +12,6 @@ using namespace std;
 ApplicationKinect::ApplicationKinect(const char* deviceName, const char* deviceIP, Kinect* mKinect) : Device(deviceName,deviceIP){
 
     myKinect = mKinect;
-    startMimeTime=0;
     
     openni::Status checkResult = openni::STATUS_OK;
     checkResult = myKinect->initKinect();
@@ -47,7 +46,7 @@ void ApplicationKinect::logOutCM(){
     notify(jsonDocument);
 }
 
-/*Test method for communication*/
+//Test method for communication
 void ApplicationKinect::sendOrder(string targetIP){
     jsonDocument = myJsonHandler.createJsonConnectToRobot(targetIP, myDeviceIP);
     notify(jsonDocument);
@@ -60,8 +59,7 @@ void ApplicationKinect::selectRobot(vector<string> robotList){
     
     if (robot==-2) {
         cout<<"Fin du programme "<<endl;
-        //logOutCM();
-        //exit(0);
+        
     }
     else if (robot!=-1){
         jsonDocument = myJsonHandler.createJsonConnectToRobot(robotList[robot], myDeviceIP);
@@ -112,8 +110,11 @@ int ApplicationKinect::selectCaseSkeleton(Kinect* myKinect, std::vector<std::str
 void ApplicationKinect::mimeHumanArms(string robot){
     nite::Status checkResult = nite::STATUS_OK;
     vector<float> jointOrientation;
-    int64 timeStamp;
+    bool startCount;
+    bool flagCount=false;
     int countDown = 8;
+    time_t startMimeTime=time(NULL);
+
     
     checkResult = myKinect->initSkeletonTracker();
     if (checkResult!=nite::STATUS_OK) {
@@ -122,14 +123,17 @@ void ApplicationKinect::mimeHumanArms(string robot){
     }
     
     do {
-        jointOrientation = myKinect->trackSkeletonMime(timeStamp, countDown); //timestamp in whateverseconds !!
+        jointOrientation = myKinect->trackSkeletonMime(startCount, countDown);
         
-        if (startMimeTime==0) {
-            startMimeTime = timeStamp;
+        if (startCount && !flagCount) {
+            flagCount=true;
+            startMimeTime=time(NULL);
         }
-        countDown = 8 - (int)((timeStamp-startMimeTime)/100000000);
+        if (flagCount) {
+            countDown = 8 -(int)(time(NULL)-startMimeTime);
+        }
     }
-    while (/*!jointOrientation.empty() &&*/ (timeStamp-startMimeTime<800000000));
+    while (countDown>0);
     jsonDocument = myJsonHandler.createJsonMime(robot, myDeviceIP, jointOrientation);
     myKinect->stopSkeletonTracker();
     startMimeTime=0;

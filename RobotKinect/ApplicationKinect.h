@@ -38,5 +38,4 @@ public:
 private:
     Kinect* myKinect;
     std::vector<std::string> robotList; /*IP address of the robots*/
-    int64 startMimeTime;
 };
