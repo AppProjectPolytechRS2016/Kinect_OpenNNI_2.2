@@ -132,6 +132,9 @@ void ApplicationKinect::mimeHumanArms(string robot){
         if (flagCount) {
             countDown = 8 -(int)(time(NULL)-startMimeTime);
         }
+        if (flagCount && !startCount) {
+            flagCount=false;
+        }
     }
     while (countDown>0);
     jsonDocument = myJsonHandler.createJsonMime(robot, myDeviceIP, jointOrientation);

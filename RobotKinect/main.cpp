@@ -14,7 +14,7 @@ int main(int argc, char** argv)
 {
     Kinect kinect_1(0);
     
-    ApplicationKinect appKinect("AppKinect1","169.254.1.119", &kinect_1);
+    ApplicationKinect appKinect("AppKinect1","169.254.21.113", &kinect_1);
     
     ComBridge comBridge("169.254.193.193",6020);
     
@@ -24,5 +24,14 @@ int main(int argc, char** argv)
     appKinect.logInCM();
         
     appKinect.logOutCM();
+    
+    /*bool startCount;
+    int countDown=1;
+    
+    kinect_1.initSkeletonTracker();
+    while (true) {
+        kinect_1.trackSkeletonMime(startCount, countDown);
+    }*/
+    
     
 }

@@ -34,16 +34,16 @@ private:
     nite::UserTracker *myUserTracker;
     nite::UserId myPoseUser;
     openni::Device myNiDevice;
-    //openni::VideoStream myVideoStream;
-    //openni::VideoFrameRef videoFrame;
     openni::VideoFrameRef depthFrame;
     nite::HandTrackerFrameRef myHandTrackerFrame;
     nite::UserTrackerFrameRef myUserTrackerFrame;
     
     KinectDisplay myKinectDisplay;
     
-    void rotationsFromSegment(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z, float &jointPitch, float &jointRoll);
-    void elbowRoll(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z,int joint3X,int joint3Y, int joint3Z,float &jointRoll);
+    void rotationsFromSegmentG(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z, float &jointPitch, float &jointRoll);
+    void rotationsFromSegmentD(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z, float &jointPitch, float &jointRoll);
+    void elbowRollG(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z,int joint3X,int joint3Y, int joint3Z,float &jointRoll);
+    void elbowRollD(int joint1X, int joint1Y, int joint1Z, int joint2X,int joint2Y, int joint2Z,int joint3X,int joint3Y, int joint3Z,float &jointRoll);
     
     int myKinectID;
     bool aUserIsTracked;
